@@ -2,20 +2,22 @@
 {
     public class FoodBooking
     {
-        public int FoodItemId { get; set; }
-        public string Description { get; set; }
-        public float UnitPrice { get; set; }
+        public int FoodBookingId { get; set; }
+        public int ClientReferenceId { get; set; }
+        public int NumberOfGuests { get; set; }
+        public int MenuId { get; set; }
 
-        public FoodBooking()
-        {
-            Description = string.Empty;
-        }
+        //public FoodBooking()
+        //{
 
-        public FoodBooking(int foodItemId, string description, int unitPrice)
+        //}
+
+        public FoodBooking(int foodBookingId, int clientReferenceId, int numberOfGuests, int menuId)
         {
-            FoodItemId = foodItemId;
-            Description = description;
-            UnitPrice = unitPrice;
+            FoodBookingId = foodBookingId;
+            ClientReferenceId = clientReferenceId;
+            NumberOfGuests = numberOfGuests;
+            MenuId = menuId;
         }
     }
 }
