@@ -10,10 +10,10 @@ namespace ThAmCo.Catering.Data
         public FoodItem? FoodItem { get; set; }
         public Menu? Menu { get; set; }
 
-        //public MenuFoodItem()
-        //{
+        public MenuFoodItem()
+        {
 
-        //}
+        }
 
         public MenuFoodItem(int menuId, int foodItemId)
         {
