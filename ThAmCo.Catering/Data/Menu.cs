@@ -8,6 +8,8 @@ namespace ThAmCo.Catering.Data
         [Required]
         public string MenuName { get; set; }
 
+        public FoodBooking? FoodBooking { get; set; }
+
         public Menu()
         {
             MenuName = string.Empty;

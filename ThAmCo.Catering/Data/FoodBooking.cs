@@ -7,6 +7,8 @@
         public int NumberOfGuests { get; set; }
         public int MenuId { get; set; }
 
+        public List<Menu>? Menus { get; set; }
+
         //public FoodBooking()
         //{
 
