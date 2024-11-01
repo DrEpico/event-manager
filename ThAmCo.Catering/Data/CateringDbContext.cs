@@ -40,13 +40,14 @@ namespace ThAmCo.Catering.Data
             //Define many to many
             modelBuilder.Entity<Menu>()
                 .HasMany(m => m.MenuFoodItems)
-                .WithOne(mf => mf.Menu)
+                .WithOne(mfi => mfi.Menu)
                 .HasForeignKey(mf => mf.MenuId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<FoodItem>()
-                .HasMany(m => m.MenuFoodItems)
-                .WithOne(mf => mf.FoodItem)
+                .HasMany(fi => fi.MenuFoodItems)
+                .WithOne(mfi => mfi.FoodItem)
+                .HasForeignKey(mfi => mfi.FoodItemId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
