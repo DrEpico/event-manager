@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -84,14 +85,22 @@ namespace ThAmCo.Catering.Controllers
         }
 
         [HttpPost("AddFoodItem")]
-        public async Task<ActionResult<FoodItem>> AddFoodItem(FoodItem foodItem)
+        public async Task<ActionResult<FoodItemDto>> AddFoodItem(FoodItemDto foodItemDto)
         {
+            // Map the DTO to the entity
+            var foodItem = new FoodItem()
+            {
+                Description = foodItemDto.Description,
+                UnitPrice = foodItemDto.UnitPrice
+            };
+
             _context.FoodItems.Add(foodItem);
             await _context.SaveChangesAsync();
 
             //might want to use CreatedAtAction(nameof(GetFoodItem), ...) instead of hardcoding the action name "GetSession",
             //which is generally safer if you ever rename or refactor the action later.
-            return CreatedAtAction("AddFoodItem", new {id = foodItem.FoodItemId}, foodItem);
+            // Reference an existing action that retrieves a FoodItem by ID (e.g., GetFoodItem)
+            return CreatedAtAction(nameof(GetFoodItem), new {id = foodItem.FoodItemId}, foodItemDto);
         }
 
         // DELETE: api/FoodItems/5
