@@ -83,6 +83,17 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItem);
         }
 
+        [HttpPost("AddFoodItem")]
+        public async Task<ActionResult<FoodItem>> AddFoodItem(FoodItem foodItem)
+        {
+            _context.FoodItems.Add(foodItem);
+            await _context.SaveChangesAsync();
+
+            //might want to use CreatedAtAction(nameof(GetFoodItem), ...) instead of hardcoding the action name "GetSession",
+            //which is generally safer if you ever rename or refactor the action later.
+            return CreatedAtAction("AddFoodItem", new {id = foodItem.FoodItemId}, foodItem);
+        }
+
         // DELETE: api/FoodItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFoodItem(int id)
