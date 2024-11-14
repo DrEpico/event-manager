@@ -40,7 +40,7 @@ namespace ThAmCo.Venues.Controllers
                                            a.CostPerHour
                                        });
 
-            return Ok(await avails.ToListAsync());
+            return Ok(await avails.ToListAsync()); 
         }
     }
 

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -72,6 +73,30 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
+        //PUT: api/EditFoodItem/{id}
+        [HttpPut("EditFoodItem/{id}")]
+        public async Task<IActionResult> EditFoodItem(int id, FoodItemDto foodItemDto)
+        {
+            // Find the existing FoodItem by ID
+            var foodItem = await _context.FoodItems.FindAsync(id);
+
+            // Check if the item exists
+            if (foodItem == null)
+            {
+                return NotFound();
+            }
+
+            // Update the existing FoodItem's properties with values from the DTO
+            foodItem.Description = foodItemDto.Description;
+            foodItem.UnitPrice = foodItemDto.UnitPrice;
+
+            // Save the changes to the database
+            await _context.SaveChangesAsync();
+
+            // Return a NoContent response to indicate a successful update
+            return NoContent();
+        }
+
         // POST: api/FoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -83,16 +108,25 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItem);
         }
 
-        //[HttpPost("{CreateFoodItem}")]
-        //public async Task<IActionResult> CreateFoodItem()
-        //{
-        //    if (_context == null)
-        //    {
-        //        return BadRequest();
-        //    }
+        //POST: api/AddFoodItems(name, )
+        [HttpPost("AddFoodItem")]
+        public async Task<ActionResult<FoodItemDto>> AddFoodItem(FoodItemDto foodItemDto)
+        {
+            // Map the DTO to the entity
+            var foodItem = new FoodItem()
+            {
+                Description = foodItemDto.Description,
+                UnitPrice = foodItemDto.UnitPrice
+            };
 
-        //    var 
-        //}
+            _context.FoodItems.Add(foodItem);
+            await _context.SaveChangesAsync();
+
+            //might want to use CreatedAtAction(nameof(GetFoodItem), ...) instead of hardcoding the action name "GetSession",
+            //which is generally safer if you ever rename or refactor the action later.
+            // Reference an existing action that retrieves a FoodItem by ID (e.g., GetFoodItem)
+            return CreatedAtAction(nameof(GetFoodItem), new {id = foodItem.FoodItemId}, foodItemDto);
+        }
 
         // DELETE: api/FoodItems/5
         [HttpDelete("{id}")]
