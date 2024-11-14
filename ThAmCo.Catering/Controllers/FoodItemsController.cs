@@ -73,6 +73,30 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
+        //PUT: api/EditFoodItem/{id}
+        [HttpPut("EditFoodItem/{id}")]
+        public async Task<IActionResult> EditFoodItem(int id, FoodItemDto foodItemDto)
+        {
+            // Find the existing FoodItem by ID
+            var foodItem = await _context.FoodItems.FindAsync(id);
+
+            // Check if the item exists
+            if (foodItem == null)
+            {
+                return NotFound();
+            }
+
+            // Update the existing FoodItem's properties with values from the DTO
+            foodItem.Description = foodItemDto.Description;
+            foodItem.UnitPrice = foodItemDto.UnitPrice;
+
+            // Save the changes to the database
+            await _context.SaveChangesAsync();
+
+            // Return a NoContent response to indicate a successful update
+            return NoContent();
+        }
+
         // POST: api/FoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
@@ -84,6 +108,7 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItem);
         }
 
+        //POST: api/AddFoodItems(name, )
         [HttpPost("AddFoodItem")]
         public async Task<ActionResult<FoodItemDto>> AddFoodItem(FoodItemDto foodItemDto)
         {

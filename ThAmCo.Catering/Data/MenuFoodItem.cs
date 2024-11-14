@@ -10,6 +10,7 @@ namespace ThAmCo.Catering.Data
         public FoodItem? FoodItem { get; set; }
         public Menu? Menu { get; set; }
 
+        //This cannot be good practice 🗿
         public MenuFoodItem()
         {
 
