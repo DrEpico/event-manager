@@ -83,6 +83,17 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItem);
         }
 
+        //[HttpPost("{CreateFoodItem}")]
+        //public async Task<IActionResult> CreateFoodItem()
+        //{
+        //    if (_context == null)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var 
+        //}
+
         // DELETE: api/FoodItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFoodItem(int id)
