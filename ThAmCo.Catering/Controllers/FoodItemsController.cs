@@ -87,8 +87,15 @@ namespace ThAmCo.Catering.Controllers
             }
 
             // Update the existing FoodItem's properties with values from the DTO
-            foodItem.Description = foodItemDto.Description;
-            foodItem.UnitPrice = foodItemDto.UnitPrice;
+            if (!string.IsNullOrEmpty(foodItemDto.Description))
+            {
+                foodItem.Description = foodItemDto.Description;
+            }
+            
+            if (foodItemDto.UnitPrice.HasValue)
+            {
+                foodItem.UnitPrice = foodItemDto.UnitPrice.Value;// Use .Value to get the underlying float
+            }
 
             // Save the changes to the database
             await _context.SaveChangesAsync();
@@ -113,11 +120,18 @@ namespace ThAmCo.Catering.Controllers
         public async Task<ActionResult<FoodItemDto>> AddFoodItem(FoodItemDto foodItemDto)
         {
             // Map the DTO to the entity
-            var foodItem = new FoodItem()
+            var foodItem = new FoodItem();
+            // Check if Description is provided and not empty
+            if (!string.IsNullOrEmpty(foodItemDto.Description))
             {
-                Description = foodItemDto.Description,
-                UnitPrice = foodItemDto.UnitPrice
-            };
+                foodItem.Description = foodItemDto.Description;
+            }
+
+            // Check if UnitPrice is provided and has a valid value
+            if (foodItemDto.UnitPrice.HasValue)
+            {
+                foodItem.UnitPrice = foodItemDto.UnitPrice.Value;
+            }
 
             _context.FoodItems.Add(foodItem);
             await _context.SaveChangesAsync();
