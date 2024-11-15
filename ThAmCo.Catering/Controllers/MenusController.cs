@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -20,11 +21,33 @@ namespace ThAmCo.Catering.Controllers
             _context = context;
         }
 
-        // GET: api/Menus
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenus()
+        // GET: api/GetMenusFull
+        [HttpGet("GetMenusFull")]
+        public async Task<ActionResult<IEnumerable<Menu>>> GetMenusFull()
         {
             return await _context.Menus.ToListAsync();
+        }
+
+        // This method outputs fields specificed in the DTO only
+        // GET: api/Menus
+        [HttpGet("GetMenus")]
+        public async Task<ActionResult<IEnumerable<MenuOutputDto>>> GetMenus()
+        {
+            //Implement DTO to limit the output fields
+
+
+            var list = await _context.Menus.ToListAsync();
+
+            List<MenuOutputDto> OutputList = new List<MenuOutputDto>();
+
+            foreach (var item in list)
+            {
+                MenuOutputDto OutputItem = new MenuOutputDto(item.MenuId, item.MenuName);
+                //how to add items to list
+                OutputList.Add(OutputItem);
+            }
+
+            return OutputList;
         }
 
         // GET: api/Menus/5
