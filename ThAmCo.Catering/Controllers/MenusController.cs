@@ -110,6 +110,30 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
+        //PUT: api/Menu/EditName/id
+        [HttpPut("EditName/{id}")]
+        public async Task<IActionResult> EditMenuName(int id, MenuInputDto menuDto)
+        {
+            var menu = await _context.Menus.FindAsync(id);
+
+            if (menu == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                menu.MenuName = menuDto.MenuName;
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         // POST: api/Menus
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
