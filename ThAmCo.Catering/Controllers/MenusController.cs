@@ -137,12 +137,26 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/Menus
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(Menu menu)
+        public async Task<ActionResult<Menu>> PostMenu(MenuInputDto menuDto)
         {
-            _context.Menus.Add(menu);
-            await _context.SaveChangesAsync();
+            // Map the input DTO to the Menu entity
+            Menu menu = new Menu
+            {
+                MenuName = menuDto.MenuName
+            };
 
-            return CreatedAtAction("GetMenu", new { id = menu.MenuId }, menu);
+            try
+            {
+                // Add the new Menu to the database context
+                _context.Menus.Add(menu);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetMenu), new { id = menu.MenuId }, menuDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // DELETE: api/Menus/5
