@@ -10,7 +10,7 @@ namespace ThAmCo.Catering.Data
 
         //Are these 2 even supposed to be here?
         public List<MenuFoodItem>? MenuFoodItems { get; set; }
-        public FoodBooking? FoodBooking { get; set; }
+        public List<FoodBooking>? FoodBookings { get; set; }
        
         public Menu()
         {
