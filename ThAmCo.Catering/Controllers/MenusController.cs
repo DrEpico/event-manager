@@ -33,12 +33,22 @@ namespace ThAmCo.Catering.Controllers
         [HttpGet("GetMenus")]
         public async Task<ActionResult<IEnumerable<MenuOutputDto>>> GetMenus()
         {
-            //Implement DTO to limit the output fields
-            var OutputList = await _context.Menus
-                .Select(menu => new MenuOutputDto(menu.MenuId, menu.MenuName))
-                .ToListAsync();
+            try
+            {
+                //Implement DTO to limit the output fields
+                var menus = await _context.Menus
+                    .Select(menu => new MenuOutputDto(menu.MenuId, menu.MenuName))
+                    .ToListAsync();
 
-            return OutputList;
+                if (!menus.Any()) 
+                    return NotFound("No menus found");
+
+                return Ok(menus);
+            } 
+            catch(Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // GET: api/Menus/5
