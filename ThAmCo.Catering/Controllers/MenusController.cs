@@ -55,16 +55,28 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/Menus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(int id)
+        public async Task<ActionResult<MenuOutputDto>> GetMenu(int id)
         {
-            var menu = await _context.Menus.FindAsync(id);
-
-            if (menu == null)
+            try
             {
-                return NotFound();
-            }
+                var menu = await _context.Menus.FindAsync(id);
 
-            return menu;
+                if (menu == null)
+                {
+                    return NotFound();
+                }
+
+                MenuOutputDto menuDto = new MenuOutputDto(menu.MenuId, menu.MenuName);
+
+                menuDto.MenuId = menu.MenuId;
+                menuDto.MenuName = menu.MenuName;
+
+                return menuDto;
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // PUT: api/Menus/5
