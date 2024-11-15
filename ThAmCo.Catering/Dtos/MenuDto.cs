@@ -17,7 +17,7 @@ namespace ThAmCo.Catering.Dtos
         public MenuOutputDto(int menuId, string menuName)
         {
             MenuId = menuId;
-            MenuName = menuName;
+            MenuName = menuName ?? "Unnamed Menu"; //Handle possible null value
         }
     }
 }
