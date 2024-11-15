@@ -34,18 +34,9 @@ namespace ThAmCo.Catering.Controllers
         public async Task<ActionResult<IEnumerable<MenuOutputDto>>> GetMenus()
         {
             //Implement DTO to limit the output fields
-
-
-            var list = await _context.Menus.ToListAsync();
-
-            List<MenuOutputDto> OutputList = new List<MenuOutputDto>();
-
-            foreach (var item in list)
-            {
-                MenuOutputDto OutputItem = new MenuOutputDto(item.MenuId, item.MenuName);
-                //how to add items to list
-                OutputList.Add(OutputItem);
-            }
+            var OutputList = await _context.Menus
+                .Select(menu => new MenuOutputDto(menu.MenuId, menu.MenuName))
+                .ToListAsync();
 
             return OutputList;
         }
