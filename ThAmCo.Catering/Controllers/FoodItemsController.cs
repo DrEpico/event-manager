@@ -88,7 +88,7 @@ namespace ThAmCo.Catering.Controllers
 
             // Update the existing FoodItem's properties with values from the DTO
             if (!string.IsNullOrEmpty(foodItemDto.Description))
-            {
+            {   
                 foodItem.Description = foodItemDto.Description;
             }
             

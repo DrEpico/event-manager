@@ -8,6 +8,7 @@ namespace ThAmCo.Catering.Dtos
         public string MenuName { get; set; } = string.Empty;
     }
 
+    //It's kinda gross having 2 classes in one file but... 🥲
     public class MenuOutputDto
     {
         public int MenuId { get; set; } 

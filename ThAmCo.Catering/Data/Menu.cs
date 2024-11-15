@@ -8,6 +8,7 @@ namespace ThAmCo.Catering.Data
         [Required]
         public string MenuName { get; set; }
 
+        //Are these 2 even supposed to be here?
         public List<MenuFoodItem>? MenuFoodItems { get; set; }
         public FoodBooking? FoodBooking { get; set; }
        
