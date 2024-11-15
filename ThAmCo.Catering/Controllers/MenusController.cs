@@ -21,6 +21,7 @@ namespace ThAmCo.Catering.Controllers
             _context = context;
         }
 
+        //Could comment this out?
         // GET: api/GetMenusFull
         [HttpGet("GetMenusFull")]
         public async Task<ActionResult<IEnumerable<Menu>>> GetMenusFull()
@@ -28,14 +29,15 @@ namespace ThAmCo.Catering.Controllers
             return await _context.Menus.ToListAsync();
         }
 
-        // This method outputs fields specificed in the DTO only
-        // GET: api/Menus
+        //Consider Pagination for scalability
+        // GET: api/GetMenus
+
         [HttpGet("GetMenus")]
         public async Task<ActionResult<IEnumerable<MenuOutputDto>>> GetMenus()
         {
             try
             {
-                //Implement DTO to limit the output fields
+                // Transform entity list into a DTO list to limit the output fields and protect sensitive data.
                 var menus = await _context.Menus
                     .Select(menu => new MenuOutputDto(menu.MenuId, menu.MenuName))
                     .ToListAsync();
