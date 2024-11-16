@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Drawing.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -21,10 +24,23 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // GET: api/MenuFoodItems
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<MenuFoodItem>>> GetMenuFoodItems()
+        //{
+        //    return await _context.MenuFoodItems.ToListAsync();
+        //}
+
+        // GET: api/MenuFoodItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MenuFoodItem>>> GetMenuFoodItems()
+        public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItems()
         {
-            return await _context.MenuFoodItems.ToListAsync();
+            var menuFoodItems = await _context.MenuFoodItems
+                .Select(mfi => new MenuFoodItemDto(
+                    mfi.Menu.MenuName,
+                    mfi.FoodItem.Description
+                )).ToListAsync();
+
+            return Ok(menuFoodItems);
         }
 
         // GET: api/MenuFoodItems/5
