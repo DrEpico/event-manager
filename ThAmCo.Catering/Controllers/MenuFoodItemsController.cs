@@ -32,7 +32,7 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/MenuFoodItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MenuFoodItemOutputDto>>> GetMenuFoodItems()
+        public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItems()
         {   
             // Include related data for proper projection
             var menuFoodItems = await _context.MenuFoodItems
@@ -42,7 +42,7 @@ namespace ThAmCo.Catering.Controllers
 
             // Map entities to DTO with null-checks in memory
             var menuFoodItemsDto = menuFoodItems
-                .Select(mfi => new MenuFoodItemOutputDto(
+                .Select(mfi => new MenuFoodItemDto(
                     mfi.Menu != null ? mfi.Menu.MenuName : "Unknown menu",
                     mfi.FoodItem != null ? mfi.FoodItem.Description : "Unknown item"
                 ))// Null checks are done in C# instead of being translated to SQL.
@@ -99,31 +99,26 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/MenuFoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId)
+        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(MenuFoodItem menuFoodItem)
         {
-            var menu = await _context.Menus.FindAsync(menuId);
-            var item = await _context.FoodItems.FindAsync(itemId);
-
-            MenuFoodItem MenuFoodItem = new MenuFoodItem(menuId, itemId);
-            _context.MenuFoodItems.Add(MenuFoodItem);
-
+            _context.MenuFoodItems.Add(menuFoodItem);
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch(DbUpdateException)
+            catch (DbUpdateException)
             {
-                if(MenuHasFoodItem(menuId, itemId))
+                if (MenuFoodItemExists(menuFoodItem.MenuId))
                 {
                     return Conflict();
-                } 
+                }
                 else
                 {
                     throw;
                 }
             }
 
-            return Created();
+            return CreatedAtAction("GetMenuFoodItem", new { id = menuFoodItem.MenuId }, menuFoodItem);
         }
 
         // DELETE: api/MenuFoodItems/5
@@ -145,11 +140,6 @@ namespace ThAmCo.Catering.Controllers
         private bool MenuFoodItemExists(int id)
         {
             return _context.MenuFoodItems.Any(e => e.MenuId == id);
-        }
-
-        private bool MenuHasFoodItem(int menuId, int itemId)
-        {
-            return _context.MenuFoodItems.Any(e => e.MenuId == menuId && e.FoodItemId == itemId);
         }
     }
 }
