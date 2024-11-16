@@ -35,20 +35,20 @@ namespace ThAmCo.Catering.Controllers
         public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItems()
         {   
             // Include related data for proper projection
-            var MenuFoodItems = await _context.MenuFoodItems
+            var menuFoodItems = await _context.MenuFoodItems
                 .Include(mfi => mfi.Menu)
                 .Include(mfi => mfi.FoodItem)
                 .ToListAsync();
 
             // Map entities to DTO with null-checks in memory
-            var MenuFoodItemsDto = MenuFoodItems
+            var menuFoodItemsDto = menuFoodItems
                 .Select(mfi => new MenuFoodItemDto(
                     mfi.Menu != null ? mfi.Menu.MenuName : "Unknown menu",
                     mfi.FoodItem != null ? mfi.FoodItem.Description : "Unknown item"
                 ))// Null checks are done in C# instead of being translated to SQL.
                 .ToList();
 
-            return Ok(MenuFoodItemsDto);
+            return Ok(menuFoodItemsDto);
         }
 
         // GET: api/MenuFoodItems/5
@@ -105,7 +105,7 @@ namespace ThAmCo.Catering.Controllers
         /// <param name="itemId">The food item to be added to the specificed menu</param>
         /// <returns>201 Created Status Code </returns>
         [HttpPost("CreateMenuFoodItem")]
-        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId) //Should I rather use a DTO to take in 2 ID params?
+        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId)
         {
             var menu = await _context.Menus.FindAsync(menuId);
             var item = await _context.FoodItems.FindAsync(itemId);
@@ -132,7 +132,7 @@ namespace ThAmCo.Catering.Controllers
             return Created();
         }
 
-        // DELETE: api/MenuFoodItems/RemoveMenuFoodItem
+        // DELETE: api/MenuFoodItems/5
         [HttpDelete("RemoveMenuFoodItem")]
         public async Task<IActionResult> DeleteMenuFoodItem(int menuId, int itemId)
         {
