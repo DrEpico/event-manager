@@ -32,7 +32,7 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/MenuFoodItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItems()
+        public async Task<ActionResult<IEnumerable<MenuFoodItemOutputDto>>> GetMenuFoodItems()
         {   
             // Include related data for proper projection
             var menuFoodItems = await _context.MenuFoodItems
@@ -42,10 +42,10 @@ namespace ThAmCo.Catering.Controllers
 
             // Map entities to DTO with null-checks in memory
             var menuFoodItemsDto = menuFoodItems
-                .Select(mfi => new MenuFoodItemDto(
+                .Select(mfi => new MenuFoodItemOutputDto(
                     mfi.Menu != null ? mfi.Menu.MenuName : "Unknown menu",
                     mfi.FoodItem != null ? mfi.FoodItem.Description : "Unknown item"
-                ))
+                ))// Null checks are done in C# instead of being translated to SQL.
                 .ToList();
 
             return Ok(menuFoodItemsDto);
