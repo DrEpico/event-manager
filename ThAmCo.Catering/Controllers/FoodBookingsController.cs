@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -22,9 +23,20 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/FoodBookings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<FoodBooking>>> GetFoodBookings()
+        public async Task<ActionResult<IEnumerable<FoodBookingOutputDto>>> GetFoodBookings()
         {
-            return await _context.FoodBookings.ToListAsync();
+            var FoodBookings = await _context.FoodBookings
+                .Include(fb => fb.Menu)
+                .ToListAsync();
+
+            var FoodBookingsDto = FoodBookings
+                .Select(fb => new FoodBookingOutputDto(
+                    fb.ClientReferenceId,
+                    fb.NumberOfGuests,
+                    fb.Menu.MenuName //TODO: catch possible null reference 
+                ));
+
+            return Ok(FoodBookingsDto);
         }
 
         // GET: api/FoodBookings/5
@@ -32,6 +44,7 @@ namespace ThAmCo.Catering.Controllers
         public async Task<ActionResult<FoodBooking>> GetFoodBooking(int id)
         {
             var foodBooking = await _context.FoodBookings.FindAsync(id);
+
 
             if (foodBooking == null)
             {
