@@ -133,17 +133,28 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // DELETE: api/MenuFoodItems/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMenuFoodItem(int id)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteMenuFoodItem(int menuId, int itemId)
         {
-            var menuFoodItem = await _context.MenuFoodItems.FindAsync(id);
-            if (menuFoodItem == null)
+            var menu = await _context.Menus.FindAsync(menuId);
+            var item = await _context.FoodItems.FindAsync(itemId);
+
+            MenuFoodItem MenuFoodItem = new MenuFoodItem(menuId, itemId);
+
+            if (menu == null || item == null)
             {
                 return NotFound();
             }
 
-            _context.MenuFoodItems.Remove(menuFoodItem);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.MenuFoodItems.Remove(MenuFoodItem);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
 
             return NoContent();
         }
