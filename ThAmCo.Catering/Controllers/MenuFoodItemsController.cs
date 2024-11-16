@@ -99,26 +99,31 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/MenuFoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(MenuFoodItem menuFoodItem)
+        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId)
         {
-            _context.MenuFoodItems.Add(menuFoodItem);
+            var menu = await _context.Menus.FindAsync(menuId);
+            var item = await _context.FoodItems.FindAsync(itemId);
+
+            MenuFoodItem MenuFoodItem = new MenuFoodItem(menuId, itemId);
+            _context.MenuFoodItems.Add(MenuFoodItem);
+
             try
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateException)
+            catch(DbUpdateException)
             {
-                if (MenuFoodItemExists(menuFoodItem.MenuId))
+                if(MenuHasFoodItem(menuId, itemId))
                 {
                     return Conflict();
-                }
+                } 
                 else
                 {
                     throw;
                 }
             }
 
-            return CreatedAtAction("GetMenuFoodItem", new { id = menuFoodItem.MenuId }, menuFoodItem);
+            return Created();
         }
 
         // DELETE: api/MenuFoodItems/5
@@ -140,6 +145,11 @@ namespace ThAmCo.Catering.Controllers
         private bool MenuFoodItemExists(int id)
         {
             return _context.MenuFoodItems.Any(e => e.MenuId == id);
+        }
+
+        private bool MenuHasFoodItem(int menuId, int itemId)
+        {
+            return _context.MenuFoodItems.Any(e => e.MenuId == menuId && e.FoodItemId == itemId);
         }
     }
 }
