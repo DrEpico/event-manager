@@ -99,26 +99,33 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/MenuFoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(MenuFoodItem menuFoodItem)
+        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId, MenuFoodItemInputDto menuFoodItemDto)
         {
-            _context.MenuFoodItems.Add(menuFoodItem);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (MenuFoodItemExists(menuFoodItem.MenuId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return CreatedAtAction("GetMenuFoodItem", new { id = menuFoodItem.MenuId }, menuFoodItem);
+
+            //MenuFoodItem menuFoodItem = new MenuFoodItemDto(menuFoodItemDto.MenuId, menuFoodItemDto.FoodItemId)
+            //{
+
+            //}
+            //_context.MenuFoodItems.Add(menuFoodItem);
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateException)
+            //{
+            //    if (MenuFoodItemExists(menuFoodItem.MenuId))
+            //    {
+            //        return Conflict();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return CreatedAtAction("GetMenuFoodItem", new { id = menuFoodItem.MenuId }, menuFoodItem);
+            return Ok();
         }
 
         // DELETE: api/MenuFoodItems/5
