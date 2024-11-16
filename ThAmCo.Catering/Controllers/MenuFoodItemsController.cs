@@ -98,6 +98,12 @@ namespace ThAmCo.Catering.Controllers
 
         // POST: api/MenuFoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Takes menu ID and food item ID to populate a row in the MenuFoodItem composite table.
+        /// </summary>
+        /// <param name="menuId">The menu to be added with an item</param>
+        /// <param name="itemId">The food item to be added to the specificed menu</param>
+        /// <returns>201 Created Status Code </returns>
         [HttpPost]
         public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId)
         {

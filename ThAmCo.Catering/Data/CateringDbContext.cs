@@ -22,6 +22,11 @@ namespace ThAmCo.Catering.Data
             DbPath = Path.Join(path, "ThAmCo.catering.db");
         }
 
+        public CateringDbContext(DbContextOptions<CateringDbContext> options)
+        {
+
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
