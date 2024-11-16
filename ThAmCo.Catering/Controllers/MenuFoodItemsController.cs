@@ -33,14 +33,22 @@ namespace ThAmCo.Catering.Controllers
         // GET: api/MenuFoodItems
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItems()
-        {
+        {   
+            // Include related data for proper projection
             var menuFoodItems = await _context.MenuFoodItems
-                .Select(mfi => new MenuFoodItemDto(
-                    mfi.Menu.MenuName,
-                    mfi.FoodItem.Description
-                )).ToListAsync();
+                .Include(mfi => mfi.Menu)
+                .Include(mfi => mfi.FoodItem)
+                .ToListAsync();
 
-            return Ok(menuFoodItems);
+            // Map entities to DTO with null-checks in memory
+            var menuFoodItemsDto = menuFoodItems
+                .Select(mfi => new MenuFoodItemDto(
+                    mfi.Menu != null ? mfi.Menu.MenuName : "Unknown menu",
+                    mfi.FoodItem != null ? mfi.FoodItem.Description : "Unknown item"
+                ))
+                .ToList();
+
+            return Ok(menuFoodItemsDto);
         }
 
         // GET: api/MenuFoodItems/5
