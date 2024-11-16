@@ -4,15 +4,15 @@ namespace ThAmCo.Catering.Dtos
 {
     public class FoodBookingInputDto
     {
-        [Required]
+        [Required] //Not nullable!
         [Range(1,100)]
         public int NumberOfGuests { get; set; }
-        [Required]
+        [Required] //Same as above
         public int MenuId { get; set; }
 
-        public FoodBookingInputDto(int numberOfGusts, int menuId)
+        public FoodBookingInputDto(int numberOfGuests, int menuId)
         {
-            NumberOfGuests = numberOfGusts;
+            NumberOfGuests = numberOfGuests;
             MenuId = menuId;
         }
     }

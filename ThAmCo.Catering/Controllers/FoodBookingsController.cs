@@ -87,12 +87,28 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/FoodBookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<FoodBooking>> PostFoodBooking(FoodBooking foodBooking)
-        {
-            _context.FoodBookings.Add(foodBooking);
-            await _context.SaveChangesAsync();
+        public async Task<ActionResult<FoodBookingOutputDto>> PostFoodBooking(FoodBookingInputDto foodBookingDto)
+        {   
+            var foodBooking = new FoodBooking();
+            
+            try
+            { 
+                //Validation is done at DTO so I don't think I need to check for null in here again?
+                foodBooking.NumberOfGuests = foodBookingDto.NumberOfGuests;
+                foodBooking.MenuId = foodBookingDto.MenuId;
+                //TODO:
+                //foodBooking.ClientReferenceId = GenerateClientReferenceId();
 
-            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBooking);
+
+                _context.FoodBookings.Add(foodBooking);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingDto);
         }
 
         // DELETE: api/FoodBookings/5
