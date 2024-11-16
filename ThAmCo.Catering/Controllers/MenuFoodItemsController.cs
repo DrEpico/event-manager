@@ -104,7 +104,7 @@ namespace ThAmCo.Catering.Controllers
         /// <param name="menuId">The menu to be added with an item</param>
         /// <param name="itemId">The food item to be added to the specificed menu</param>
         /// <returns>201 Created Status Code </returns>
-        [HttpPost]
+        [HttpPost("CreateMenuFoodItem")]
         public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId)
         {
             var menu = await _context.Menus.FindAsync(menuId);
@@ -133,7 +133,7 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // DELETE: api/MenuFoodItems/5
-        [HttpDelete]
+        [HttpDelete("RemoveMenuFoodItem")]
         public async Task<IActionResult> DeleteMenuFoodItem(int menuId, int itemId)
         {
             var menu = await _context.Menus.FindAsync(menuId);
