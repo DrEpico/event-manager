@@ -147,13 +147,21 @@ namespace ThAmCo.Catering.Controllers
         public async Task<IActionResult> DeleteFoodItem(int id)
         {
             var foodItem = await _context.FoodItems.FindAsync(id);
+
             if (foodItem == null)
             {
                 return NotFound();
             }
 
-            _context.FoodItems.Remove(foodItem);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.FoodItems.Remove(foodItem);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
 
             return NoContent();
         }
