@@ -40,6 +40,8 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // GET: api/FoodBookings/5
+        //Skipping this one as I hope no one will randomly start GET'ing food bookings
+        // by ID. That's be kinda weird in my humble opinion.
         [HttpGet("{id}")]
         public async Task<ActionResult<FoodBooking>> GetFoodBooking(int id)
         {
@@ -134,7 +136,7 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // DELETE: api/FoodBookings/5
-        [HttpDelete("{ClientReferenceId}")]
+        [HttpDelete("{clientReferenceId}")]
         public async Task<IActionResult> DeleteFoodBooking(int clientReferenceId)
         {
             var foodBooking = await _context.FoodBookings
