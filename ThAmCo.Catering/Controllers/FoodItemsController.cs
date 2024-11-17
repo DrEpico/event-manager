@@ -22,10 +22,30 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // GET: api/FoodItems
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<FoodItem>>> GetFoodItems()
+        [HttpGet("GetFoodItemsFull")]
+        public async Task<ActionResult<IEnumerable<FoodItem>>> GetFoodItemsFull()
         {
             return await _context.FoodItems.ToListAsync();
+        }
+
+        [HttpGet("GetFoodItems")]
+        public async Task<ActionResult<IEnumerable<FoodItemDto>>> GetFoodItems()
+        {
+            try
+            {
+                var FoodItems = await _context.FoodItems
+                    .Select(fi => new FoodItemDto(fi.Description, fi.UnitPrice))
+                    .ToListAsync();
+
+                if (!FoodItems.Any())
+                    return NotFound("No item found");
+
+                return Ok(FoodItems);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         // GET: api/FoodItems/5
