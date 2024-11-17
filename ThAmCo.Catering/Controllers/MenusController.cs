@@ -38,14 +38,14 @@ namespace ThAmCo.Catering.Controllers
             try
             {
                 // Transform entity list into a DTO list to limit the output fields and protect sensitive data.
-                var menus = await _context.Menus
+                var Menus = await _context.Menus
                     .Select(menu => new MenuOutputDto(menu.MenuId, menu.MenuName))
                     .ToListAsync();
 
-                if (!menus.Any()) 
-                    return NotFound("No menus found");
+                if (!Menus.Any()) 
+                    return NotFound("No Menus found");
 
-                return Ok(menus);
+                return Ok(Menus);
             } 
             catch(Exception ex)
             {
