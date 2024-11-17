@@ -56,7 +56,7 @@ namespace ThAmCo.Catering.Controllers
         // PUT: api/FoodBookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
-        public async Task<IActionResult> PutFoodBooking(FoodBookingEditInputDto foodBookingDto)
+        public async Task<ActionResult<FoodBookingOutputDto>> PutFoodBooking(FoodBookingEditInputDto foodBookingDto)
         {
             var foodBooking = await _context.FoodBookings
                 .FirstOrDefaultAsync(fb => fb.ClientReferenceId == foodBookingDto.ClientReferenceId);
@@ -103,7 +103,7 @@ namespace ThAmCo.Catering.Controllers
                 }
             }
 
-            return NoContent();
+            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingDto);
         }
 
         // POST: api/FoodBookings
@@ -134,10 +134,12 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // DELETE: api/FoodBookings/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFoodBooking(int id)
+        [HttpDelete("{ClientReferenceId}")]
+        public async Task<IActionResult> DeleteFoodBooking(int clientReferenceId)
         {
-            var foodBooking = await _context.FoodBookings.FindAsync(id);
+            var foodBooking = await _context.FoodBookings
+                .FirstOrDefaultAsync(fb => fb.ClientReferenceId == clientReferenceId);
+
             if (foodBooking == null)
             {
                 return NotFound();
