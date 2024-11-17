@@ -68,14 +68,14 @@ namespace ThAmCo.Catering.Controllers
 
             if (foodBooking == null)
             {
-                return NotFound("The Client Reference ID doesn't exit.");
+                return NotFound("The Client Reference ID doesn't exist.");
             }
 
             //Ignore possisble null values as they're handled at line 63
             if (foodBooking.NumberOfGuests == foodBookingDto.NumberOfGuests.Value 
                 && foodBooking.MenuId == foodBookingDto.MenuId.Value)
             {
-                return BadRequest("Parameters are identical to the existing record. Will not update.");
+                return StatusCode(304, "Not modified. The submitted values are identical to the existing record.");
             } 
             else 
             {
