@@ -10,5 +10,16 @@ namespace ThAmCo.Catering.Dtos
         //Range is 0-100 to avoid negative values for the float.
         [Range(0, 100, ErrorMessage = "Above £100 for a dish is crazy.")]
         public float? UnitPrice { get; set; }
+
+        public FoodItemDto()
+        {
+
+        }
+
+        public FoodItemDto(string description, float unitPrice)
+        {
+            Description = description;
+            UnitPrice = unitPrice;
+        }
     }
 }
