@@ -51,6 +51,7 @@ namespace ThAmCo.Catering.Controllers
             return Ok(menuFoodItemsDto);
         }
 
+        //I don't even think getting a composite table record by ID is a thing so pass
         // GET: api/MenuFoodItems/5
         [HttpGet("{id}")]
         public async Task<ActionResult<MenuFoodItem>> GetMenuFoodItem(int id)
@@ -65,6 +66,7 @@ namespace ThAmCo.Catering.Controllers
             return menuFoodItem;
         }
 
+        //Editing the composite table record is not in the requirements so skipping
         // PUT: api/MenuFoodItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -105,7 +107,7 @@ namespace ThAmCo.Catering.Controllers
         /// <param name="itemId">The food item to be added to the specificed menu</param>
         /// <returns>201 Created Status Code </returns>
         [HttpPost("CreateMenuFoodItem")]
-        public async Task<ActionResult<MenuFoodItem>> PostMenuFoodItem(int menuId, int itemId)
+        public async Task<ActionResult> PostMenuFoodItem(int menuId, int itemId)
         {
             var menu = await _context.Menus.FindAsync(menuId);
             var item = await _context.FoodItems.FindAsync(itemId);
@@ -129,7 +131,7 @@ namespace ThAmCo.Catering.Controllers
                 }
             }
 
-            return Created();
+            return Created(); //Probably return a list of items on the modificated menu.
         }
 
         // DELETE: api/MenuFoodItems/5

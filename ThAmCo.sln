@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThAmCo.Catering", "ThAmCo.C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThAmCo.Events", "ThAmCo.Events\ThAmCo.Events.csproj", "{1BC34C67-9DAC-4DF6-9824-9A0B78EF5F10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1BC34C67-9DAC-4DF6-9824-9A0B78EF5F10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BC34C67-9DAC-4DF6-9824-9A0B78EF5F10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BC34C67-9DAC-4DF6-9824-9A0B78EF5F10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
