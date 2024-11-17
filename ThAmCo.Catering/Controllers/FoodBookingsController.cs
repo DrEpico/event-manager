@@ -58,7 +58,8 @@ namespace ThAmCo.Catering.Controllers
         [HttpPut]
         public async Task<IActionResult> PutFoodBooking(FoodBookingEditInputDto foodBookingDto)
         {
-            var foodBooking = await _context.FoodBookings.FindAsync(foodBookingDto.ClientReferenceId);
+            var foodBooking = await _context.FoodBookings
+                .FirstOrDefaultAsync(fb => fb.ClientReferenceId == foodBookingDto.ClientReferenceId);
             
             if(!foodBookingDto.NumberOfGuests.HasValue && !foodBookingDto.MenuId.HasValue)
             {
