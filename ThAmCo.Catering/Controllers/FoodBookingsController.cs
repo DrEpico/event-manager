@@ -145,8 +145,15 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound();
             }
 
-            _context.FoodBookings.Remove(foodBooking);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.FoodBookings.Remove(foodBooking);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
 
             return NoContent();
         }
