@@ -55,10 +55,10 @@ namespace ThAmCo.Catering.Controllers
 
         // PUT: api/FoodBookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{customerReferenceId}")]
-        public async Task<IActionResult> PutFoodBooking(int customerReferenceId, FoodBookingEditInputDto foodBookingDto)
+        [HttpPut]
+        public async Task<IActionResult> PutFoodBooking(FoodBookingEditInputDto foodBookingDto)
         {
-            var foodBooking = await _context.FoodBookings.FindAsync(customerReferenceId);
+            var foodBooking = await _context.FoodBookings.FindAsync(foodBookingDto.ClientReferenceId);
             
             if(!foodBookingDto.NumberOfGuests.HasValue && !foodBookingDto.MenuId.HasValue)
             {
@@ -67,7 +67,7 @@ namespace ThAmCo.Catering.Controllers
 
             if (foodBooking == null)
             {
-                return NotFound("The Customer Reference ID doesn't exit.");
+                return NotFound("The Client Reference ID doesn't exit.");
             }
 
             //Ignore possisble null values as they're handled at line 63
@@ -92,7 +92,7 @@ namespace ThAmCo.Catering.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FoodBookingExists(customerReferenceId))
+                if (!FoodBookingExists(foodBooking.FoodBookingId))
                 {
                     return NotFound();
                 }
