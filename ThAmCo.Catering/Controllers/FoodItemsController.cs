@@ -30,7 +30,7 @@ namespace ThAmCo.Catering.Controllers
 
         // GET: api/FoodItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<FoodItem>> GetFoodItem(int id)
+        public async Task<ActionResult<FoodItemDto>> GetFoodItem(int id)
         {
             var foodItem = await _context.FoodItems.FindAsync(id);
 
@@ -39,7 +39,11 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound();
             }
 
-            return foodItem;
+            var foodItemDto = new FoodItemDto();
+            foodItemDto.Description = foodItem.Description;
+            foodItemDto.UnitPrice = foodItem.UnitPrice;
+
+            return foodItemDto;
         }
 
         // PUT: api/FoodItems/5
@@ -106,14 +110,20 @@ namespace ThAmCo.Catering.Controllers
 
         // POST: api/FoodItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<FoodItem>> PostFoodItem(FoodItem foodItem)
-        {
-            _context.FoodItems.Add(foodItem);
-            await _context.SaveChangesAsync();
+        //[HttpPost]
+        //public async Task<ActionResult<FoodItem>> PostFoodItem(FoodItemDto foodItemDto)
+        //{
+        //    //How do i make sure entity framework manages the foodItemId automatically.
+        //    var foodItem = new FoodItem(
+        //        foodItemDto.Description,
+        //        foodItemDto.UnitPrice.Value
+        //    );
 
-            return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItem);
-        }
+        //    _context.FoodItems.Add(foodItem);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItemDto);
+        //} //I forgot I had already created a new POST method xd
 
         //POST: api/AddFoodItems(name, )
         [HttpPost("AddFoodItem")]
