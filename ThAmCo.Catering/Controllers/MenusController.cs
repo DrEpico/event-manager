@@ -136,8 +136,8 @@ namespace ThAmCo.Catering.Controllers
 
         // POST: api/Menus
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(MenuInputDto menuDto)
+        [HttpPost]//TODO: Route to the created object
+        public async Task<ActionResult> PostMenu(MenuInputDto menuDto)
         {
             // Map the input DTO to the Menu entity
             Menu menu = new Menu
