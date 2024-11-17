@@ -55,23 +55,44 @@ namespace ThAmCo.Catering.Controllers
 
         // PUT: api/FoodBookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFoodBooking(int id, FoodBooking foodBooking)
+        [HttpPut("{customerReferenceId}")]
+        public async Task<IActionResult> PutFoodBooking(int customerReferenceId, FoodBookingEditInputDto foodBookingDto)
         {
-            if (id != foodBooking.FoodBookingId)
+            var foodBooking = await _context.FoodBookings.FindAsync(customerReferenceId);
+            
+            if(!foodBookingDto.NumberOfGuests.HasValue && !foodBookingDto.MenuId.HasValue)
             {
-                return BadRequest();
+                return BadRequest("At least either of 'NumberOfGuests' or 'MenuId' should have a value to update booking.");
             }
 
-            _context.Entry(foodBooking).State = EntityState.Modified;
+            if (foodBooking == null)
+            {
+                return NotFound("The Customer Reference ID doesn't exit.");
+            }
+
+            //Ignore possisble null values as they're handled at line 63
+            if (foodBooking.NumberOfGuests == foodBookingDto.NumberOfGuests.Value 
+                && foodBooking.MenuId == foodBookingDto.MenuId.Value)
+            {
+                return NotFound();
+            } 
+            else 
+            {
+                if (foodBookingDto.NumberOfGuests.HasValue)
+                    foodBooking.NumberOfGuests = foodBookingDto.NumberOfGuests.Value;
+                if (foodBookingDto.MenuId.HasValue) 
+                    foodBooking.MenuId = foodBookingDto.MenuId.Value;
+            }
 
             try
             {
+                _context.Entry(foodBooking).State = EntityState.Modified;
+
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FoodBookingExists(id))
+                if (!FoodBookingExists(customerReferenceId))
                 {
                     return NotFound();
                 }

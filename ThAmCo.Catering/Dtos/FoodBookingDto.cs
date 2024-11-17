@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 
 namespace ThAmCo.Catering.Dtos
 {
+    // DTO for creating a booking!
     public class FoodBookingInputDto
     {
         [Required] //Not nullable!
@@ -15,6 +18,14 @@ namespace ThAmCo.Catering.Dtos
             NumberOfGuests = numberOfGuests;
             MenuId = menuId;
         }
+    }
+
+    public class FoodBookingEditInputDto // I already don't like where this is going 😭
+    {
+        [Required]
+        public int ClientReferenceId { get; set; }
+        public int? NumberOfGuests { get; set; }
+        public int? MenuId { get; set; }
     }
 
     public class FoodBookingOutputDto
