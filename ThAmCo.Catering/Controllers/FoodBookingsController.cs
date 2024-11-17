@@ -75,7 +75,7 @@ namespace ThAmCo.Catering.Controllers
             if (foodBooking.NumberOfGuests == foodBookingDto.NumberOfGuests.Value 
                 && foodBooking.MenuId == foodBookingDto.MenuId.Value)
             {
-                return NotFound();
+                return BadRequest("Parameters are identical to the existing record. Will not update.");
             } 
             else 
             {
