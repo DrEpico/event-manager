@@ -22,5 +22,86 @@ namespace ThAmCo.Events.Data
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseSqlite($"Data Source={DbPath}");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Seed data for Events
+            modelBuilder.Entity<Event>().HasData(
+                new Event { EventId = 1, Title = "Tech Expo", Date = new DateTime(2024, 12, 1), EventType = "Exhibition" },
+                new Event { EventId = 2, Title = "AI Workshop", Date = new DateTime(2024, 12, 3), EventType = "Workshop" },
+                new Event { EventId = 3, Title = "Annual Gala Dinner", Date = new DateTime(2024, 12, 5), EventType = "Gala" },
+                new Event { EventId = 4, Title = "Coding Hackathon", Date = new DateTime(2024, 12, 6), EventType = "Competition" },
+                new Event { EventId = 5, Title = "Marketing Summit", Date = new DateTime(2024, 12, 8), EventType = "Conference" },
+                new Event { EventId = 6, Title = "Startup Pitch Fest", Date = new DateTime(2024, 12, 10), EventType = "Competition" },
+                new Event { EventId = 7, Title = "Science Fair", Date = new DateTime(2024, 12, 12), EventType = "Exhibition" },
+                new Event { EventId = 8, Title = "Charity Auction", Date = new DateTime(2024, 12, 14), EventType = "Fundraiser" },
+                new Event { EventId = 9, Title = "Photography Workshop", Date = new DateTime(2024, 12, 15), EventType = "Workshop" },
+                new Event { EventId = 10, Title = "Art & Design Expo", Date = new DateTime(2024, 12, 18), EventType = "Exhibition" },
+                new Event { EventId = 11, Title = "Developer Meetup", Date = new DateTime(2024, 12, 20), EventType = "Networking" },
+                new Event { EventId = 12, Title = "Community Volunteering", Date = new DateTime(2024, 12, 22), EventType = "Outreach" },
+                new Event { EventId = 13, Title = "Holiday Festival", Date = new DateTime(2024, 12, 24), EventType = "Festival" },
+                new Event { EventId = 14, Title = "Leadership Seminar", Date = new DateTime(2024, 12, 26), EventType = "Workshop" },
+                new Event { EventId = 15, Title = "End-of-Year Party", Date = new DateTime(2024, 12, 30), EventType = "Celebration" }
+            );
+
+            // Seed data for Guests
+            modelBuilder.Entity<Guest>().HasData(
+                new Guest { GuestId = 1, Name = "Alice Johnson", Email = "alice.johnson@example.com", Phone = "1234567890" },
+                new Guest { GuestId = 2, Name = "Bob Smith", Email = "bob.smith@example.com", Phone = "2345678901" },
+                new Guest { GuestId = 3, Name = "Charlie Brown", Email = "charlie.brown@example.com", Phone = "3456789012" },
+                new Guest { GuestId = 4, Name = "Diana Prince", Email = "diana.prince@example.com", Phone = "4567890123" },
+                new Guest { GuestId = 5, Name = "Eve Adams", Email = "eve.adams@example.com", Phone = "5678901234" },
+                new Guest { GuestId = 6, Name = "Frank Harris", Email = "frank.harris@example.com", Phone = "6789012345" },
+                new Guest { GuestId = 7, Name = "Grace Lee", Email = "grace.lee@example.com", Phone = "7890123456" },
+                new Guest { GuestId = 8, Name = "Hank Hill", Email = "hank.hill@example.com", Phone = "8901234567" },
+                new Guest { GuestId = 9, Name = "Ivy Nguyen", Email = "ivy.nguyen@example.com", Phone = "9012345678" },
+                new Guest { GuestId = 10, Name = "Jack Miller", Email = "jack.miller@example.com", Phone = "0123456789" },
+                new Guest { GuestId = 11, Name = "Kelly Green", Email = "kelly.green@example.com", Phone = "1122334455" },
+                new Guest { GuestId = 12, Name = "Luke Skywalker", Email = "luke.skywalker@example.com", Phone = "2233445566" },
+                new Guest { GuestId = 13, Name = "Maria Garcia", Email = "maria.garcia@example.com", Phone = "3344556677" },
+                new Guest { GuestId = 14, Name = "Nathan Drake", Email = "nathan.drake@example.com", Phone = "4455667788" },
+                new Guest { GuestId = 15, Name = "Olivia King", Email = "olivia.king@example.com", Phone = "5566778899" }
+            );
+
+            // Seed data for GuestBookings
+            modelBuilder.Entity<GuestBooking>().HasData(
+                new GuestBooking { GuestBookingId = 1, GuestId = 1, EventId = 1, HasAttended = false },
+                new GuestBooking { GuestBookingId = 2, GuestId = 2, EventId = 2, HasAttended = true },
+                new GuestBooking { GuestBookingId = 3, GuestId = 3, EventId = 3, HasAttended = false },
+                new GuestBooking { GuestBookingId = 4, GuestId = 4, EventId = 4, HasAttended = true },
+                new GuestBooking { GuestBookingId = 5, GuestId = 5, EventId = 5, HasAttended = false },
+                new GuestBooking { GuestBookingId = 6, GuestId = 6, EventId = 6, HasAttended = true },
+                new GuestBooking { GuestBookingId = 7, GuestId = 7, EventId = 7, HasAttended = false },
+                new GuestBooking { GuestBookingId = 8, GuestId = 8, EventId = 8, HasAttended = true },
+                new GuestBooking { GuestBookingId = 9, GuestId = 9, EventId = 9, HasAttended = false },
+                new GuestBooking { GuestBookingId = 10, GuestId = 10, EventId = 10, HasAttended = true },
+                new GuestBooking { GuestBookingId = 11, GuestId = 11, EventId = 11, HasAttended = false },
+                new GuestBooking { GuestBookingId = 12, GuestId = 12, EventId = 12, HasAttended = true },
+                new GuestBooking { GuestBookingId = 13, GuestId = 13, EventId = 13, HasAttended = false },
+                new GuestBooking { GuestBookingId = 14, GuestId = 14, EventId = 14, HasAttended = true },
+                new GuestBooking { GuestBookingId = 15, GuestId = 15, EventId = 15, HasAttended = false }
+            );
+
+            // Seed data for Staff
+            modelBuilder.Entity<Staff>().HasData(
+                new Staff { StaffId = 1, Name = "Anna White", Role = "Coordinator" },
+                new Staff { StaffId = 2, Name = "Ben Thomas", Role = "Manager" },
+                new Staff { StaffId = 3, Name = "Cathy Holmes", Role = "Assistant" },
+                new Staff { StaffId = 4, Name = "David Chen", Role = "Coordinator" },
+                new Staff { StaffId = 5, Name = "Emily Brown", Role = "Manager" },
+                new Staff { StaffId = 6, Name = "Fred Johnson", Role = "Assistant" },
+                new Staff { StaffId = 7, Name = "George Lee", Role = "Coordinator" },
+                new Staff { StaffId = 8, Name = "Helen Davis", Role = "Manager" },
+                new Staff { StaffId = 9, Name = "Irene Scott", Role = "Assistant" },
+                new Staff { StaffId = 10, Name = "Jackie Ray", Role = "Coordinator" },
+                new Staff { StaffId = 11, Name = "Kevin Moore", Role = "Manager" },
+                new Staff { StaffId = 12, Name = "Lily Green", Role = "Assistant" },
+                new Staff { StaffId = 13, Name = "Mike Taylor", Role = "Coordinator" },
+                new Staff { StaffId = 14, Name = "Nina Brooks", Role = "Manager" },
+                new Staff { StaffId = 15, Name = "Oscar Peterson", Role = "Assistant" }
+            );
+        }
     }
 }
