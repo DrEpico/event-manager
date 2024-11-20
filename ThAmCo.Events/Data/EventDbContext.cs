@@ -16,5 +16,11 @@ namespace ThAmCo.Events.Data
             var path = Environment.GetFolderPath(folder);
             DbPath = Path.Join(path, "ThAmCo.Event.db");
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlite($"Data Source={DbPath}");
+        }
     }
 }
