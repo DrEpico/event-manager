@@ -69,7 +69,7 @@ namespace ThAmCo.Catering.Data
                 new Menu { MenuId = 1, MenuName = "Classic Menu" },
                 new Menu { MenuId = 2, MenuName = "Vegetarian Menu" },
                 new Menu { MenuId = 3, MenuName = "Vegan Menu" },
-                new Menu { MenuId = 4, MenuName = "Kids Menu" },
+                new Menu { MenuId = 4, MenuName = "Japanese Menu" },
                 new Menu { MenuId = 5, MenuName = "Seafood Menu" },
                 new Menu { MenuId = 6, MenuName = "Italian Menu" },
                 new Menu { MenuId = 7, MenuName = "BBQ Menu" },
