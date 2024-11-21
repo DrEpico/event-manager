@@ -8,7 +8,7 @@
         public bool HasAttended { get; set; }
 
         // Navigation Properties
-        public List<GuestBooking> GuestBookings { get; set; } = new();
-        public List<Staffing> Staffings { get; set; } = new();
+        public Guest Guest { get; set; }
+        public Event Event { get; set; }
     }
 }
