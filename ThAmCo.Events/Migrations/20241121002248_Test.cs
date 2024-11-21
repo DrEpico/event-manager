@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ThAmCo.Events.Migration
+namespace ThAmCo.Events.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Test : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,8 +65,7 @@ namespace ThAmCo.Events.Migration
                         .Annotation("Sqlite:Autoincrement", true),
                     GuestId = table.Column<int>(type: "INTEGER", nullable: false),
                     EventId = table.Column<int>(type: "INTEGER", nullable: false),
-                    HasAttended = table.Column<bool>(type: "INTEGER", nullable: false),
-                    GuestBookingId1 = table.Column<int>(type: "INTEGER", nullable: true)
+                    HasAttended = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -77,11 +76,6 @@ namespace ThAmCo.Events.Migration
                         principalTable: "Events",
                         principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GuestBookings_GuestBookings_GuestBookingId1",
-                        column: x => x.GuestBookingId1,
-                        principalTable: "GuestBookings",
-                        principalColumn: "GuestBookingId");
                     table.ForeignKey(
                         name: "FK_GuestBookings_Guests_GuestId",
                         column: x => x.GuestId,
@@ -97,8 +91,7 @@ namespace ThAmCo.Events.Migration
                     StaffingId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     StaffId = table.Column<int>(type: "INTEGER", nullable: false),
-                    EventId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GuestBookingId = table.Column<int>(type: "INTEGER", nullable: true)
+                    EventId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,11 +102,6 @@ namespace ThAmCo.Events.Migration
                         principalTable: "Events",
                         principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Staffing_GuestBookings_GuestBookingId",
-                        column: x => x.GuestBookingId,
-                        principalTable: "GuestBookings",
-                        principalColumn: "GuestBookingId");
                     table.ForeignKey(
                         name: "FK_Staffing_Staff_StaffId",
                         column: x => x.StaffId,
@@ -190,35 +178,30 @@ namespace ThAmCo.Events.Migration
 
             migrationBuilder.InsertData(
                 table: "GuestBookings",
-                columns: new[] { "GuestBookingId", "EventId", "GuestBookingId1", "GuestId", "HasAttended" },
+                columns: new[] { "GuestBookingId", "EventId", "GuestId", "HasAttended" },
                 values: new object[,]
                 {
-                    { 1, 1, null, 1, false },
-                    { 2, 2, null, 2, true },
-                    { 3, 3, null, 3, false },
-                    { 4, 4, null, 4, true },
-                    { 5, 5, null, 5, false },
-                    { 6, 6, null, 6, true },
-                    { 7, 7, null, 7, false },
-                    { 8, 8, null, 8, true },
-                    { 9, 9, null, 9, false },
-                    { 10, 10, null, 10, true },
-                    { 11, 11, null, 11, false },
-                    { 12, 12, null, 12, true },
-                    { 13, 13, null, 13, false },
-                    { 14, 14, null, 14, true },
-                    { 15, 15, null, 15, false }
+                    { 1, 1, 1, false },
+                    { 2, 2, 2, true },
+                    { 3, 3, 3, false },
+                    { 4, 4, 4, true },
+                    { 5, 5, 5, false },
+                    { 6, 6, 6, true },
+                    { 7, 7, 7, false },
+                    { 8, 8, 8, true },
+                    { 9, 9, 9, false },
+                    { 10, 10, 10, true },
+                    { 11, 11, 11, false },
+                    { 12, 12, 12, true },
+                    { 13, 13, 13, false },
+                    { 14, 14, 14, true },
+                    { 15, 15, 15, false }
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_GuestBookings_EventId",
                 table: "GuestBookings",
                 column: "EventId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GuestBookings_GuestBookingId1",
-                table: "GuestBookings",
-                column: "GuestBookingId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GuestBookings_GuestId",
@@ -231,11 +214,6 @@ namespace ThAmCo.Events.Migration
                 column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Staffing_GuestBookingId",
-                table: "Staffing",
-                column: "GuestBookingId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Staffing_StaffId",
                 table: "Staffing",
                 column: "StaffId");
@@ -245,19 +223,19 @@ namespace ThAmCo.Events.Migration
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Staffing");
-
-            migrationBuilder.DropTable(
                 name: "GuestBookings");
 
             migrationBuilder.DropTable(
-                name: "Staff");
+                name: "Staffing");
+
+            migrationBuilder.DropTable(
+                name: "Guests");
 
             migrationBuilder.DropTable(
                 name: "Events");
 
             migrationBuilder.DropTable(
-                name: "Guests");
+                name: "Staff");
         }
     }
 }

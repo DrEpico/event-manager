@@ -8,11 +8,11 @@ using ThAmCo.Events.Data;
 
 #nullable disable
 
-namespace ThAmCo.Events.Migration
+namespace ThAmCo.Events.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20241121000136_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241121002248_Test")]
+    partial class Test
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -288,9 +288,6 @@ namespace ThAmCo.Events.Migration
                     b.Property<int>("EventId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuestBookingId1")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("GuestId")
                         .HasColumnType("INTEGER");
 
@@ -300,8 +297,6 @@ namespace ThAmCo.Events.Migration
                     b.HasKey("GuestBookingId");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("GuestBookingId1");
 
                     b.HasIndex("GuestId");
 
@@ -535,17 +530,12 @@ namespace ThAmCo.Events.Migration
                     b.Property<int>("EventId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuestBookingId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("StaffId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("StaffingId");
 
                     b.HasIndex("EventId");
-
-                    b.HasIndex("GuestBookingId");
 
                     b.HasIndex("StaffId");
 
@@ -554,21 +544,21 @@ namespace ThAmCo.Events.Migration
 
             modelBuilder.Entity("ThAmCo.Events.Data.GuestBooking", b =>
                 {
-                    b.HasOne("ThAmCo.Events.Data.Event", null)
+                    b.HasOne("ThAmCo.Events.Data.Event", "Event")
                         .WithMany("GuestBookings")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ThAmCo.Events.Data.GuestBooking", null)
-                        .WithMany("GuestBookings")
-                        .HasForeignKey("GuestBookingId1");
-
-                    b.HasOne("ThAmCo.Events.Data.Guest", null)
+                    b.HasOne("ThAmCo.Events.Data.Guest", "Guest")
                         .WithMany("GuestBookings")
                         .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("Guest");
                 });
 
             modelBuilder.Entity("ThAmCo.Events.Data.Staffing", b =>
@@ -578,10 +568,6 @@ namespace ThAmCo.Events.Migration
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ThAmCo.Events.Data.GuestBooking", null)
-                        .WithMany("Staffings")
-                        .HasForeignKey("GuestBookingId");
 
                     b.HasOne("ThAmCo.Events.Data.Staff", "Staff")
                         .WithMany("Staffings")
@@ -604,13 +590,6 @@ namespace ThAmCo.Events.Migration
             modelBuilder.Entity("ThAmCo.Events.Data.Guest", b =>
                 {
                     b.Navigation("GuestBookings");
-                });
-
-            modelBuilder.Entity("ThAmCo.Events.Data.GuestBooking", b =>
-                {
-                    b.Navigation("GuestBookings");
-
-                    b.Navigation("Staffings");
                 });
 
             modelBuilder.Entity("ThAmCo.Events.Data.Staff", b =>

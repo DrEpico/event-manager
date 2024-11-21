@@ -1,7 +1,13 @@
+using ThAmCo.Catering.Data;
+using ThAmCo.Events.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<EventDbContext>();
 
 var app = builder.Build();
 
