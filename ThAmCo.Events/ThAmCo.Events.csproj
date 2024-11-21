@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\GuestBookingList\" />
+    <Folder Include="Pages\StaffList\" />
   </ItemGroup>
 
 </Project>
