@@ -28,15 +28,15 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
-            var event = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
+            var selectedEvent = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
 
-            if (event == null)
+            if (selectedEvent == null)
             {
                 return NotFound();
             }
             else
             {
-                Event = event;
+                Event = selectedEvent;
             }
             return Page();
         }
@@ -48,10 +48,10 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
-            var event = await _context.Events.FindAsync(id);
-            if (event != null)
+            var selectedEvent = await _context.Events.FindAsync(id);
+            if (selectedEvent != null)
             {
-                Event = event;
+                Event = selectedEvent;
                 _context.Events.Remove(Event);
                 await _context.SaveChangesAsync();
             }

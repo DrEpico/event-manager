@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ThAmCo.Events.Data;
 
 namespace ThAmCo.Events.Data
 {
@@ -103,5 +104,6 @@ namespace ThAmCo.Events.Data
                 new Staff { StaffId = 15, Name = "Oscar Peterson", Role = "Assistant" }
             );
         }
+        public DbSet<ThAmCo.Events.Data.Staffing> Staffing { get; set; } = default!;
     }
 }

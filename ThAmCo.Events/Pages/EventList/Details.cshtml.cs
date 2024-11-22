@@ -27,14 +27,14 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
-            var event = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
-            if (event == null)
+            var selectedEvent = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
+            if (selectedEvent == null)
             {
                 return NotFound();
             }
             else
             {
-                Event = event;
+                Event = selectedEvent;
             }
             return Page();
         }

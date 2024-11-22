@@ -27,8 +27,4 @@
     <ProjectReference Include="..\Tests\Tests.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\StaffList\" />
-  </ItemGroup>
-
 </Project>
