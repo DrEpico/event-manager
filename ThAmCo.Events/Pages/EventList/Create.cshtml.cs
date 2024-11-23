@@ -15,28 +15,31 @@ namespace ThAmCo.Events.Pages.EventList
         private readonly ThAmCo.Events.Data.EventDbContext _context;
 
         //public List<string> EventTypes { get; set; }
-
         public CreateModel(ThAmCo.Events.Data.EventDbContext context)
         {
             _context = context;
         }
-
         public async Task<IActionResult> OnGetAsync()
         {
-            EventTypes = await _context.Events
+            var eventTypes = await _context.Events
                 .Select(e => e.EventType)
                 .Distinct()
                 .ToListAsync();
 
+            EventTypes = eventTypes.Select(type => new SelectListItem
+            {
+                Text = type, // What is displayed to the user
+                Value = type // What is sent when the form is submitted
+            });
+
             return Page();
         }
-
 
         [BindProperty]
         public Event Event { get; set; } = default!;
 
         // Dropdown options
-        public List<string> EventTypes { get; set; } = default!;
+        public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
