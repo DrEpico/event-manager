@@ -33,6 +33,36 @@
     <h4>Guests</h4>
     @if (Model.Event.GuestBookings.Any())
     {
+    <table>
+        <thead>
+            <tr>
+                @Html.DisplayNameFor(model => model.Event.GuestBookings.First().Guest.Name)
+            </tr>
+            <tr>
+                @Html.DisplayNameFor(model => model.Event.GuestBookings.First().HasAttended)
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var guest in Model.Event.GuestBookings)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => guest.Guest.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => guest.HasAttended)
+            </td>
+        </tr>
+    }
+        </tbody>
+    </table>
+    }
+    else
+    {
+        <p>No guests found for this event</p>
+    }
+    @* @if (Model.Event.GuestBookings.Any())
+    {
         <ul>
             @foreach (var guest in Model.Event.GuestBookings)
             {
@@ -49,7 +79,7 @@
     {
         <p>No guests found for this event</p>
     }
-    
+     *@
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |
