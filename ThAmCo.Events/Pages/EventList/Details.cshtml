@@ -33,30 +33,23 @@
     <h4>Guests</h4>
     @if (Model.Event.GuestBookings.Any())
     {
-    <table class="table">
-        <thead>
-            <tr>
-                @Html.DisplayNameFor(model => model.Event.GuestBookings.First().Guest.Name)
-            </tr>
-            <tr>
-                @Html.DisplayNameFor(model => model.Event.GuestBookings.First().HasAttended)
-            </tr>
-            <th></th>
-        </thead>
-        <tbody>
-    @foreach (var guest in Model.Event.GuestBookings)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => guest.Guest.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => guest.HasAttended)
-            </td>
-        </tr>
-    }
-        </tbody>
-    </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Event.GuestBookings.First().Guest.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Event.GuestBookings.First().HasAttended)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var guest in Model.Event.GuestBookings)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => guest.Guest.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => guest.HasAttended)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     }
     else
     {
