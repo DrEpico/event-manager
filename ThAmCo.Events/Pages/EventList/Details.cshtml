@@ -40,6 +40,9 @@
                     Attended: @(guest.HasAttended ? "Yes" : "No") Guest: @guest.Guest?.Name
                 </li>
             }
+            <li>
+                Total count: @Model.Event.GuestBookings.Count()
+            </li>
         </ul>
     }
     else
