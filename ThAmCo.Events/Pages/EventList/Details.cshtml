@@ -30,6 +30,23 @@
             @Html.DisplayFor(model => model.Event.EventType)
         </dd>
     </dl>
+    <h4>Guests</h4>
+    @if (Model.Event.GuestBookings.Any())
+    {
+        <ul>
+            @foreach (var guest in Model.Event.GuestBookings)
+            {
+                <li>
+                    Attended: @(guest.HasAttended ? "Yes" : "No") Guest: @guest.Guest?.Name
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No guests found for this event</p>
+    }
+    
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |
