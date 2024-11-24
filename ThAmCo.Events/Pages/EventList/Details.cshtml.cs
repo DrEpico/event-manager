@@ -35,7 +35,7 @@ namespace ThAmCo.Events.Pages.EventList
 
             if (selectedEvent == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
             else
             {

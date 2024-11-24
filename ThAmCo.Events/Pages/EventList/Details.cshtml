@@ -41,6 +41,7 @@
             <tr>
                 @Html.DisplayNameFor(model => model.Event.GuestBookings.First().HasAttended)
             </tr>
+            <th></th>
         </thead>
         <tbody>
     @foreach (var guest in Model.Event.GuestBookings)
@@ -61,25 +62,6 @@
     {
         <p>No guests found for this event</p>
     }
-    @* @if (Model.Event.GuestBookings.Any())
-    {
-        <ul>
-            @foreach (var guest in Model.Event.GuestBookings)
-            {
-                <li>
-                    Attended: @(guest.HasAttended ? "Yes" : "No") Guest: @guest.Guest?.Name
-                </li>
-            }
-            <li>
-                Total count: @Model.Event.GuestBookings.Count()
-            </li>
-        </ul>
-    }
-    else
-    {
-        <p>No guests found for this event</p>
-    }
-     *@
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |
