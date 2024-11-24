@@ -48,6 +48,10 @@
                         <td>@Html.DisplayFor(modelItem => guest.HasAttended)</td>
                     </tr>
                 }
+                    <tr>
+                        <td colspan="2">Total Guest Count: @Model.Event.GuestBookings.Count()</td>
+                    </tr>
+
             </tbody>
         </table>
     }

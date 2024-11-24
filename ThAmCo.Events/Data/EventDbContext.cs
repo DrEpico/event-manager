@@ -82,7 +82,10 @@ namespace ThAmCo.Events.Data
                 new GuestBooking { GuestBookingId = 12, GuestId = 12, EventId = 12, HasAttended = true },
                 new GuestBooking { GuestBookingId = 13, GuestId = 13, EventId = 13, HasAttended = false },
                 new GuestBooking { GuestBookingId = 14, GuestId = 14, EventId = 14, HasAttended = true },
-                new GuestBooking { GuestBookingId = 15, GuestId = 15, EventId = 15, HasAttended = false }
+                new GuestBooking { GuestBookingId = 15, GuestId = 15, EventId = 15, HasAttended = false },
+                new GuestBooking { GuestBookingId = 16, GuestId = 15, EventId = 1, HasAttended = true },
+                new GuestBooking { GuestBookingId = 17, GuestId = 15, EventId = 2, HasAttended = true },
+                new GuestBooking { GuestBookingId = 18, GuestId = 1, EventId = 15, HasAttended = true }
             );
 
             // Seed data for Staff
