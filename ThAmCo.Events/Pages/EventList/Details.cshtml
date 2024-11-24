@@ -33,7 +33,7 @@
     <h4>Guests</h4>
     @if (Model.Event.GuestBookings.Any())
     {
-    <table>
+    <table class="table">
         <thead>
             <tr>
                 @Html.DisplayNameFor(model => model.Event.GuestBookings.First().Guest.Name)
