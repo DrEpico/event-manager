@@ -30,6 +30,35 @@
             @Html.DisplayFor(model => model.Event.EventType)
         </dd>
     </dl>
+    <h4>Guests</h4>
+    @if (Model.Event.GuestBookings.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Event.GuestBookings.First().Guest.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Event.GuestBookings.First().HasAttended)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var guest in Model.Event.GuestBookings)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => guest.Guest.Name)</td>
+                        <td>@Html.DisplayFor(modelItem => guest.HasAttended)</td>
+                    </tr>
+                }
+                    <tr>
+                        <td colspan="2">Total Guest Count: @Model.Event.GuestBookings.Count()</td>
+                    </tr>
+
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No guests found for this event</p>
+    }
 </div>
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |

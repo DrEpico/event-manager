@@ -8,7 +8,7 @@
         public bool HasAttended { get; set; }
 
         // Navigation Properties
-        public Guest Guest { get; set; }
-        public Event Event { get; set; }
+        public Guest? Guest { get; set; }
+        public Event? Event { get; set; }
     }
 }

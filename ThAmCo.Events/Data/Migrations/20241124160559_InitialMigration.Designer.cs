@@ -8,17 +8,17 @@ using ThAmCo.Events.Data;
 
 #nullable disable
 
-namespace ThAmCo.Events.Migrations
+namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20241121002248_Test")]
-    partial class Test
+    [Migration("20241124160559_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
 
             modelBuilder.Entity("ThAmCo.Events.Data.Event", b =>
                 {
@@ -407,6 +407,27 @@ namespace ThAmCo.Events.Migrations
                             EventId = 15,
                             GuestId = 15,
                             HasAttended = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 16,
+                            EventId = 1,
+                            GuestId = 15,
+                            HasAttended = true
+                        },
+                        new
+                        {
+                            GuestBookingId = 17,
+                            EventId = 2,
+                            GuestId = 15,
+                            HasAttended = true
+                        },
+                        new
+                        {
+                            GuestBookingId = 18,
+                            EventId = 15,
+                            GuestId = 1,
+                            HasAttended = true
                         });
                 });
 

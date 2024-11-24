@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ThAmCo.Events.Migrations
+namespace ThAmCo.Events.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -195,7 +195,10 @@ namespace ThAmCo.Events.Migrations
                     { 12, 12, 12, true },
                     { 13, 13, 13, false },
                     { 14, 14, 14, true },
-                    { 15, 15, 15, false }
+                    { 15, 15, 15, false },
+                    { 16, 1, 15, true },
+                    { 17, 2, 15, true },
+                    { 18, 15, 1, true }
                 });
 
             migrationBuilder.CreateIndex(

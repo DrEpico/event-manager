@@ -28,9 +28,14 @@ namespace ThAmCo.Events.Pages.EventList
             }
 
             var selectedEvent = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
+            var eventGuests = await _context.Events
+                .Include(e => e.GuestBookings) // e = event
+                .ThenInclude(gb => gb.Guest) // gb = guestBookings
+                .FirstOrDefaultAsync(g => g.EventId == id); // g = guest
+
             if (selectedEvent == null)
             {
-                return NotFound();
+                return NotFound(); 
             }
             else
             {
