@@ -123,7 +123,6 @@ namespace ThAmCo.Catering.Controllers
                 //TODO:
                 //foodBooking.ClientReferenceId = GenerateClientReferenceId();
 
-
                 _context.FoodBookings.Add(foodBooking);
                 await _context.SaveChangesAsync();
             }

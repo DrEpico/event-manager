@@ -23,11 +23,11 @@ namespace ThAmCo.Catering.Controllers
 
         //Could comment this out?
         // GET: api/GetMenusFull
-        [HttpGet("GetMenusFull")]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenusFull()
-        {
-            return await _context.Menus.ToListAsync();
-        }
+        //[HttpGet("GetMenusFull")]
+        //public async Task<ActionResult<IEnumerable<Menu>>> GetMenusFull()
+        //{
+        //    return await _context.Menus.ToListAsync();
+        //}
 
         //Consider Pagination for scalability
         // GET: api/GetMenus
@@ -81,34 +81,34 @@ namespace ThAmCo.Catering.Controllers
 
         // PUT: api/Menus/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenu(int id, Menu menu)
-        {
-            if (id != menu.MenuId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutMenu(int id, Menu menu)
+        //{
+        //    if (id != menu.MenuId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(menu).State = EntityState.Modified;
+        //    _context.Entry(menu).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MenuExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!MenuExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         //PUT: api/Menu/EditName/id
         [HttpPut("EditName/{id}")]
