@@ -22,11 +22,11 @@ namespace ThAmCo.Catering.Controllers
         }
 
         // GET: api/FoodItems
-        [HttpGet("GetFoodItemsFull")]
-        public async Task<ActionResult<IEnumerable<FoodItem>>> GetFoodItemsFull()
-        {
-            return await _context.FoodItems.ToListAsync();
-        }
+        //[HttpGet("GetFoodItemsFull")]
+        //public async Task<ActionResult<IEnumerable<FoodItem>>> GetFoodItemsFull()
+        //{
+        //    return await _context.FoodItems.ToListAsync();
+        //}
 
         [HttpGet("GetFoodItems")]
         public async Task<ActionResult<IEnumerable<FoodItemDto>>> GetFoodItems()
@@ -68,34 +68,34 @@ namespace ThAmCo.Catering.Controllers
 
         // PUT: api/FoodItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFoodItem(int id, FoodItem foodItem)
-        {
-            if (id != foodItem.FoodItemId)
-            {
-                return BadRequest();
-            }
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> PutFoodItem(int id, FoodItem foodItem)
+        //{
+        //    if (id != foodItem.FoodItemId)
+        //    {
+        //        return BadRequest();
+        //    }
 
-            _context.Entry(foodItem).State = EntityState.Modified;
+        //    _context.Entry(foodItem).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!FoodItemExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!FoodItemExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
 
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
 
         //PUT: api/EditFoodItem/{id}
         [HttpPut("EditFoodItem/{id}")]

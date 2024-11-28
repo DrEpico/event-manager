@@ -134,6 +134,7 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingDto);
         }
 
+        //TODO: this needs to be a PUT method cuz cancelling isn't deleting it 
         // DELETE: api/FoodBookings/5
         [HttpDelete("{clientReferenceId}")]
         public async Task<IActionResult> DeleteFoodBooking(int clientReferenceId)
