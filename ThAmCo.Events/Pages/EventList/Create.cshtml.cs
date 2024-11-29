@@ -14,10 +14,10 @@ namespace ThAmCo.Events.Pages.EventList
     public class CreateModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;
-        private readonly VenueService _venueService;
+        private readonly VenueAvailabilityService _venueService;
 
         //public List<string> EventTypes { get; set; }
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueService venueService)
+        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueService)
         {
             _context = context;
             _venueService = venueService;
@@ -49,11 +49,18 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
-        //[BindProperty]
-        //public Event Event { get; set; } = default!;
-
-        // Dropdown options
-        //public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
+        public async Task<IActionResult> OnPostLoadVenuesAsync()
+        {
+            if (string.IsNullOrEmpty(SelectedEventType))
+            {
+                Venues = Enumerable.Empty<SelectListItem>();
+            }
+            else
+            {
+                //Fetch venues suitable for selected event type
+                Venues = await _venueService.GetAvailableVenuesAsync();
+            }
+        }
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
