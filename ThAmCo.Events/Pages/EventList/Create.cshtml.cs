@@ -16,15 +16,23 @@ namespace ThAmCo.Events.Pages.EventList
         private readonly ThAmCo.Events.Data.EventDbContext _context;
         private readonly VenueService _venueService;
 
-        public List<VenueService> Venues { get; set; } = [];
-
-
         //public List<string> EventTypes { get; set; }
         public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueService venueService)
         {
             _context = context;
             _venueService = venueService;
         }
+
+        [BindProperty]
+        public Event Event { get; set; } = default!;
+
+        [BindProperty]
+        public string SelectedEventType { get; set; } = default!;// To store the selected event type
+
+        public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
+        public IEnumerable<SelectListItem> Venues { get; set; } = default!;
+
+
         public async Task<IActionResult> OnGetAsync()
         {
             //Venues = await _venueService.GetAvailableVenuesAsync();
