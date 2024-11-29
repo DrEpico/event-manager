@@ -35,26 +35,25 @@ namespace ThAmCo.Events.Pages.EventList
 
         public async Task<IActionResult> OnGetAsync()
         {
-            //Venues = await _venueService.GetAvailableVenuesAsync();
-            var eventTypes = await _context.Events
-                .Select(e => e.EventType)
-                .Distinct()
-                .ToListAsync();
+            EventTypes = await _context.Events
+               .Select(et => new SelectListItem
+               {
+                   Text = et.Title, // Display title
+                   //Value = et.Id    // Use Id as the value
+               })
+           .ToListAsync();
 
-            EventTypes = eventTypes.Select(type => new SelectListItem
-            {
-                Text = type, // What is displayed to the user
-                Value = type // What is sent when the form is submitted
-            });
+            // Default venues (empty until event type is selected)
+            Venues = Enumerable.Empty<SelectListItem>();
 
             return Page();
         }
 
-        [BindProperty]
-        public Event Event { get; set; } = default!;
+        //[BindProperty]
+        //public Event Event { get; set; } = default!;
 
         // Dropdown options
-        public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
+        //public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
