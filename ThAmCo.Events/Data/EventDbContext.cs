@@ -44,7 +44,7 @@ namespace ThAmCo.Events.Data
                 new Event { EventId = 12, Title = "Community Volunteering", Date = new DateTime(2024, 12, 22), EventType = "Outreach" },
                 new Event { EventId = 13, Title = "Holiday Festival", Date = new DateTime(2024, 12, 24), EventType = "Festival" },
                 new Event { EventId = 14, Title = "Leadership Seminar", Date = new DateTime(2024, 12, 26), EventType = "Workshop" },
-                new Event { EventId = 15, Title = "End-of-Year Party", Date = new DateTime(2024, 12, 30), EventType = "Celebration" }
+                new Event { EventId = 15, Title = "End-of-Year Party", Date = new DateTime(2024, 12, 30), EventType = "Festival" }
             );
 
             // Seed data for Guests
@@ -88,7 +88,6 @@ namespace ThAmCo.Events.Data
                 new GuestBooking { GuestBookingId = 18, GuestId = 1, EventId = 15, HasAttended = true }
             );
 
-            // Seed data for Staff
             modelBuilder.Entity<Staff>().HasData(
                 new Staff { StaffId = 1, Name = "Anna White", Role = "Coordinator" },
                 new Staff { StaffId = 2, Name = "Ben Thomas", Role = "Manager" },
@@ -104,8 +103,19 @@ namespace ThAmCo.Events.Data
                 new Staff { StaffId = 12, Name = "Lily Green", Role = "Assistant" },
                 new Staff { StaffId = 13, Name = "Mike Taylor", Role = "Coordinator" },
                 new Staff { StaffId = 14, Name = "Nina Brooks", Role = "Manager" },
-                new Staff { StaffId = 15, Name = "Oscar Peterson", Role = "Assistant" }
+                new Staff { StaffId = 15, Name = "Oscar Peterson", Role = "Assistant" },
+                new Staff { StaffId = 16, Name = "Patricia Ward", Role = "Coordinator" },
+                new Staff { StaffId = 17, Name = "Quincy Adams", Role = "Manager" },
+                new Staff { StaffId = 18, Name = "Rachel King", Role = "Assistant" },
+                new Staff { StaffId = 19, Name = "Samuel Turner", Role = "Coordinator" },
+                new Staff { StaffId = 20, Name = "Tina Evans", Role = "Manager" },
+                new Staff { StaffId = 21, Name = "Uma Patel", Role = "Assistant" },
+                new Staff { StaffId = 22, Name = "Victor Stone", Role = "Coordinator" },
+                new Staff { StaffId = 23, Name = "Wendy Clark", Role = "Manager" },
+                new Staff { StaffId = 24, Name = "Xavier Lewis", Role = "Assistant" },
+                new Staff { StaffId = 25, Name = "Yvonne Carter", Role = "Coordinator" }
             );
+
         }
         public DbSet<ThAmCo.Events.Data.Staffing> Staffing { get; set; } = default!;
     }
