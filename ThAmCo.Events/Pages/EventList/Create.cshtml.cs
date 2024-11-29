@@ -7,20 +7,27 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Services;
 
 namespace ThAmCo.Events.Pages.EventList
 {
     public class CreateModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly VenueService _venueService;
+
+        public List<VenueService> Venues { get; set; } = [];
+
 
         //public List<string> EventTypes { get; set; }
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context)
+        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueService venueService)
         {
             _context = context;
+            _venueService = venueService;
         }
         public async Task<IActionResult> OnGetAsync()
         {
+            //Venues = await _venueService.GetAvailableVenuesAsync();
             var eventTypes = await _context.Events
                 .Select(e => e.EventType)
                 .Distinct()
