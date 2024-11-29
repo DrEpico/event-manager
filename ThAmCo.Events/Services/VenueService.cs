@@ -35,7 +35,7 @@ namespace ThAmCo.Events.Services
             response.EnsureSuccessStatusCode();
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
-            var items = System.Text.Json.JsonSerializer.Deserialize<List<VenueAvailabilityDto>>(jsonResponse, jsonOptions);
+            var items = JsonSerializer.Deserialize<List<VenueAvailabilityDto>>(jsonResponse, jsonOptions);
 
             if (items == null)
             {
