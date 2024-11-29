@@ -1,9 +1,13 @@
 using ThAmCo.Catering.Data;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+// Register the HTTP client and VenueService for Dependency Injection (DI)
+builder.Services.AddHttpClient<VenueService>();
 
 builder.Services.AddRazorPages();
 
