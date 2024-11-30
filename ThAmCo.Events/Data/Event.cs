@@ -1,10 +1,17 @@
-﻿namespace ThAmCo.Events.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ThAmCo.Events.Data
 {
     public class Event
     {
         public int EventId { get; set; }
         public string Title { get; set; }
+        [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+        [DataType(DataType.Time)]
+        public TimeSpan StartTime { get; set; }
+        [DataType(DataType.Time)]
+        public TimeSpan EndTime { get; set; }
         public string EventType { get; set; }
 
         // Navigation Properties
