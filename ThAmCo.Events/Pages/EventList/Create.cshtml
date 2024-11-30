@@ -19,10 +19,21 @@
                 <span asp-validation-for="Event.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Event.Date" class="control-label"></label>
-                <input asp-for="Event.Date" class="form-control" />
+                <label asp-for="Event.Date" class="control-label">Date</label>
+                <input asp-for="Event.Date" class="form-control" type="date" />
                 <span asp-validation-for="Event.Date" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Event.StartTime" class="control-label">Start Time</label>
+                <input asp-for="Event.StartTime" class="form-control" type="time" />
+                <span asp-validation-for="Event.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Event.EndTime" class="control-label">End Time</label>
+                <input asp-for="Event.EndTime" class="form-control" type="time" />
+                <span asp-validation-for="Event.EndTime" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <label asp-for="Event.EventType" class="control-label"></label>
                 <select asp-for="Event.EventType" class="form-control" asp-items="Model.EventTypes">
@@ -30,6 +41,20 @@
                 </select>
                 <span asp-validation-for="Event.EventType" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <button type="submit" asp-page-handler="SearchVenues" class="btn btn-primary">Search</button>
+            </div>
+
+            @if (Model.Venues != null && Model.Venues.Any())
+            {
+                <div class="form-group">
+                    <label for="AvailableVenues" class="control-label">Available Venues</label>
+                    <select @* asp-for="Event.Venue" *@ class="form-control" asp-items="Model.Venues">
+                        <option value="">-- Select --</option>
+                    </select>
+                    <span @* asp-validation-for="Event.Venue" *@ class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
