@@ -7,7 +7,7 @@ namespace ThAmCo.Events.Services
     public class VenueEventTypeService
     {
         const string ServiceBaseUrl = "https://localhost:7088/api";
-        const string VenueEndpoint = "/EventType";
+        const string VenueEndpoint = "/EventTypes";
         private readonly HttpClient _httpClient;
 
         public VenueEventTypeService(HttpClient httpClient)
