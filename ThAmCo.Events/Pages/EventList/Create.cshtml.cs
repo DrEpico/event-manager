@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Dtos;
 using ThAmCo.Events.Services;
 
 namespace ThAmCo.Events.Pages.EventList
@@ -14,13 +15,15 @@ namespace ThAmCo.Events.Pages.EventList
     public class CreateModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;
-        private readonly VenueAvailabilityService _venueService;
+        private readonly VenueAvailabilityService _venueAvailabilityService;
+        private readonly VenueEventTypeService _venueEventTypeService;
 
         //public List<string> EventTypes { get; set; }
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueService)
+        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueAvailability, VenueEventTypeService venueEventType)
         {
             _context = context;
-            _venueService = venueService;
+            _venueAvailabilityService = venueAvailability;
+            _venueEventTypeService = venueEventType;
         }
 
         [BindProperty]
@@ -32,35 +35,31 @@ namespace ThAmCo.Events.Pages.EventList
         public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
         public IEnumerable<SelectListItem> Venues { get; set; } = default!;
 
-
         public async Task<IActionResult> OnGetAsync()
         {
-            EventTypes = await _context.Events
-               .Select(et => new SelectListItem
-               {
-                   Text = et.Title, // Display title
-                   //Value = et.Id    // Use Id as the value
-               })
-           .ToListAsync();
+            var eventTypes = await _venueEventTypeService.GetEventTypesAsync();
 
-            // Default venues (empty until event type is selected)
-            Venues = Enumerable.Empty<SelectListItem>();
+            EventTypes = eventTypes.Select(et => new SelectListItem
+            {
+                Text = et.Title, // Displayed text
+                Value = et.Id.ToString() // Value sent to the server
+            });
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostLoadVenuesAsync()
-        {
-            if (string.IsNullOrEmpty(SelectedEventType))
-            {
-                Venues = Enumerable.Empty<SelectListItem>();
-            }
-            else
-            {
-                //Fetch venues suitable for selected event type
-                Venues = await _venueService.GetAvailableVenuesAsync();
-            }
-        }
+        //public async Task<IActionResult> OnPostLoadVenuesAsync()
+        //{
+        //    if (string.IsNullOrEmpty(SelectedEventType))
+        //    {
+        //        Venues = Enumerable.Empty<SelectListItem>();
+        //    }
+        //    else
+        //    {
+        //        //Fetch venues suitable for selected event type
+        //        Venues = await _venueAvailabilityService.GetAvailableVenuesAsync();
+        //    }
+        //}
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
