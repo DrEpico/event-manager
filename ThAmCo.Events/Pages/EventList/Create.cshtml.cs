@@ -48,18 +48,34 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
-        //public async Task<IActionResult> OnPostLoadVenuesAsync()
-        //{
-        //    if (string.IsNullOrEmpty(SelectedEventType))
-        //    {
-        //        Venues = Enumerable.Empty<SelectListItem>();
-        //    }
-        //    else
-        //    {
-        //        //Fetch venues suitable for selected event type
-        //        Venues = await _venueAvailabilityService.GetAvailableVenuesAsync();
-        //    }
-        //}
+        public async Task<IActionResult> OnPostSearchVenuesAsync()
+        {
+            if (Event.Date == null || string.IsNullOrEmpty(Event.EventType))
+            {
+                ModelState.AddModelError("", "Please provide both a date and an event type to search for venues.");
+                return Page();
+            }
+
+            // Fetch venues from the service
+            var availableVenues = await _venueAvailabilityService.GetAvailableVenuesAsync(Event.EventType, Event.Date + Event.StartTime, Event.Date + Event.StartTime);
+
+            Venues = availableVenues.Select(v => new SelectListItem
+            {
+                Text = v.Name
+                //Value = v.Id.ToString()
+            });
+
+            // Preserve the event types in case the page reloads
+            var eventTypes = await _venueEventTypeService.GetEventTypesAsync();
+            EventTypes = eventTypes.Select(et => new SelectListItem
+            {
+                Text = et.Title,
+                Value = et.Id.ToString()
+            });
+
+            return Page();
+        }
+
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
