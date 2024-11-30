@@ -28,23 +28,22 @@ namespace ThAmCo.Events.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed data for Events
             modelBuilder.Entity<Event>().HasData(
-                new Event { EventId = 1, Title = "Tech Expo", Date = new DateTime(2024, 12, 1), EventType = "Exhibition" },
-                new Event { EventId = 2, Title = "AI Workshop", Date = new DateTime(2024, 12, 3), EventType = "Workshop" },
-                new Event { EventId = 3, Title = "Annual Gala Dinner", Date = new DateTime(2024, 12, 5), EventType = "Gala" },
-                new Event { EventId = 4, Title = "Coding Hackathon", Date = new DateTime(2024, 12, 6), EventType = "Competition" },
-                new Event { EventId = 5, Title = "Marketing Summit", Date = new DateTime(2024, 12, 8), EventType = "Conference" },
-                new Event { EventId = 6, Title = "Startup Pitch Fest", Date = new DateTime(2024, 12, 10), EventType = "Competition" },
-                new Event { EventId = 7, Title = "Science Fair", Date = new DateTime(2024, 12, 12), EventType = "Exhibition" },
-                new Event { EventId = 8, Title = "Charity Auction", Date = new DateTime(2024, 12, 14), EventType = "Fundraiser" },
-                new Event { EventId = 9, Title = "Photography Workshop", Date = new DateTime(2024, 12, 15), EventType = "Workshop" },
-                new Event { EventId = 10, Title = "Art & Design Expo", Date = new DateTime(2024, 12, 18), EventType = "Exhibition" },
-                new Event { EventId = 11, Title = "Developer Meetup", Date = new DateTime(2024, 12, 20), EventType = "Networking" },
-                new Event { EventId = 12, Title = "Community Volunteering", Date = new DateTime(2024, 12, 22), EventType = "Outreach" },
-                new Event { EventId = 13, Title = "Holiday Festival", Date = new DateTime(2024, 12, 24), EventType = "Festival" },
-                new Event { EventId = 14, Title = "Leadership Seminar", Date = new DateTime(2024, 12, 26), EventType = "Workshop" },
-                new Event { EventId = 15, Title = "End-of-Year Party", Date = new DateTime(2024, 12, 30), EventType = "Festival" }
+                new Event { EventId = 1, Title = "Tech Expo", Date = new DateTime(2024, 12, 1), StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), EventType = "Exhibition" },
+                new Event { EventId = 2, Title = "AI Workshop", Date = new DateTime(2024, 12, 3), StartTime = new TimeSpan(10, 0, 0), EndTime = new TimeSpan(15, 0, 0), EventType = "Workshop" },
+                new Event { EventId = 3, Title = "Annual Gala Dinner", Date = new DateTime(2024, 12, 5), StartTime = new TimeSpan(19, 0, 0), EndTime = new TimeSpan(23, 0, 0), EventType = "Gala" },
+                new Event { EventId = 4, Title = "Coding Hackathon", Date = new DateTime(2024, 12, 6), StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(18, 0, 0), EventType = "Competition" },
+                new Event { EventId = 5, Title = "Marketing Summit", Date = new DateTime(2024, 12, 8), StartTime = new TimeSpan(8, 30, 0), EndTime = new TimeSpan(16, 30, 0), EventType = "Conference" },
+                new Event { EventId = 6, Title = "Startup Pitch Fest", Date = new DateTime(2024, 12, 10), StartTime = new TimeSpan(14, 0, 0), EndTime = new TimeSpan(20, 0, 0), EventType = "Competition" },
+                new Event { EventId = 7, Title = "Science Fair", Date = new DateTime(2024, 12, 12), StartTime = new TimeSpan(10, 0, 0), EndTime = new TimeSpan(16, 0, 0), EventType = "Exhibition" },
+                new Event { EventId = 8, Title = "Charity Auction", Date = new DateTime(2024, 12, 14), StartTime = new TimeSpan(18, 0, 0), EndTime = new TimeSpan(22, 0, 0), EventType = "Fundraiser" },
+                new Event { EventId = 9, Title = "Photography Workshop", Date = new DateTime(2024, 12, 15), StartTime = new TimeSpan(13, 0, 0), EndTime = new TimeSpan(17, 0, 0), EventType = "Workshop" },
+                new Event { EventId = 10, Title = "Art & Design Expo", Date = new DateTime(2024, 12, 18), StartTime = new TimeSpan(10, 0, 0), EndTime = new TimeSpan(18, 0, 0), EventType = "Exhibition" },
+                new Event { EventId = 11, Title = "Developer Meetup", Date = new DateTime(2024, 12, 20), StartTime = new TimeSpan(19, 0, 0), EndTime = new TimeSpan(21, 30, 0), EventType = "Networking" },
+                new Event { EventId = 12, Title = "Community Volunteering", Date = new DateTime(2024, 12, 22), StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(15, 0, 0), EventType = "Outreach" },
+                new Event { EventId = 13, Title = "Holiday Festival", Date = new DateTime(2024, 12, 24), StartTime = new TimeSpan(14, 0, 0), EndTime = new TimeSpan(22, 0, 0), EventType = "Festival" },
+                new Event { EventId = 14, Title = "Leadership Seminar", Date = new DateTime(2024, 12, 26), StartTime = new TimeSpan(9, 30, 0), EndTime = new TimeSpan(16, 30, 0), EventType = "Workshop" },
+                new Event { EventId = 15, Title = "End-of-Year Party", Date = new DateTime(2024, 12, 30), StartTime = new TimeSpan(20, 0, 0), EndTime = new TimeSpan(23, 59, 0), EventType = "Festival" }
             );
 
             // Seed data for Guests
