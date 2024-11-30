@@ -22,7 +22,6 @@ namespace ThAmCo.Events.Services
             PropertyNameCaseInsensitive = true
         };
 
-
         public async Task<List<VenueAvailabilityDto>> GetAvailableVenuesAsync(
             [FromQuery, MinLength(3), MaxLength(3), Required] string eventType,
             [FromQuery, Required] DateTime beginDate,
