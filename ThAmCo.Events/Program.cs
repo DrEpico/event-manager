@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 // Register the HTTP client and VenueService for Dependency Injection (DI)
-builder.Services.AddHttpClient<VenueService>();
+builder.Services.AddHttpClient<VenueAvailabilityService>();
 
 builder.Services.AddRazorPages();
 

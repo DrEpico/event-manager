@@ -6,13 +6,13 @@ using Xunit.Abstractions;
 
 namespace ThAmCo.Events.Services
 {
-    public class VenueService
+    public class VenueAvailabilityService
     {
         const string ServiceBaseUrl = "https://localhost:7088/api";
         const string VenueEndpoint = "/availability";
         private readonly HttpClient _httpClient;
 
-        public VenueService(HttpClient httpClient)
+        public VenueAvailabilityService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
