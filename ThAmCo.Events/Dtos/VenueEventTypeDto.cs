@@ -2,7 +2,13 @@
 {
     public class VenueEventTypeDto
     {
-        int Id { get; set; }
+        public string Id { get; set; }
         public string Title { get; set; }
+
+        public VenueEventTypeDto(string id, string title)
+        {
+            Id = id;
+            Title = title;
+        }
     }
 }
