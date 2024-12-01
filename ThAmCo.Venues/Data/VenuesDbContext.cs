@@ -158,7 +158,8 @@ namespace ThAmCo.Venues.Data
 
 
                 var rand = new Random(0);
-                var startDate = new DateTime(2022, 11, 01);
+                var startDate = new DateTime(2024, 12, 01);
+                var endDate = startDate.AddMonths(3); // 3 months from today
                 var dates = new List<Availability>();
                 var venues = new[] {
                     new { Venue = "FDLCK", Cost = 30.0 },
@@ -167,18 +168,32 @@ namespace ThAmCo.Venues.Data
                 }.ToList();
                 venues.ForEach(v =>
                 {
-                    var more = Enumerable.Range(0, 90)
-                        .Select(i => new Availability
+                    // Generate dates for the next 3 months
+                    var days = Enumerable.Range(0, (endDate - startDate).Days + 1);
+
+                    // Generate time slots for each day
+                    foreach (var dayOffset in days)
+                    {
+                        var dayDate = startDate.AddDays(dayOffset);
+
+                        // Time slots from 8AM to 10PM (1-hour slots)
+                        var timeSlots = Enumerable.Range(8, 15).Select(hour => new Availability
                         {
                             VenueCode = v.Venue,
-                            Date = startDate.AddDays(i),
+                            Date = new DateTime(dayDate.Year, dayDate.Month, dayDate.Day, hour, 0, 0),
                             CostPerHour = Math.Round(v.Cost * (1.0 + rand.NextDouble()), 2)
                         });
-                    dates.AddRange(more);
+
+                        dates.AddRange(timeSlots);
+                    }
                 });
-                var availabilities = dates.Where(d => rand.NextDouble() < 0.3)
-                                          .OrderBy(d => d.Date)
+
+                // Filter and shuffle availabilities
+                var availabilities = dates.Where(d => rand.NextDouble() < 0.3) // ~30% random availability
+                                          .OrderBy(d => d.Date) // Order by date and time
                                           .ToArray();
+
+                // Seed into the database
                 builder.Entity<Availability>()
                        .HasData(availabilities);
             }
