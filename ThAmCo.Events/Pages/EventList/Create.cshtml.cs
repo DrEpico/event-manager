@@ -33,6 +33,7 @@ namespace ThAmCo.Events.Pages.EventList
         public string SelectedEventType { get; set; } = default!;// To store the selected event type
 
         public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
+        [BindProperty]
         public IEnumerable<SelectListItem> Venues { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
@@ -57,12 +58,16 @@ namespace ThAmCo.Events.Pages.EventList
             }
 
             // Fetch venues from the service
-            var availableVenues = await _venueAvailabilityService.GetAvailableVenuesAsync(Event.EventType, Event.Date + Event.StartTime, Event.Date + Event.StartTime);
+            var availableVenues = await _venueAvailabilityService.GetAvailableVenuesAsync(
+                Event.EventType, 
+                Event.Date + Event.StartTime, 
+                Event.Date + Event.StartTime
+            );
 
             Venues = availableVenues.Select(v => new SelectListItem
             {
-                Text = v.Name
-                //Value = v.Id.ToString()
+                Text = v.Name,
+                Value = v.Code
             });
 
             // Preserve the event types in case the page reloads
@@ -70,7 +75,7 @@ namespace ThAmCo.Events.Pages.EventList
             EventTypes = eventTypes.Select(et => new SelectListItem
             {
                 Text = et.Title,
-                Value = et.Id.ToString()
+                Value = et.Id
             });
 
             return Page();
