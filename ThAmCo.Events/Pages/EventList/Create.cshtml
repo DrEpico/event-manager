@@ -49,11 +49,14 @@
             {
                 <div class="form-group">
                     <label for="AvailableVenues" class="control-label">Available Venues</label>
-                    <select @* asp-for="Event.Venue" *@ class="form-control" asp-items="Model.Venues">
+                    <select asp-for="Event.VenueCode" class="form-control" asp-items="Model.Venues">
                         <option value="">-- Select --</option>
                     </select>
-                    <span @* asp-validation-for="Event.Venue" *@ class="text-danger"></span>
+                    <span asp-validation-for="Event.VenueCode" class="text-danger"></span>
                 </div>
+            } else
+            {
+                <p>error: no venues available</p>
             }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
