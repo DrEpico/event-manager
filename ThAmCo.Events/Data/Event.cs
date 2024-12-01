@@ -13,6 +13,7 @@ namespace ThAmCo.Events.Data
         [DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
         public string EventType { get; set; }
+        public string? VenueCode { get; set; } // Bind the selected venue's code
 
         // Navigation Properties
         public List<GuestBooking> GuestBookings { get; set; } = new();
