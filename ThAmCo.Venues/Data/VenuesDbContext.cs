@@ -102,7 +102,7 @@ namespace ThAmCo.Venues.Data
                         new EventType { Id = "EXH", Title = "Exhibition" },
                         new EventType { Id = "WKS", Title = "Workshop" },
                         new EventType { Id = "GAL", Title = "Gala" },
-                        new EventType { Id = "COMP", Title = "Competition" },
+                        new EventType { Id = "CMP", Title = "Competition" },
                         new EventType { Id = "FND", Title = "Fundraiser"},
                         new EventType { Id = "NET", Title = "Networking" },
                         new EventType { Id = "OTR", Title = "Outreach" },
@@ -135,7 +135,7 @@ namespace ThAmCo.Venues.Data
                         new Suitability { VenueCode = "CRKHL", EventTypeId = "FND" },  // Fundraiser
                         new Suitability { VenueCode = "TNDMR", EventTypeId = "WKS" },  // Workshop
                         new Suitability { VenueCode = "TNDMR", EventTypeId = "NET" },  // Networking
-                        new Suitability { VenueCode = "TNDMR", EventTypeId = "COMP" }, // Competition
+                        new Suitability { VenueCode = "TNDMR", EventTypeId = "CMP" }, // Competition
                         new Suitability { VenueCode = "FDLCK", EventTypeId = "FND" },  // Fundraiser
                         new Suitability { VenueCode = "FDLCK", EventTypeId = "OTR" },  // Outreach
                         new Suitability { VenueCode = "SUNPL", EventTypeId = "FES" },  // Festival
@@ -147,7 +147,7 @@ namespace ThAmCo.Venues.Data
                         new Suitability { VenueCode = "LNKRY", EventTypeId = "NET" },  // Networking
                         new Suitability { VenueCode = "LNKRY", EventTypeId = "MET" },  // Meeting
                         new Suitability { VenueCode = "STGHM", EventTypeId = "GAL" },  // Gala
-                        new Suitability { VenueCode = "CMPGR", EventTypeId = "COMP" }, // Competition
+                        new Suitability { VenueCode = "CMPGR", EventTypeId = "CMP" }, // Competition
                         new Suitability { VenueCode = "CMPGR", EventTypeId = "EXH" },  // Exhibition
                         new Suitability { VenueCode = "HMSCR", EventTypeId = "EXH" },  // Exhibition
                         new Suitability { VenueCode = "HMSCR", EventTypeId = "FND" },  // Fundraiser
