@@ -32,9 +32,11 @@ namespace ThAmCo.Venues.Controllers
             return Ok(ReservationGetDto.FromModel(reservation));
         }
 
-        [HttpPost]
-        public async Task<IActionResult>
-        CreateReservation([FromBody] ReservationPostDto reservation)
+        //TODO: maybe tweak staffing table to have the work time as well so the
+        //  same staff cant be assigned to different events at the same time but that'll
+        //  be for later
+        [HttpPost("PostReservation")] 
+        public async Task<IActionResult> CreateReservation([FromBody] ReservationPostDto reservation)
         {
             if (!ModelState.IsValid)
             {
