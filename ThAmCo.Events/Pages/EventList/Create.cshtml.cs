@@ -17,13 +17,15 @@ namespace ThAmCo.Events.Pages.EventList
         private readonly ThAmCo.Events.Data.EventDbContext _context;
         private readonly VenueAvailabilityService _venueAvailabilityService;
         private readonly VenueEventTypeService _venueEventTypeService;
+        private readonly VenueReserveService _venueReserveService;
 
         //public List<string> EventTypes { get; set; }
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueAvailability, VenueEventTypeService venueEventType)
+        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueAvailability, VenueEventTypeService venueEventType, VenueReserveService venueReservation)
         {
             _context = context;
             _venueAvailabilityService = venueAvailability;
             _venueEventTypeService = venueEventType;
+            _venueReserveService = venueReservation;
         }
 
         [BindProperty]
@@ -49,6 +51,7 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
+        //Don't tell me event creation and venue reservation should be separate because i spent the entire weekend on this 😶
         public async Task<IActionResult> OnPostSearchVenuesAsync()
         {
             if (Event.Date == null || string.IsNullOrEmpty(Event.EventType))
@@ -81,6 +84,42 @@ namespace ThAmCo.Events.Pages.EventList
 
             return Page();
         }
+
+        public async Task<IActionResult> OnPostReserveVenuesAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            // Create the reservation DTO
+            var reservation = new VenueReservationDto
+            {
+                StaffId = "1", // Temporary hardcoded value
+                EventDate = Event.Date,
+                VenueCode = Event.VenueCode
+            };
+
+            try
+            {
+                // Call the reservation service
+                /*var response = */await _venueReserveService.PostReservationVenueAsync(reservation);
+
+                // If successful, save the event locally
+                _context.Events.Add(Event);
+                await _context.SaveChangesAsync();
+
+                // Redirect to a confirmation or events list page
+                return RedirectToPage("EventsList"); // Adjust to your actual page
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log the error or show an error message
+                ModelState.AddModelError(string.Empty, $"Error reserving venue: {ex.Message}");
+                return Page();
+            }
+        }
+
 
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
