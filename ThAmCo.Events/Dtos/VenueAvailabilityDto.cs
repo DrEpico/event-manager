@@ -2,12 +2,12 @@
 {
     public class VenueAvailabilityDto
     {
-        public required string Code;
-        public required string Name;
-        public required string Description;
-        public required int Capacity;
-        public required DateTime Date;
-        public required double CostPerHour;
+        public string Code { get; init; }
+        public string Name { get; init; }
+        public string Description { get; init; }
+        public int Capacity { get; init; }
+        public DateTime Date { get; init; }
+        public double CostPerHour { get; init; }
 
         public VenueAvailabilityDto(string code, string name, string description, int capacity, DateTime date, double costPerHour)
         {
