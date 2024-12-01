@@ -5,6 +5,14 @@
     ViewData["Title"] = "Create";
 }
 
+<!-- Add your CSS directly in the Razor file -->
+<style>
+    .scrollable-dropdown {
+        max-height: 200px; /* Adjust the height as needed */
+        overflow-y: auto;  /* Enable vertical scroll */
+    }
+</style>
+
 <h1>Create</h1>
 
 <h4>Event</h4>
@@ -25,12 +33,25 @@
             </div>
             <div class="form-group">
                 <label asp-for="Event.StartTime" class="control-label">Start Time</label>
-                <input asp-for="Event.StartTime" class="form-control" type="time" step="3600" />
+                <select asp-for="Event.StartTime" class="form-control scrollable-dropdown">
+                    <option>-- Select --</option>
+                    @for (int hour = 8; hour <= 23; hour++)
+                    {
+                        <option value="@hour:00">@hour:00</option>
+                    }
+                </select>
                 <span asp-validation-for="Event.StartTime" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <label asp-for="Event.EndTime" class="control-label">End Time</label>
-                <input asp-for="Event.EndTime" class="form-control" type="time" step="3600" />
+                <select asp-for="Event.EndTime" class="form-control scrollable-dropdown">
+                    <option>-- Select --</option>
+                    @for (int hour = 8; hour <= 23; hour++)
+                    {
+                        <option value="@hour:00">@hour:00</option>
+                    }
+                </select>
                 <span asp-validation-for="Event.EndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
