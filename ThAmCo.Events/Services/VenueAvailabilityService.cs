@@ -24,12 +24,10 @@ namespace ThAmCo.Events.Services
 
         public async Task<List<VenueAvailabilityDto>> GetAvailableVenuesAsync(
             [FromQuery, MinLength(3), MaxLength(3), Required] string eventType,
-            [FromQuery, Required] DateTime beginDate,
-            [FromQuery, Required] DateTime endDate)
+            [FromQuery, Required] DateTime date)
         {
-            if (beginDate > endDate)
-                throw new ArgumentException("The begin date must be earlier than or equal to the end date.");
-
+            var beginDate = date.Date; // Sets time to 00:00
+            var endDate = date.Date.AddDays(1).AddTicks(-1); // Sets time to 23:59:59.9999999
             var response = await _httpClient.GetAsync($"{ServiceBaseUrl}{VenueEndpoint}?eventType={eventType}&beginDate={beginDate:o}&endDate={endDate:o}");
             response.EnsureSuccessStatusCode();
 

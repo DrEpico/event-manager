@@ -59,9 +59,10 @@ namespace ThAmCo.Events.Pages.EventList
 
             // Fetch venues from the service
             var availableVenues = await _venueAvailabilityService.GetAvailableVenuesAsync(
-                Event.EventType, 
-                Event.Date + Event.StartTime, 
-                Event.Date + Event.StartTime
+                Event.EventType,
+                Event.Date
+                //Event.Date + Event.StartTime, 
+                //Event.Date + Event.StartTime
             );
 
             Venues = availableVenues.Select(v => new SelectListItem
