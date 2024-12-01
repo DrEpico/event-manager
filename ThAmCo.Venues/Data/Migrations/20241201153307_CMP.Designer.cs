@@ -11,8 +11,8 @@ using ThAmCo.Venues.Data;
 namespace ThAmCo.Venues.Data.Migrations
 {
     [DbContext(typeof(VenuesDbContext))]
-    [Migration("20241129232935_UpdatedEventTypes")]
-    partial class UpdatedEventTypes
+    [Migration("20241201153307_CMP")]
+    partial class CMP
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -531,7 +531,7 @@ namespace ThAmCo.Venues.Data.Migrations
                         },
                         new
                         {
-                            Id = "COMP",
+                            Id = "CMP",
                             Title = "Competition"
                         },
                         new
@@ -632,7 +632,7 @@ namespace ThAmCo.Venues.Data.Migrations
                         },
                         new
                         {
-                            EventTypeId = "COMP",
+                            EventTypeId = "CMP",
                             VenueCode = "TNDMR"
                         },
                         new
@@ -692,7 +692,7 @@ namespace ThAmCo.Venues.Data.Migrations
                         },
                         new
                         {
-                            EventTypeId = "COMP",
+                            EventTypeId = "CMP",
                             VenueCode = "CMPGR"
                         },
                         new

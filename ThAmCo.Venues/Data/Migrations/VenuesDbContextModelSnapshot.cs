@@ -528,7 +528,7 @@ namespace ThAmCo.Venues.Data.Migrations
                         },
                         new
                         {
-                            Id = "COMP",
+                            Id = "CMP",
                             Title = "Competition"
                         },
                         new
@@ -629,7 +629,7 @@ namespace ThAmCo.Venues.Data.Migrations
                         },
                         new
                         {
-                            EventTypeId = "COMP",
+                            EventTypeId = "CMP",
                             VenueCode = "TNDMR"
                         },
                         new
@@ -689,7 +689,7 @@ namespace ThAmCo.Venues.Data.Migrations
                         },
                         new
                         {
-                            EventTypeId = "COMP",
+                            EventTypeId = "CMP",
                             VenueCode = "CMPGR"
                         },
                         new
