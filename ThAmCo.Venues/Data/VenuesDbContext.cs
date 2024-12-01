@@ -113,63 +113,92 @@ namespace ThAmCo.Venues.Data
             {
                 builder.Entity<Venue>()
                    .HasData(
-                        new Venue { Code = "CRKHL", Name = "Crackling Hall", Description = "Once the residence of Lord and Lady Crackling, this lavish dwelling remains a prime example of 18th century fine living.", Capacity = 150 },
-                        new Venue { Code = "TNDMR", Name = "Tinder Manor", Description = "Refurbished manor house with fully equipped facilities ready to help you have a good time in business or pleasure.", Capacity = 450 },
-                        new Venue { Code = "FDLCK", Name = "The Fiddler's Cockatoo", Description = "Rustic pub set in idyllic countryside, the original venue of a notorious local musician and his parrot.", Capacity = 85 },
-                        new Venue { Code = "SUNPL", Name = "Sunset Pavilion", Description = "A spacious venue by the waterfront, perfect for festivals and large gatherings.", Capacity = 1200 },
-                        new Venue { Code = "SLTCR", Name = "Saltmarsh Retreat", Description = "A quiet and serene location ideal for outreach and nature-focused events.", Capacity = 200 },
-                        new Venue { Code = "BLKTW", Name = "Blackthorn Workshop", Description = "An innovative facility equipped for hands-on workshops and small exhibitions.", Capacity = 100 },
-                        new Venue { Code = "LNKRY", Name = "The Linkery", Description = "A modern networking venue with high-speed internet and breakout rooms.", Capacity = 300 },
-                        new Venue { Code = "STGHM", Name = "Stargaze Hall", Description = "A historical gala venue known for its starry ceilings and lavish interiors.", Capacity = 500 },
-                        new Venue { Code = "CMPGR", Name = "Competition Grounds", Description = "Purpose-built grounds for hosting local and national competitions.", Capacity = 800 },
-                        new Venue { Code = "HMSCR", Name = "HomeScape Cradle", Description = "A unique exhibition space for showcasing home and garden innovations.", Capacity = 250 },
-                        new Venue { Code = "GLTNK", Name = "Glisten Tank", Description = "A fundraiser venue featuring an underwater observation gallery.", Capacity = 400 },
-                        new Venue { Code = "WTHTR", Name = "Willow Theatre", Description = "A charming theatre perfect for cultural festivals and performances.", Capacity = 220 }
+                        new Venue { Code = "CRKHL", Name = "Crackling Hall", Description = "Once the residence of Lord and Lady Crackling.", Capacity = 150 },
+                        new Venue { Code = "TNDMR", Name = "Tinder Manor", Description = "Refurbished manor house with equipped facilities.", Capacity = 450 },
+                        new Venue { Code = "FDLCK", Name = "The Fiddler's Cockatoo", Description = "Rustic pub in idyllic countryside.", Capacity = 85 },
+                        new Venue { Code = "SUNPL", Name = "Sunset Pavilion", Description = "Spacious waterfront venue.", Capacity = 1200 },
+                        new Venue { Code = "SLTCR", Name = "Saltmarsh Retreat", Description = "Quiet and serene location ideal for outreach.", Capacity = 200 },
+                        new Venue { Code = "BLKTW", Name = "Blackthorn Workshop", Description = "Facility for workshops and exhibitions.", Capacity = 100 },
+                        new Venue { Code = "LNKRY", Name = "The Linkery", Description = "Modern networking venue with high-speed internet.", Capacity = 300 },
+                        new Venue { Code = "STGHM", Name = "Stargaze Hall", Description = "Historical gala venue with starry ceilings.", Capacity = 500 },
+                        new Venue { Code = "CMPGR", Name = "Competition Grounds", Description = "Purpose-built grounds for hosting competitions.", Capacity = 800 },
+                        new Venue { Code = "HMSCR", Name = "HomeScape Cradle", Description = "Exhibition space for home innovations.", Capacity = 250 },
+                        new Venue { Code = "GLTNK", Name = "Glisten Tank", Description = "Fundraiser venue with underwater gallery.", Capacity = 400 },
+                        new Venue { Code = "WTHTR", Name = "Willow Theatre", Description = "Theatre for festivals and cultural events.", Capacity = 220 },
+                        new Venue { Code = "BRCHH", Name = "Birch Hall", Description = "Charming venue surrounded by birch woods.", Capacity = 350 },
+                        new Venue { Code = "RIVPT", Name = "Riverpoint Terrace", Description = "Perfect for outdoor gatherings by the river.", Capacity = 600 },
+                        new Venue { Code = "HNTWM", Name = "Huntwick Manor", Description = "Countryside estate for high-profile galas.", Capacity = 450 },
+                        new Venue { Code = "MNSYN", Name = "Moonshine Inn", Description = "Rustic tavern known for its festive atmosphere.", Capacity = 100 },
+                        new Venue { Code = "WDRSC", Name = "Woodrose Castle", Description = "Castle with a history of hosting royal galas.", Capacity = 700 },
+                        new Venue { Code = "SPHRD", Name = "Sapphire Docks", Description = "Waterside venue great for festivals and exhibitions.", Capacity = 500 },
+                        new Venue { Code = "ELMRG", Name = "Elm Ridge Gardens", Description = "Picturesque gardens ideal for fundraisers.", Capacity = 150 },
+                        new Venue { Code = "STPFL", Name = "Stepfield Hall", Description = "Multipurpose space for conferences and exhibitions.", Capacity = 400 }
                    );
-
 
                 builder.Entity<Suitability>()
                    .HasData(
-                        new Suitability { VenueCode = "CRKHL", EventTypeId = "GAL" },  // Gala
-                        new Suitability { VenueCode = "CRKHL", EventTypeId = "EXH" },  // Exhibition
-                        new Suitability { VenueCode = "CRKHL", EventTypeId = "FND" },  // Fundraiser
-                        new Suitability { VenueCode = "TNDMR", EventTypeId = "WKS" },  // Workshop
-                        new Suitability { VenueCode = "TNDMR", EventTypeId = "NET" },  // Networking
-                        new Suitability { VenueCode = "TNDMR", EventTypeId = "CMP" }, // Competition
-                        new Suitability { VenueCode = "FDLCK", EventTypeId = "FND" },  // Fundraiser
-                        new Suitability { VenueCode = "FDLCK", EventTypeId = "OTR" },  // Outreach
-                        new Suitability { VenueCode = "SUNPL", EventTypeId = "FES" },  // Festival
-                        new Suitability { VenueCode = "SUNPL", EventTypeId = "EXH" },  // Exhibition
-                        new Suitability { VenueCode = "SLTCR", EventTypeId = "OTR" },  // Outreach
-                        new Suitability { VenueCode = "SLTCR", EventTypeId = "WKS" },  // Workshop
-                        new Suitability { VenueCode = "BLKTW", EventTypeId = "WKS" },  // Workshop
-                        new Suitability { VenueCode = "BLKTW", EventTypeId = "EXH" },  // Exhibition
-                        new Suitability { VenueCode = "LNKRY", EventTypeId = "NET" },  // Networking
-                        new Suitability { VenueCode = "LNKRY", EventTypeId = "MET" },  // Meeting
-                        new Suitability { VenueCode = "STGHM", EventTypeId = "GAL" },  // Gala
-                        new Suitability { VenueCode = "CMPGR", EventTypeId = "CMP" }, // Competition
-                        new Suitability { VenueCode = "CMPGR", EventTypeId = "EXH" },  // Exhibition
-                        new Suitability { VenueCode = "HMSCR", EventTypeId = "EXH" },  // Exhibition
-                        new Suitability { VenueCode = "HMSCR", EventTypeId = "FND" },  // Fundraiser
-                        new Suitability { VenueCode = "GLTNK", EventTypeId = "FND" },  // Fundraiser
-                        new Suitability { VenueCode = "WTHTR", EventTypeId = "FES" },  // Festival
-                        new Suitability { VenueCode = "WTHTR", EventTypeId = "EXH" }   // Exhibition
+                        new Suitability { VenueCode = "CRKHL", EventTypeId = "GAL" },
+                        new Suitability { VenueCode = "CRKHL", EventTypeId = "EXH" },
+                        new Suitability { VenueCode = "TNDMR", EventTypeId = "WKS" },
+                        new Suitability { VenueCode = "TNDMR", EventTypeId = "NET" },
+                        new Suitability { VenueCode = "FDLCK", EventTypeId = "FND" },
+                        new Suitability { VenueCode = "SUNPL", EventTypeId = "FES" },
+                        new Suitability { VenueCode = "SUNPL", EventTypeId = "EXH" },
+                        new Suitability { VenueCode = "SLTCR", EventTypeId = "OTR" },
+                        new Suitability { VenueCode = "BLKTW", EventTypeId = "WKS" },
+                        new Suitability { VenueCode = "LNKRY", EventTypeId = "NET" },
+                        new Suitability { VenueCode = "STGHM", EventTypeId = "GAL" },
+                        new Suitability { VenueCode = "CMPGR", EventTypeId = "CMP" },
+                        new Suitability { VenueCode = "HMSCR", EventTypeId = "EXH" },
+                        new Suitability { VenueCode = "GLTNK", EventTypeId = "FND" },
+                        new Suitability { VenueCode = "WTHTR", EventTypeId = "FES" },
+                        new Suitability { VenueCode = "BRCHH", EventTypeId = "WKS" },
+                        new Suitability { VenueCode = "RIVPT", EventTypeId = "FES" },
+                        new Suitability { VenueCode = "HNTWM", EventTypeId = "GAL" },
+                        new Suitability { VenueCode = "MNSYN", EventTypeId = "FND" },
+                        new Suitability { VenueCode = "WDRSC", EventTypeId = "GAL" },
+                        new Suitability { VenueCode = "SPHRD", EventTypeId = "FES" },
+                        new Suitability { VenueCode = "ELMRG", EventTypeId = "FND" },
+                        new Suitability { VenueCode = "STPFL", EventTypeId = "EXH" }
                    );
 
 
                 var rand = new Random(0);
                 var startDate = new DateTime(2024, 12, 01);
-                var endDate = startDate.AddMonths(3); // 3 months from today
+                var endDate = startDate.AddDays(14);
                 var dates = new List<Availability>();
                 var venues = new[] {
-                    new { Venue = "FDLCK", Cost = 30.0 },
                     new { Venue = "CRKHL", Cost = 50.0 },
-                    new { Venue = "TNDMR", Cost = 70.0 }
+                    new { Venue = "TNDMR", Cost = 70.0 },
+                    new { Venue = "FDLCK", Cost = 30.0 },
+                    new { Venue = "SUNPL", Cost = 120.0 },
+                    new { Venue = "SLTCR", Cost = 40.0 },
+                    new { Venue = "BLKTW", Cost = 35.0 },
+                    new { Venue = "LNKRY", Cost = 60.0 },
+                    new { Venue = "STGHM", Cost = 80.0 },
+                    new { Venue = "CMPGR", Cost = 100.0 },
+                    new { Venue = "HMSCR", Cost = 55.0 },
+                    new { Venue = "GLTNK", Cost = 90.0 },
+                    new { Venue = "WTHTR", Cost = 65.0 },
+                    new { Venue = "BRCHH", Cost = 45.0 },
+                    new { Venue = "RIVPT", Cost = 85.0 },
+                    new { Venue = "HNTWM", Cost = 75.0 },
+                    new { Venue = "MNSYN", Cost = 40.0 },
+                    new { Venue = "WDRSC", Cost = 110.0 },
+                    new { Venue = "SPHRD", Cost = 100.0 },
+                    new { Venue = "ELMRG", Cost = 50.0 },
+                    new { Venue = "STPFL", Cost = 70.0 }
                 }.ToList();
+                //JUSTIFICATION: I would've had it generate availability for the next 3 months from 1st Dec for 20 venues but that would take
+                //  20 minutes so since this is for demonstration purposes anyway ill keep it down to 2 weeks worth of availability.
+                //  After the changes it now takes 2,3 minutes to generate the availabilities so go grab water and hydrate while you wait lol
                 venues.ForEach(v =>
                 {
                     // Generate dates for the next 3 months
                     var days = Enumerable.Range(0, (endDate - startDate).Days + 1);
+
+                    // Confirm the range
+                    Console.WriteLine($"Generating data from {startDate} to {endDate}");
 
                     // Generate time slots for each day
                     foreach (var dayOffset in days)
