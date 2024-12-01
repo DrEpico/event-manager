@@ -99,7 +99,8 @@ namespace ThAmCo.Events.Pages.EventList
                 EventDate = Event.Date,
                 VenueCode = Event.VenueCode
             };
-
+            //TODO: method to assign one random staff (id) to the event (id)
+            //TODO: Add code to populate staffing record using the data mentioned above; 
             try
             {
                 // Call the reservation service
