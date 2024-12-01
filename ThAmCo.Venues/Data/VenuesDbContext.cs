@@ -165,9 +165,10 @@ namespace ThAmCo.Venues.Data
 
                 var rand = new Random(0);
                 var startDate = new DateTime(2024, 12, 01);
-                var endDate = startDate.AddDays(14);
+                var endDate = startDate.AddDays(14); // 2 weeks of availability
                 var dates = new List<Availability>();
-                var venues = new[] {
+                var venues = new[]
+                {
                     new { Venue = "CRKHL", Cost = 50.0 },
                     new { Venue = "TNDMR", Cost = 70.0 },
                     new { Venue = "FDLCK", Cost = 30.0 },
@@ -194,35 +195,31 @@ namespace ThAmCo.Venues.Data
                 //  After the changes it now takes 2,3 minutes to generate the availabilities so go grab water and hydrate while you wait lol
                 venues.ForEach(v =>
                 {
-                    // Generate dates for the next 3 months
+                    // Generate dates for the 2-week period
                     var days = Enumerable.Range(0, (endDate - startDate).Days + 1);
 
                     // Confirm the range
                     Console.WriteLine($"Generating data from {startDate} to {endDate}");
 
-                    // Generate time slots for each day
                     foreach (var dayOffset in days)
                     {
                         var dayDate = startDate.AddDays(dayOffset);
 
-                        // Time slots from 8AM to 10PM (1-hour slots)
-                        var timeSlots = Enumerable.Range(8, 15).Select(hour => new Availability
+                        // Create a single 24-hour availability slot for the venue
+                        dates.Add(new Availability
                         {
                             VenueCode = v.Venue,
-                            Date = new DateTime(dayDate.Year, dayDate.Month, dayDate.Day, hour, 0, 0),
+                            Date = new DateTime(dayDate.Year, dayDate.Month, dayDate.Day, 0, 0, 0), // Start of the day
                             CostPerHour = Math.Round(v.Cost * (1.0 + rand.NextDouble()), 2)
                         });
-
-                        dates.AddRange(timeSlots);
                     }
                 });
 
-                // Filter and shuffle availabilities
-                var availabilities = dates.Where(d => rand.NextDouble() < 0.3) // ~30% random availability
-                                          .OrderBy(d => d.Date) // Order by date and time
-                                          .ToArray();
+                // Seed all generated data into the database
+                var availabilities = dates
+                    .OrderBy(d => d.Date) // Order by date and time
+                    .ToArray();
 
-                // Seed into the database
                 builder.Entity<Availability>()
                        .HasData(availabilities);
             }

@@ -66,7 +66,7 @@ namespace ThAmCo.Events.Pages.EventList
 
             Venues = availableVenues.Select(v => new SelectListItem
             {
-                Text = v.Name,
+                Text = v.Name + " - £" + v.CostPerHour + " - Capacity: " + v.Capacity,
                 Value = v.Code
             });
 
