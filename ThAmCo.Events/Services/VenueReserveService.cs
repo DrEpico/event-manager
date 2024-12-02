@@ -2,6 +2,7 @@
 using ThAmCo.Events.Dtos;
 using ThAmCo.Events.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ThAmCo.Events.Services
 {
@@ -22,42 +23,38 @@ namespace ThAmCo.Events.Services
             PropertyNameCaseInsensitive = true
         };
 
-        public async Task PostReservationVenueAsync(VenueReservationDto reservation, int id, TimeSpan startTime, TimeSpan endTime)
+        public async Task<ConfirmReservationDto> PostReservationVenueAsync(DateTime date, string venueCode, int eventId, TimeSpan startTime, TimeSpan endTime)
         {   //got absolutely no clue what the link should look like 
 
+            string staffId = await AssignStaffing(eventId, startTime, endTime);
 
             // Create the reservation DTO
             var reservation = new VenueReservationDto //TODO: move this to service (pass down data not as object yet)
             {
-                StaffId = "1", // Temporary hardcoded value
-                EventDate = Event.Date,
-                VenueCode = Event.VenueCode
+                StaffId = staffId,
+                EventDate = date,
+                VenueCode = venueCode
             };
+            var url = ServiceBaseUrl + VenueReservationEndpoint;
+            HttpResponseMessage response = await _httpClient.PostAsJsonAsync(url, reservation);
 
-            // Serialize the DTO into JSON
-            var jsonContent = new StringContent(
-                JsonSerializer.Serialize(reservation),
-                System.Text.Encoding.UTF8,
-                "application/json");
+            response.EnsureSuccessStatusCode();
 
-            try
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+
+            var confirm = JsonSerializer.Deserialize<ConfirmReservationDto>(jsonResponse, jsonOptions);
+
+            if (confirm != null)
             {
-                //TODO: Need to make sure 
-                // Post the serialized JSON to the API
-                var response = await _httpClient.PostAsync($"{ServiceBaseUrl}{VenueReservationEndpoint}/PostReservation", jsonContent);
-
-                // Handle the response if necessary
-                response.EnsureSuccessStatusCode(); // Throws an exception if the status code is not 2xx
-            }
-            catch (Exception ex) 
-            { 
-
+                throw new ArgumentNullException(nameof(response),
+                    "The revervation response is null");
             }
 
-
+            return confirm;
         }
 
-        private async Task<int> AssignStaffing(int id, TimeSpan startTime, TimeSpan endTime)
+        /// <returns>Returns string type StaffId because the reservation DTO takes string type</returns>
+        private async Task<string> AssignStaffing(int eventId, TimeSpan startTime, TimeSpan endTime)
         {
             //Task: Get a list of staff that are available for the specified time period and
             //  create a staffing record by assinging a random staff.
@@ -71,7 +68,7 @@ namespace ThAmCo.Events.Services
                 .ToListAsync();
 
             var availableStaff = allStaff
-                .Where(staff => !staff.Staffings
+                .Where(staff => !staff.Staffings    
                     .Any(staffing => staffing.Event.StartTime < endTime && staffing.Event.EndTime > startTime))
                 .ToList();
 
@@ -86,13 +83,13 @@ namespace ThAmCo.Events.Services
             var staffing = new Staffing
             {
                 StaffingId = selectedStaff.StaffId,
-                EventId = id
+                EventId = eventId
             };
 
             _context.Staffing.Add(staffing);
             await _context.SaveChangesAsync();
 
-            return selectedStaff.StaffId;
+            return selectedStaff.StaffId.ToString();
         }
     }
 }

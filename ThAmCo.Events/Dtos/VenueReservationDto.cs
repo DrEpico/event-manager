@@ -9,7 +9,7 @@ namespace ThAmCo.Events.Dtos
         public DateTime EventDate { get; set; }
 
         [Required, MinLength(5), MaxLength(5)]
-        public string VenueCode { get; set; }
+        public string VenueCode { get; set; } = string.Empty;
 
         [Required]
         public string StaffId { get; set; }
