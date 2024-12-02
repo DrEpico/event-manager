@@ -93,7 +93,7 @@ namespace ThAmCo.Events.Pages.EventList
             }
 
             // Create the reservation DTO
-            var reservation = new VenueReservationDto
+            var reservation = new VenueReservationDto //TODO: move this to service (pass down data not as object yet)
             {
                 StaffId = "1", // Temporary hardcoded value
                 EventDate = Event.Date,
@@ -103,8 +103,8 @@ namespace ThAmCo.Events.Pages.EventList
             //TODO: Add code to populate staffing record using the data mentioned above; 
             try
             {
-                // Call the reservation service
-                /*var response = */await _venueReserveService.PostReservationVenueAsync(reservation);
+                // Call the reservation service 
+                /*var response = */await _venueReserveService.PostReservationVenueAsync(reservation, Event.EventId, Event.StartTime, Event.EndTime);
 
                 // If successful, save the event locally
                 _context.Events.Add(Event);
