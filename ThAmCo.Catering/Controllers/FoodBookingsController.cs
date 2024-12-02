@@ -33,7 +33,7 @@ namespace ThAmCo.Catering.Controllers
                 .Select(fb => new FoodBookingOutputDto(
                     fb.ClientReferenceId,
                     fb.NumberOfGuests,
-                    fb.Menu.MenuName //TODO: catch possible null reference 
+                    fb.Menu?.MenuName //TODO: catch possible null reference 
                 ));
 
             return Ok(FoodBookingsDto);
