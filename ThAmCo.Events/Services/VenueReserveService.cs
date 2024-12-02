@@ -25,21 +25,39 @@ namespace ThAmCo.Events.Services
         public async Task PostReservationVenueAsync(VenueReservationDto reservation, int id, TimeSpan startTime, TimeSpan endTime)
         {   //got absolutely no clue what the link should look like 
 
+
+            // Create the reservation DTO
+            var reservation = new VenueReservationDto //TODO: move this to service (pass down data not as object yet)
+            {
+                StaffId = "1", // Temporary hardcoded value
+                EventDate = Event.Date,
+                VenueCode = Event.VenueCode
+            };
+
             // Serialize the DTO into JSON
             var jsonContent = new StringContent(
                 JsonSerializer.Serialize(reservation),
                 System.Text.Encoding.UTF8,
                 "application/json");
 
-            //TODO: Need to make sure 
-            // Post the serialized JSON to the API
-            var response = await _httpClient.PostAsync($"{ServiceBaseUrl}{VenueReservationEndpoint}/PostReservation", jsonContent);
+            try
+            {
+                //TODO: Need to make sure 
+                // Post the serialized JSON to the API
+                var response = await _httpClient.PostAsync($"{ServiceBaseUrl}{VenueReservationEndpoint}/PostReservation", jsonContent);
 
-            // Handle the response if necessary
-            response.EnsureSuccessStatusCode(); // Throws an exception if the status code is not 2xx
+                // Handle the response if necessary
+                response.EnsureSuccessStatusCode(); // Throws an exception if the status code is not 2xx
+            }
+            catch (Exception ex) 
+            { 
+
+            }
+
+
         }
 
-        private async Task AssignStaffing(int id, TimeSpan startTime, TimeSpan endTime)
+        private async Task<int> AssignStaffing(int id, TimeSpan startTime, TimeSpan endTime)
         {
             //Task: Get a list of staff that are available for the specified time period and
             //  create a staffing record by assinging a random staff.
@@ -73,6 +91,8 @@ namespace ThAmCo.Events.Services
 
             _context.Staffing.Add(staffing);
             await _context.SaveChangesAsync();
+
+            return selectedStaff.StaffId;
         }
     }
 }
