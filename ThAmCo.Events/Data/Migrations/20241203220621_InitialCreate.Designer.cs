@@ -11,8 +11,8 @@ using ThAmCo.Events.Data;
 namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20241203141941_AddTime")]
-    partial class AddTime
+    [Migration("20241203220621_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -647,17 +647,11 @@ namespace ThAmCo.Events.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("EventId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("StaffId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("StaffingId");
 

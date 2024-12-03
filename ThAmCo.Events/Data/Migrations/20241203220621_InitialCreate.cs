@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ThAmCo.Events.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,7 +21,10 @@ namespace ThAmCo.Events.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EventType = table.Column<string>(type: "TEXT", nullable: false)
+                    StartTime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "TEXT", nullable: false),
+                    EventType = table.Column<string>(type: "TEXT", nullable: false),
+                    VenueCode = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -112,24 +115,24 @@ namespace ThAmCo.Events.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Events",
-                columns: new[] { "EventId", "Date", "EventType", "Title" },
+                columns: new[] { "EventId", "Date", "EndTime", "EventType", "StartTime", "Title", "VenueCode" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Exhibition", "Tech Expo" },
-                    { 2, new DateTime(2024, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workshop", "AI Workshop" },
-                    { 3, new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Gala", "Annual Gala Dinner" },
-                    { 4, new DateTime(2024, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), "Competition", "Coding Hackathon" },
-                    { 5, new DateTime(2024, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), "Conference", "Marketing Summit" },
-                    { 6, new DateTime(2024, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Competition", "Startup Pitch Fest" },
-                    { 7, new DateTime(2024, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Exhibition", "Science Fair" },
-                    { 8, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Fundraiser", "Charity Auction" },
-                    { 9, new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workshop", "Photography Workshop" },
-                    { 10, new DateTime(2024, 12, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), "Exhibition", "Art & Design Expo" },
-                    { 11, new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Networking", "Developer Meetup" },
-                    { 12, new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Outreach", "Community Volunteering" },
-                    { 13, new DateTime(2024, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), "Festival", "Holiday Festival" },
-                    { 14, new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workshop", "Leadership Seminar" },
-                    { 15, new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Celebration", "End-of-Year Party" }
+                    { 1, new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 17, 0, 0, 0), "Exhibition", new TimeSpan(0, 9, 0, 0, 0), "Tech Expo", null },
+                    { 2, new DateTime(2024, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 15, 0, 0, 0), "Workshop", new TimeSpan(0, 10, 0, 0, 0), "AI Workshop", null },
+                    { 3, new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 23, 0, 0, 0), "Gala", new TimeSpan(0, 19, 0, 0, 0), "Annual Gala Dinner", null },
+                    { 4, new DateTime(2024, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 18, 0, 0, 0), "Competition", new TimeSpan(0, 9, 0, 0, 0), "Coding Hackathon", null },
+                    { 5, new DateTime(2024, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 16, 30, 0, 0), "Conference", new TimeSpan(0, 8, 30, 0, 0), "Marketing Summit", null },
+                    { 6, new DateTime(2024, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 20, 0, 0, 0), "Competition", new TimeSpan(0, 14, 0, 0, 0), "Startup Pitch Fest", null },
+                    { 7, new DateTime(2024, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 16, 0, 0, 0), "Exhibition", new TimeSpan(0, 10, 0, 0, 0), "Science Fair", null },
+                    { 8, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 22, 0, 0, 0), "Fundraiser", new TimeSpan(0, 18, 0, 0, 0), "Charity Auction", null },
+                    { 9, new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 17, 0, 0, 0), "Workshop", new TimeSpan(0, 13, 0, 0, 0), "Photography Workshop", null },
+                    { 10, new DateTime(2024, 12, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 18, 0, 0, 0), "Exhibition", new TimeSpan(0, 10, 0, 0, 0), "Art & Design Expo", null },
+                    { 11, new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 21, 30, 0, 0), "Networking", new TimeSpan(0, 19, 0, 0, 0), "Developer Meetup", null },
+                    { 12, new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 15, 0, 0, 0), "Outreach", new TimeSpan(0, 9, 0, 0, 0), "Community Volunteering", null },
+                    { 13, new DateTime(2024, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 22, 0, 0, 0), "Festival", new TimeSpan(0, 14, 0, 0, 0), "Holiday Festival", null },
+                    { 14, new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 16, 30, 0, 0), "Workshop", new TimeSpan(0, 9, 30, 0, 0), "Leadership Seminar", null },
+                    { 15, new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), new TimeSpan(0, 23, 59, 0, 0), "Festival", new TimeSpan(0, 20, 0, 0, 0), "End-of-Year Party", null }
                 });
 
             migrationBuilder.InsertData(
@@ -173,7 +176,17 @@ namespace ThAmCo.Events.Data.Migrations
                     { 12, "Lily Green", "Assistant" },
                     { 13, "Mike Taylor", "Coordinator" },
                     { 14, "Nina Brooks", "Manager" },
-                    { 15, "Oscar Peterson", "Assistant" }
+                    { 15, "Oscar Peterson", "Assistant" },
+                    { 16, "Patricia Ward", "Coordinator" },
+                    { 17, "Quincy Adams", "Manager" },
+                    { 18, "Rachel King", "Assistant" },
+                    { 19, "Samuel Turner", "Coordinator" },
+                    { 20, "Tina Evans", "Manager" },
+                    { 21, "Uma Patel", "Assistant" },
+                    { 22, "Victor Stone", "Coordinator" },
+                    { 23, "Wendy Clark", "Manager" },
+                    { 24, "Xavier Lewis", "Assistant" },
+                    { 25, "Yvonne Carter", "Coordinator" }
                 });
 
             migrationBuilder.InsertData(

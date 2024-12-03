@@ -94,7 +94,18 @@ namespace ThAmCo.Events.Pages.EventList
             try
             {
                 // Call the reservation service 
-                /*var response = */await _venueReserveService.PostReservationVenueAsync(Event.Date, Event.VenueCode, Event.EventId, Event.StartTime, Event.EndTime);
+                var response = await _venueReserveService.PostReservationVenueAsync(Event.Date, Event.VenueCode, Event.EventId, Event.StartTime, Event.EndTime);
+                //response.EnsureSuccessStatusCode();
+
+                Event = new Event
+                {
+                    Title = Event.Title,
+                    Date = Event.Date,
+                    StartTime = Event.StartTime,
+                    EndTime = Event.EndTime,
+                    EventType = Event.EventType,
+                    VenueCode = Event.VenueCode
+                };
 
                 // If successful, save the event locally
                 _context.Events.Add(Event);

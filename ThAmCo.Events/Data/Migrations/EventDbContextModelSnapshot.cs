@@ -644,17 +644,11 @@ namespace ThAmCo.Events.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<TimeSpan>("EndTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("EventId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("StaffId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("TEXT");
 
                     b.HasKey("StaffingId");
 

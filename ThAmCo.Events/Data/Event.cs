@@ -8,9 +8,9 @@ namespace ThAmCo.Events.Data
         public string Title { get; set; }
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         public TimeSpan StartTime { get; set; }
-        [DataType(DataType.Time)]
+        //[DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
         public string EventType { get; set; }
         public string? VenueCode { get; set; } // Bind the selected venue's code
