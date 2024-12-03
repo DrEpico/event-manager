@@ -31,9 +31,6 @@ namespace ThAmCo.Events.Pages.EventList
         [BindProperty]
         public Event Event { get; set; } = default!;
 
-        [BindProperty]
-        public string SelectedEventType { get; set; } = default!;// To store the selected event type
-
         public IEnumerable<SelectListItem> EventTypes { get; set; } = default!;
         [BindProperty]
         public IEnumerable<SelectListItem> Venues { get; set; } = default!;
@@ -85,7 +82,7 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
-        public async Task<IActionResult> OnPostReserveVenuesAsync()
+        public async Task<IActionResult> OnPostReserveVenueAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -116,18 +113,18 @@ namespace ThAmCo.Events.Pages.EventList
 
 
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+        //// For more information, see https://aka.ms/RazorPagesCRUD.
+        //public async Task<IActionResult> OnPostAsync()
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return Page();
+        //    }
 
-            _context.Events.Add(Event);
-            await _context.SaveChangesAsync();
+        //    _context.Events.Add(Event);
+        //    await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
-        }
+        //    return RedirectToPage("./Index");
+        //}
     }
 }
