@@ -25,7 +25,7 @@ namespace ThAmCo.Events.Services
 
         public async Task<ConfirmReservationDto> PostReservationVenueAsync(DateTime date, string venueCode, int eventId, TimeSpan startTime, TimeSpan endTime)
         {  
-            string staffId = await AssignStaffing(eventId, startTime, endTime);
+            string staffId = await AssignStaffing(eventId, date, startTime, endTime);
 
             // Create the reservation DTO
             var reservation = new VenueReservationDto //TODO: move this to service (pass down data not as object yet)
@@ -35,96 +35,87 @@ namespace ThAmCo.Events.Services
                 VenueCode = venueCode
             };
             var url = ServiceBaseUrl + VenueReservationEndpoint;
-            HttpResponseMessage response = await _httpClient.PostAsJsonAsync(url, reservation);
+            HttpResponseMessage response;
+            try
+            {
+                response = await _httpClient.PostAsJsonAsync(url, reservation);
+                response.EnsureSuccessStatusCode();
+            }
+            catch (Exception ex)
+            {
+                // Handle exception or log it
+                throw new HttpRequestException("Failed to post reservation.", ex);
+            }
 
-            response.EnsureSuccessStatusCode();
+            if (response == null)
+            {
+                throw new InvalidOperationException("The response was not received.");
+            }
 
             var jsonResponse = await response.Content.ReadAsStringAsync();
 
             var confirm = JsonSerializer.Deserialize<ConfirmReservationDto>(jsonResponse, jsonOptions);
 
-            if (confirm != null)
+            if (confirm == null)
             {
                 throw new ArgumentNullException(nameof(response),
-                    "The revervation response is null");
+                    "The reservation response is null");
             }
 
             return confirm;
         }
 
         /// <returns>Returns string type StaffId because the reservation DTO takes string type</returns>
-        private async Task<string> AssignStaffing(int eventId, TimeSpan startTime, TimeSpan endTime)
+        private async Task<string> AssignStaffing(int eventId, DateTime eventDate, TimeSpan startTime, TimeSpan endTime)
         {
-            //Task: Get a list of staff that are available for the specified time period and
-            //  create a staffing record by assinging a random staff.
-
-            //P;C get the list of staff 
-            //  somehow filter out the pre-occupied fellas by joining a couple tables Staff -> Staffing -> Event -> Event time
-            //  then return a random staff ID and save a staffing record to the database
-            List<Staff> allStaff;
-
             try
             {
-                allStaff = await _context.Staff
-                    .Include(e => e.Staffings)
-                    .ThenInclude(s => s.Event)
+                // Get the list of unavailable staff IDs for the specified time period
+                var unavailableStaffIds = await _context.Staffing
+                    .Where(s => s.Event.Date == eventDate && s.Event.StartTime < endTime && s.Event.EndTime > startTime)
+                    .Select(s => s.StaffId)
+                    .Distinct()
                     .ToListAsync();
-            }
-            catch (Exception ex)
-            {
-                // Log the error details for debugging
-                Console.WriteLine($"Error fetching staff from database: {ex.Message}");
-                if (ex.InnerException != null)
+
+                // Get the list of available staff
+                var availableStaff = _context.Staff
+                    .Where(s => !unavailableStaffIds.Contains(s.StaffId))
+                    .ToList();
+
+                if (!availableStaff.Any())
                 {
-                    Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                    throw new Exception("No available staff for the specified time period.");
                 }
-                throw new Exception("An error occurred while retrieving staff data. Check database configuration.", ex);
-            }
 
-            // Check if staff data is null or empty
-            if (allStaff == null || !allStaff.Any())
-            {
-                throw new Exception("No staff records found in the database.");
-            }
+                // Select a random staff member
+                var random = new Random();
+                var selectedStaff = availableStaff[random.Next(availableStaff.Count)];
 
-            // Filter available staff
-            var availableStaff = allStaff
-                .Where(staff => !staff.Staffings
-                    .Any(staffing => staffing.Event.StartTime < endTime && staffing.Event.EndTime > startTime))
-                .ToList();
+                // Create a staffing record
+                var staffing = new Staffing
+                {
+                    StaffId = selectedStaff.StaffId,
+                    EventId = eventId
+                };
 
-            if (!availableStaff.Any())
-            {
-                throw new Exception("No available staff for the specified time period.");
-            }
-
-            // Select a random staff member
-            var random = new Random();
-            var selectedStaff = availableStaff[random.Next(availableStaff.Count)];
-
-            // Create a new staffing record
-            var staffing = new Staffing
-            {
-                StaffingId = selectedStaff.StaffId,
-                EventId = eventId
-            };
-
-            try
-            {
+                // Save the staffing record to the database
                 _context.Staffing.Add(staffing);
                 await _context.SaveChangesAsync();
+
+                return selectedStaff.StaffId.ToString();
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error saving staffing record: {ex.Message}");
+                // Log the exception for debugging
+                Console.WriteLine($"Error assigning staffing: {ex.Message}");
                 if (ex.InnerException != null)
                 {
                     Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
                 }
-                throw new Exception("An error occurred while saving the staffing record.", ex);
-            }
 
-            return selectedStaff.StaffId.ToString();
+                // Return a meaningful message or rethrow the exception
+                throw new Exception("An error occurred while assigning staffing. Please try again.", ex);
+            }
         }
     }
 }
