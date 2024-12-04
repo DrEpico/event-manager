@@ -27,6 +27,18 @@ namespace ThAmCo.Events.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Event>()
+                .Property(e => e.EndTime)
+                .HasConversion(
+                    v => v.ToString(), // Convert TimeSpan to string for storage
+                    v => TimeSpan.Parse(v) // Convert string back to TimeSpan
+                );
+            modelBuilder.Entity<Event>()
+                .Property(e => e.StartTime)
+                .HasConversion(
+                    v => v.ToString(), // Convert TimeSpan to string for storage
+                    v => TimeSpan.Parse(v) // Convert string back to TimeSpan
+                );
 
             modelBuilder.Entity<Event>().HasData(
                 new Event { EventId = 1, Title = "Tech Expo", Date = new DateTime(2024, 12, 1), StartTime = new TimeSpan(9, 0, 0), EndTime = new TimeSpan(17, 0, 0), EventType = "Exhibition" },
