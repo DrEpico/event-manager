@@ -93,10 +93,6 @@ namespace ThAmCo.Events.Pages.EventList
             //TODO: Add code to populate staffing record using the data mentioned above; 
             try
             {
-                // Call the reservation service 
-                var response = await _venueReserveService.PostReservationVenueAsync(Event.Date, Event.VenueCode, Event.EventId, Event.StartTime, Event.EndTime);
-                //response.EnsureSuccessStatusCode();
-
                 Event = new Event
                 {
                     Title = Event.Title,
@@ -106,13 +102,20 @@ namespace ThAmCo.Events.Pages.EventList
                     EventType = Event.EventType,
                     VenueCode = Event.VenueCode
                 };
-
                 // If successful, save the event locally
                 _context.Events.Add(Event);
                 await _context.SaveChangesAsync();
 
+                // Call the reservation service 
+                var response = await _venueReserveService.PostReservationVenueAsync(
+                    Event.Date, Event.VenueCode, Event.EventId, Event.StartTime, Event.EndTime);
+                //response.EnsureSuccessStatusCode();
+
+                _context.Entry(Event).State = EntityState.Modified; // Mark the entity as modified
+                await _context.SaveChangesAsync(); // Save the changes
+
                 // Redirect to a confirmation or events list page
-                return RedirectToPage("EventsList"); // Adjust to your actual page
+                return RedirectToPage("./Create"); 
             }
             catch (HttpRequestException ex)
             {
