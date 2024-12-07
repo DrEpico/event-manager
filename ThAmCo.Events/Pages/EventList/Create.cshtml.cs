@@ -17,10 +17,10 @@ namespace ThAmCo.Events.Pages.EventList
         private readonly ThAmCo.Events.Data.EventDbContext _context;
         private readonly VenueAvailabilityService _venueAvailabilityService;
         private readonly VenueEventTypeService _venueEventTypeService;
-        private readonly VenueReserveService _venueReserveService;
+        private readonly VenueReservationService _venueReserveService;
 
         //public List<string> EventTypes { get; set; }
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueAvailability, VenueEventTypeService venueEventType, VenueReserveService venueReservation)
+        public CreateModel(ThAmCo.Events.Data.EventDbContext context, VenueAvailabilityService venueAvailability, VenueEventTypeService venueEventType, VenueReservationService venueReservation)
         {
             _context = context;
             _venueAvailabilityService = venueAvailability;
@@ -107,7 +107,7 @@ namespace ThAmCo.Events.Pages.EventList
                 await _context.SaveChangesAsync();
 
                 // Call the reservation service 
-                var response = await _venueReserveService.PostReservationVenueAsync(
+                var confirm = await _venueReserveService.PostReservationVenueAsync(
                     Event.Date, Event.VenueCode, Event.EventId, Event.StartTime, Event.EndTime);
                 //response.EnsureSuccessStatusCode();
 
@@ -115,7 +115,7 @@ namespace ThAmCo.Events.Pages.EventList
                 await _context.SaveChangesAsync(); // Save the changes
 
                 // Redirect to a confirmation or events list page
-                return RedirectToPage("./Create"); 
+                return RedirectToPage("./ConfirmReservation", confirm);
             }
             catch (HttpRequestException ex)
             {

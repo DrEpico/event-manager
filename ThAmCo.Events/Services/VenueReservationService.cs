@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ThAmCo.Events.Services
 {
-    public class VenueReserveService
+    public class VenueReservationService
     {
         const string ServiceBaseUrl = "https://localhost:7088/api";
         const string VenueReservationEndpoint = "/Reservations";
         private readonly HttpClient _httpClient;
         private readonly EventDbContext _context;
-        public VenueReserveService(HttpClient httpClient, EventDbContext context)
+        public VenueReservationService(HttpClient httpClient, EventDbContext context)
         {
             _httpClient = httpClient;
             _context = context;

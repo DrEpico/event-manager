@@ -1,0 +1,15 @@
+﻿@page
+@model ThAmCo.Events.Pages.EventList.ConfirmationModel
+@{
+    ViewData["Title"] = "Reservation Confirmation";
+}
+
+<h1>Reservation Confirmed!</h1>
+
+<div>
+    <p><strong>Staff ID:</strong> @Model.ReservationDetails.StaffId</p>
+    <p><strong>Event Date:</strong> @Model.ReservationDetails.EventDate.ToString("f")</p>
+    <p><strong>Venue Code:</strong> @Model.ReservationDetails.VenueCode</p>
+</div>
+
+<a asp-page="/Index">Return to Home</a>
