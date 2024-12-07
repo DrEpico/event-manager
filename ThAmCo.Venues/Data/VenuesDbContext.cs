@@ -27,6 +27,7 @@ namespace ThAmCo.Venues.Data
             var folder = Environment.SpecialFolder.MyDocuments;
             var path = Environment.GetFolderPath(folder);
             DbPath = Path.Join(path, "ThAmCo.Venues.db");
+            Console.WriteLine($"Database Path: {DbPath}");
 
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

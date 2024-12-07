@@ -11,7 +11,7 @@ using ThAmCo.Events.Data;
 namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20241203220621_InitialCreate")]
+    [Migration("20241207202900_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -29,14 +29,16 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("EndTime")
+                    b.Property<string>("EndTime")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EventType")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<TimeSpan>("StartTime")
+                    b.Property<string>("StartTime")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
@@ -55,135 +57,135 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 1,
                             Date = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            EndTime = "17:00:00",
                             EventType = "Exhibition",
-                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            StartTime = "09:00:00",
                             Title = "Tech Expo"
                         },
                         new
                         {
                             EventId = 2,
                             Date = new DateTime(2024, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 15, 0, 0, 0),
+                            EndTime = "15:00:00",
                             EventType = "Workshop",
-                            StartTime = new TimeSpan(0, 10, 0, 0, 0),
+                            StartTime = "10:00:00",
                             Title = "AI Workshop"
                         },
                         new
                         {
                             EventId = 3,
                             Date = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 23, 0, 0, 0),
+                            EndTime = "23:00:00",
                             EventType = "Gala",
-                            StartTime = new TimeSpan(0, 19, 0, 0, 0),
+                            StartTime = "19:00:00",
                             Title = "Annual Gala Dinner"
                         },
                         new
                         {
                             EventId = 4,
                             Date = new DateTime(2024, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            EndTime = "18:00:00",
                             EventType = "Competition",
-                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            StartTime = "09:00:00",
                             Title = "Coding Hackathon"
                         },
                         new
                         {
                             EventId = 5,
                             Date = new DateTime(2024, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 16, 30, 0, 0),
+                            EndTime = "16:30:00",
                             EventType = "Conference",
-                            StartTime = new TimeSpan(0, 8, 30, 0, 0),
+                            StartTime = "08:30:00",
                             Title = "Marketing Summit"
                         },
                         new
                         {
                             EventId = 6,
                             Date = new DateTime(2024, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 20, 0, 0, 0),
+                            EndTime = "20:00:00",
                             EventType = "Competition",
-                            StartTime = new TimeSpan(0, 14, 0, 0, 0),
+                            StartTime = "14:00:00",
                             Title = "Startup Pitch Fest"
                         },
                         new
                         {
                             EventId = 7,
                             Date = new DateTime(2024, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 16, 0, 0, 0),
+                            EndTime = "16:00:00",
                             EventType = "Exhibition",
-                            StartTime = new TimeSpan(0, 10, 0, 0, 0),
+                            StartTime = "10:00:00",
                             Title = "Science Fair"
                         },
                         new
                         {
                             EventId = 8,
                             Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 22, 0, 0, 0),
+                            EndTime = "22:00:00",
                             EventType = "Fundraiser",
-                            StartTime = new TimeSpan(0, 18, 0, 0, 0),
+                            StartTime = "18:00:00",
                             Title = "Charity Auction"
                         },
                         new
                         {
                             EventId = 9,
                             Date = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 17, 0, 0, 0),
+                            EndTime = "17:00:00",
                             EventType = "Workshop",
-                            StartTime = new TimeSpan(0, 13, 0, 0, 0),
+                            StartTime = "13:00:00",
                             Title = "Photography Workshop"
                         },
                         new
                         {
                             EventId = 10,
                             Date = new DateTime(2024, 12, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 18, 0, 0, 0),
+                            EndTime = "18:00:00",
                             EventType = "Exhibition",
-                            StartTime = new TimeSpan(0, 10, 0, 0, 0),
+                            StartTime = "10:00:00",
                             Title = "Art & Design Expo"
                         },
                         new
                         {
                             EventId = 11,
                             Date = new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 21, 30, 0, 0),
+                            EndTime = "21:30:00",
                             EventType = "Networking",
-                            StartTime = new TimeSpan(0, 19, 0, 0, 0),
+                            StartTime = "19:00:00",
                             Title = "Developer Meetup"
                         },
                         new
                         {
                             EventId = 12,
                             Date = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 15, 0, 0, 0),
+                            EndTime = "15:00:00",
                             EventType = "Outreach",
-                            StartTime = new TimeSpan(0, 9, 0, 0, 0),
+                            StartTime = "09:00:00",
                             Title = "Community Volunteering"
                         },
                         new
                         {
                             EventId = 13,
                             Date = new DateTime(2024, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 22, 0, 0, 0),
+                            EndTime = "22:00:00",
                             EventType = "Festival",
-                            StartTime = new TimeSpan(0, 14, 0, 0, 0),
+                            StartTime = "14:00:00",
                             Title = "Holiday Festival"
                         },
                         new
                         {
                             EventId = 14,
                             Date = new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 16, 30, 0, 0),
+                            EndTime = "16:30:00",
                             EventType = "Workshop",
-                            StartTime = new TimeSpan(0, 9, 30, 0, 0),
+                            StartTime = "09:30:00",
                             Title = "Leadership Seminar"
                         },
                         new
                         {
                             EventId = 15,
                             Date = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EndTime = new TimeSpan(0, 23, 59, 0, 0),
+                            EndTime = "23:59:00",
                             EventType = "Festival",
-                            StartTime = new TimeSpan(0, 20, 0, 0, 0),
+                            StartTime = "20:00:00",
                             Title = "End-of-Year Party"
                         });
                 });
