@@ -6,10 +6,12 @@
 
 <h1>Reservation Confirmed!</h1>
 
-<div>
+<div class="mt-5">
+    <p><strong>Reservation Reference:</strong> @Model.ReservationDetails.Reference</p>
     <p><strong>Staff ID:</strong> @Model.ReservationDetails.StaffId</p>
     <p><strong>Event Date:</strong> @Model.ReservationDetails.EventDate.ToString("f")</p>
     <p><strong>Venue Code:</strong> @Model.ReservationDetails.VenueCode</p>
+    <p>Created on: @Model.ReservationDetails.WhenMade.ToString("f")</p>
 </div>
 
-<a asp-page="/Index">Return to Home</a>
+<a class="mt-5" asp-page="/Index">Return to Home</a>
