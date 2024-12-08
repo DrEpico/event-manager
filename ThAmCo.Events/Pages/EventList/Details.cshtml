@@ -51,9 +51,11 @@
                     <tr>
                         <td colspan="2">Total Guest Count: @Model.Event.GuestBookings.Count()</td>
                     </tr>
-
             </tbody>
         </table>
+        //TODO: Add a new page for booking a guest onto an event for better UX instead of doing it within the same page. 
+        //  Doing as a pop up would also work however.
+        <button type="submit" value="Add Guest" class="btn btn-secondary">Add Guest</button>
     }
     else
     {
