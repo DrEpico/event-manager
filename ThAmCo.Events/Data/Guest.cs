@@ -9,17 +9,5 @@
 
         // Navigation Properties
         public List<GuestBooking> GuestBookings { get; set; } = new();
-
-        public Guest()
-        {
-
-        }
-
-        public Guest(string name, string email, string phone)
-        {
-            Name = name;
-            Email = email;
-            Phone = phone;
-        }
     }
 }

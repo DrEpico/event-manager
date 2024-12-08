@@ -75,6 +75,7 @@
             </div>
             <div class="modal-body">
                 <form id="addGuestForm" method="post" asp-page-handler="AddGuest">
+                    <input type="hidden" name="EventId" value="@Model.Event.EventId" />
                     <div class="mb-3">
                         <label for="guestName" class="form-label">Fullname</label>
                         <input type="text" class="form-control" id="uestName" name="GuestName" required>

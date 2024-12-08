@@ -44,7 +44,8 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAddGuestAsync(string GuestName, string email, string phoneNum)
+        public async Task<IActionResult> OnPostAddGuestAsync(
+            int EventId, string GuestName, string Email, string Phone)
         {
             if (string.IsNullOrEmpty(GuestName))
             {
@@ -52,25 +53,32 @@ namespace ThAmCo.Events.Pages.EventList
                 return Page();
             }
 
-            // Assuming EventId is passed as a route parameter
-            var eventId = Event.EventId;
+            // Ensure the event exists
+            var selectedEvent = await _context.Events.FindAsync(EventId);
+            if (selectedEvent == null)
+            {
+                return NotFound();
+            }
 
-            Guest guest = new Guest(GuestName, email, phoneNum);
-
+            // Create and save the guest
+            var guest = new Guest
+            {
+                Name = GuestName,
+                Email = Email,
+                Phone = Phone
+            };
             _context.Guests.Add(guest);
             await _context.SaveChangesAsync();
 
             var newGuest = new GuestBooking
             {
-                EventId = eventId,
+                EventId = EventId,
                 GuestId = guest.GuestId,
             };
-
             _context.GuestBookings.Add(newGuest);
             await _context.SaveChangesAsync();
 
-            //return RedirectToPage("./Details", new { id = eventId });
-            return Page();
+            return RedirectToPage("./Details", new { id = EventId });
         }
 
     }
