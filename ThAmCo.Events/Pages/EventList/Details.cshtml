@@ -55,13 +55,44 @@
         </table>
         //TODO: Add a new page for booking a guest onto an event for better UX instead of doing it within the same page. 
         //  Doing as a pop up would also work however.
-        <button type="submit" value="Add Guest" class="btn btn-secondary">Add Guest</button>
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addGuestModal">
+            Add Guest
+        </button>
     }
     else
     {
         <p>No guests found for this event</p>
     }
 </div>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="addGuestModal" tabindex="-1" aria-labelledby="addGuestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addGuestModalLabel">Add Guest</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addGuestForm" method="post" asp-page-handler="AddGuest">
+                    <div class="mb-3">
+                        <label for="guestName" class="form-label">Fullname</label>
+                        <input type="text" class="form-control" id="uestName" name="GuestName" required>
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="phone" class="form-label">Phone number</label>
+                        <input type="text" class="form-control" id="email" name="phone" required>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
