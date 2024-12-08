@@ -6,6 +6,7 @@
         public int GuestId { get; set; }
         public int EventId { get; set; }
         public bool HasAttended { get; set; }
+        public bool IsCancelled { get; set; }
 
         // Navigation Properties
         public Guest? Guest { get; set; }
