@@ -50,6 +50,8 @@
                         <td>
                             <form method="post" asp-page-handler="CancelBooking">
                                 <input type="hidden" name="GuestBookingId" value="@guest.GuestBookingId" />
+                                <input type="hidden" name="GuestBookingId" value="@guest.GuestBookingId" />
+                                <input type="hidden" name="EventId" value="@Model.Event.EventId" />
                                 <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this booking?')">
                                     Cancel
                                 </button>
