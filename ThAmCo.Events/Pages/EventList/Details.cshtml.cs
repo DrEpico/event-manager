@@ -81,5 +81,27 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Details", new { id = EventId });
         }
 
+        public async Task<IActionResult> OnPostCancelBookingAsync(int GuestBookingId)
+        {
+            var booking = await _context.GuestBookings.FindAsync(GuestBookingId);
+
+            if (booking == null)
+            {
+                return NotFound(); // Handle the case where the booking doesn't exist
+            }
+
+            booking.IsCancelled = true; // Mark the booking as cancelled
+            await _context.SaveChangesAsync();
+
+            //Refresh the Event data
+            Event = await _context.Events
+                .Include(e => e.GuestBookings)
+                .ThenInclude(gb => gb.Guest)
+                .FirstOrDefaultAsync(e => e.EventId == Event.EventId);
+
+            return Page(); // Return to the current page to show updated data
+
+            //return RedirectToPage("./Details", new { id = EventId });
+        }
     }
 }
