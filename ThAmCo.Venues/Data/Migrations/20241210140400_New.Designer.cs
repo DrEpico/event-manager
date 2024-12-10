@@ -11,8 +11,8 @@ using ThAmCo.Venues.Data;
 namespace ThAmCo.Venues.Data.Migrations
 {
     [DbContext(typeof(VenuesDbContext))]
-    [Migration("20241207204659_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241210140400_New")]
+    partial class New
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ThAmCo.Events.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class New : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,7 +68,8 @@ namespace ThAmCo.Events.Data.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     GuestId = table.Column<int>(type: "INTEGER", nullable: false),
                     EventId = table.Column<int>(type: "INTEGER", nullable: false),
-                    HasAttended = table.Column<bool>(type: "INTEGER", nullable: false)
+                    HasAttended = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsCancelled = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -191,27 +192,27 @@ namespace ThAmCo.Events.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "GuestBookings",
-                columns: new[] { "GuestBookingId", "EventId", "GuestId", "HasAttended" },
+                columns: new[] { "GuestBookingId", "EventId", "GuestId", "HasAttended", "IsCancelled" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, false },
-                    { 2, 2, 2, true },
-                    { 3, 3, 3, false },
-                    { 4, 4, 4, true },
-                    { 5, 5, 5, false },
-                    { 6, 6, 6, true },
-                    { 7, 7, 7, false },
-                    { 8, 8, 8, true },
-                    { 9, 9, 9, false },
-                    { 10, 10, 10, true },
-                    { 11, 11, 11, false },
-                    { 12, 12, 12, true },
-                    { 13, 13, 13, false },
-                    { 14, 14, 14, true },
-                    { 15, 15, 15, false },
-                    { 16, 1, 15, true },
-                    { 17, 2, 15, true },
-                    { 18, 15, 1, true }
+                    { 1, 1, 1, false, false },
+                    { 2, 2, 2, true, false },
+                    { 3, 3, 3, false, false },
+                    { 4, 4, 4, true, false },
+                    { 5, 5, 5, false, false },
+                    { 6, 6, 6, true, false },
+                    { 7, 7, 7, false, false },
+                    { 8, 8, 8, true, false },
+                    { 9, 9, 9, false, false },
+                    { 10, 10, 10, true, false },
+                    { 11, 11, 11, false, false },
+                    { 12, 12, 12, true, false },
+                    { 13, 13, 13, false, false },
+                    { 14, 14, 14, true, false },
+                    { 15, 15, 15, false, false },
+                    { 16, 1, 15, true, false },
+                    { 17, 2, 15, true, false },
+                    { 18, 15, 1, true, false }
                 });
 
             migrationBuilder.CreateIndex(

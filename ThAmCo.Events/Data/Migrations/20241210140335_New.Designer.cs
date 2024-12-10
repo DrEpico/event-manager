@@ -11,8 +11,8 @@ using ThAmCo.Events.Data;
 namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    [Migration("20241208213636_AddGuestBookingCancelled")]
-    partial class AddGuestBookingCancelled
+    [Migration("20241210140335_New")]
+    partial class New
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
