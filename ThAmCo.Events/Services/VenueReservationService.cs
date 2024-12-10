@@ -117,5 +117,7 @@ namespace ThAmCo.Events.Services
                 throw new Exception("An error occurred while assigning staffing. Please try again.", ex);
             }
         }
+
+        //private async Task<VenueReservationDto>
     }
 }

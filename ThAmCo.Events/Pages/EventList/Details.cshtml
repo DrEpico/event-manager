@@ -29,6 +29,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Event.EventType)
         </dd>
+        @* <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Venue)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Venue.VenueCode)
+        </dd> *@
     </dl>
     <h4>Guests</h4>
     @if (Model.Event.GuestBookings.Any())
