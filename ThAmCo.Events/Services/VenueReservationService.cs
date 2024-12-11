@@ -118,6 +118,9 @@ namespace ThAmCo.Events.Services
             }
         }
 
-        //private async Task<VenueReservationDto>
+        //private async Task<GetVenueDto> getVenueReservationAsync(string reference)
+        //{
+
+        //}
     }
 }

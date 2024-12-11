@@ -6,19 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Dtos;
+using ThAmCo.Events.Services;
 
 namespace ThAmCo.Events.Pages.EventList
 {
     public class DetailsModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly VenueReservationService _venueReservationService;
 
-        public DetailsModel(ThAmCo.Events.Data.EventDbContext context)
-        {
+        public DetailsModel(ThAmCo.Events.Data.EventDbContext context, VenueReservationService venueService)
+        { 
             _context = context;
+            _venueReservationService = venueService;
         }
 
         public Event Event { get; set; } = default!;
+        [BindProperty]
+        public GetVenueDto Venue { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -103,6 +109,11 @@ namespace ThAmCo.Events.Pages.EventList
 
             return Page(); // Return to the current page to show updated data
         }
+
+        //public async Task<IActionResult> OnGetVenueCodeAsync(int )
+        //{
+
+        //}
 
     }
 }
