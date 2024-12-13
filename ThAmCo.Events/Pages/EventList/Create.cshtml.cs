@@ -107,15 +107,19 @@ namespace ThAmCo.Events.Pages.EventList
                 await _context.SaveChangesAsync();
 
                 // Call the reservation service 
-                var confirm = await _venueReserveService.PostReservationVenueAsync(
-                    Event.Date, Event.VenueReference, Event.EventId, Event.StartTime, Event.EndTime);
-                //response.EnsureSuccessStatusCode();
+                var reservationReference = await _venueReserveService.PostReservationVenueAsync(
+                Event.Date, Event.VenueReference, Event.EventId, Event.StartTime, Event.EndTime);
 
-                _context.Entry(Event).State = EntityState.Modified; // Mark the entity as modified
+                // Update the Event object with the actual reservation reference
+                Event.VenueReference = reservationReference.Reference;
+
+
+                _context.Entry(Event).State = EntityState.Modified; // Mark as modified
                 await _context.SaveChangesAsync(); // Save the changes
 
+
                 // Redirect to a confirmation or events list page
-                return RedirectToPage("./ConfirmReservation", confirm);
+                return RedirectToPage("./ConfirmReservation", reservationReference);
             }
             catch (HttpRequestException ex)
             {
