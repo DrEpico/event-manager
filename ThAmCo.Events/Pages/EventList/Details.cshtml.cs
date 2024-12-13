@@ -24,7 +24,7 @@ namespace ThAmCo.Events.Pages.EventList
 
         public Event Event { get; set; } = default!;
         [BindProperty]
-        public GetVenueDto Venue { get; set; } = default!;
+        public GetVenueDto VenueCode { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
