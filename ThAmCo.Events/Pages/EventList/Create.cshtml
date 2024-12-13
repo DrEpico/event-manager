@@ -67,10 +67,10 @@
             {
                 <div class="form-group">
                     <label for="AvailableVenues" class="control-label">Available Venues</label>
-                    <select asp-for="Event.VenueCode" class="form-control" asp-items="Model.Venues">
+                    <select asp-for="Event.VenueReference" class="form-control" asp-items="Model.Venues">
                         <option value="">-- Select --</option>
                     </select>
-                    <span asp-validation-for="Event.VenueCode" class="text-danger"></span>
+                    <span asp-validation-for="Event.VenueReference" class="text-danger"></span>
                 </div>
             } else
             {

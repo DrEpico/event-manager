@@ -100,7 +100,7 @@ namespace ThAmCo.Events.Pages.EventList
                     StartTime = Event.StartTime,
                     EndTime = Event.EndTime,
                     EventType = Event.EventType,
-                    VenueCode = Event.VenueCode
+                    VenueReference = Event.VenueReference
                 };
                 // If successful, save the event locally
                 _context.Events.Add(Event);
@@ -108,7 +108,7 @@ namespace ThAmCo.Events.Pages.EventList
 
                 // Call the reservation service 
                 var confirm = await _venueReserveService.PostReservationVenueAsync(
-                    Event.Date, Event.VenueCode, Event.EventId, Event.StartTime, Event.EndTime);
+                    Event.Date, Event.VenueReference, Event.EventId, Event.StartTime, Event.EndTime);
                 //response.EnsureSuccessStatusCode();
 
                 _context.Entry(Event).State = EntityState.Modified; // Mark the entity as modified
