@@ -24,7 +24,7 @@ namespace ThAmCo.Events.Pages.EventList
 
         public Event Event { get; set; } = default!;
         [BindProperty]
-        public GetVenueDto VenueCode { get; set; } = default!;
+        public GetVenueDto Venue { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,22 +33,30 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
-            var selectedEvent = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
-            var eventGuests = await _context.Events
-                .Include(e => e.GuestBookings) // e = event
-                .ThenInclude(gb => gb.Guest) // gb = guestBookings
-                .FirstOrDefaultAsync(g => g.EventId == id); // g = guest
+            // Fetch the event first
+            Event = await _context.Events
+                .Include(e => e.GuestBookings)
+                .ThenInclude(gb => gb.Guest)
+                .FirstOrDefaultAsync(e => e.EventId == id);
 
-            if (selectedEvent == null)
+            if (Event == null)
             {
-                return NotFound(); 
+                return NotFound();
+            }
+
+            // Fetch the venue if the reference exists
+            if (!string.IsNullOrEmpty(Event.VenueReference))
+            {
+                Venue = await _venueReservationService.GetVenueReservationAsync(Event.VenueReference);
             }
             else
             {
-                Event = selectedEvent;
+                Venue = null; // Handle unreserved venue case
             }
+
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostAddGuestAsync(
             int EventId, string GuestName, string Email, string Phone)
@@ -110,10 +118,6 @@ namespace ThAmCo.Events.Pages.EventList
             return Page(); // Return to the current page to show updated data
         }
 
-        //public async Task<IActionResult> OnGetVenueCodeAsync(int )
-        //{
-
-        //}
 
     }
 }
