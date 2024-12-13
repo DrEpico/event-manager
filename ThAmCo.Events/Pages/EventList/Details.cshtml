@@ -10,37 +10,80 @@
 <div>
     <h4>Event</h4>
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.Date)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.Date)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Event.EventType)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Event.EventType)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Venue)
-        </dt>
-        <dd class="col-sm-10">
-            @(Model.Event.VenueReference == null
-                ? "Unreserved"
-                : Model.Venue != null
-                ? Html.DisplayFor(model => model.Venue.VenueCode)
-                : "Venue details unavailable")
-        </dd>
+    <div class="row">
+        <!-- First Column -->
+        <div class="col-md-6">
+            <dl class="row">
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Event.Title)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Event.Title)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Event.Date)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Event.Date)
+                </dd>
+                <dt class="col-sm-4">
+                    @Html.DisplayNameFor(model => model.Event.EventType)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Event.EventType)
+                </dd>
+            </dl>
+        </div>
+        <!-- Second Column -->
+        @if (Model.Venue != null && Model.Venue.Reference != null)
+        {
+            <div class="col-md-6">
+                <dl class="row">
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Venue.Reference)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Venue.Reference)
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Venue)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @(Model.Event.VenueReference == null
+                            ? "Unreserved"
+                            : Html.DisplayFor(model => model.Venue.VenueCode))
+                    </dd>
+                    <dt class="col-sm-4">
+                        @Html.DisplayNameFor(model => model.Venue.WhenMade)
+                    </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Venue.WhenMade)
+                    </dd>
+                </dl>
+            </div>
+        }
+        else if (Model.Venue == null)
+        {
+            <dt class="col-sm-3">
+                Venue
+            </dt>
+            <dd class="col-sm-3">
+                Failed to fetch data
+            </dd>
+        }
+        else
+        {
+            <dt class="col-sm-3">
+                Venue
+            </dt>
+            <dd class="col-sm-3">
+                Unreserved
+            </dd>
+        }
+    </div> @* TODO: Convert EventType and Venue acronyms to meaningful words using if's or something *@
+    @* Backup JUSTIFICATION: EventType and VenueCode shoudn't need to be converted to words from acronyms 
+                            because the user is assumed to be an employee and not a customer *@
 
-    </dl>
     <h4>Guests</h4>
     @if (Model.Event.GuestBookings.Any())
     {
