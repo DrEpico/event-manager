@@ -50,7 +50,7 @@ namespace ThAmCo.Events.Pages.EventList
             }
 
             Assistants = await _context.Staff
-                .Where(s => s.Role == "Assistant")
+                .Where(s => s.Role == "Assistant" || s.Role == "First Aider")
                 .ToListAsync();
 
             // Fetch the venue if the reference exists
