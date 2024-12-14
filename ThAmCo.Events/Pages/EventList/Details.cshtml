@@ -62,13 +62,13 @@
                 </dl>
             </div>
         }
-        else if (Model.Venue == null)
+        else if (Model.Event.VenueReference == null)
         {
             <dt class="col-sm-3">
                 Venue
             </dt>
             <dd class="col-sm-3">
-                Failed to fetch data
+                Unreserved
             </dd>
         }
         else
@@ -77,7 +77,7 @@
                 Venue
             </dt>
             <dd class="col-sm-3">
-                Unreserved
+                Failed to fetch data
             </dd>
         }
     </div> @* TODO: Convert EventType and Venue acronyms to meaningful words using if's or something *@
