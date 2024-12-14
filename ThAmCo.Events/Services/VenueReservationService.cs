@@ -70,26 +70,31 @@ namespace ThAmCo.Events.Services
         {
             try
             {
-                // Get the list of unavailable staff IDs for the specified time period
+                // Get the list of unavailable staff IDs
                 var unavailableStaffIds = await _context.Staffing
                     .Where(s => s.Event.Date == eventDate && s.Event.StartTime < endTime && s.Event.EndTime > startTime)
                     .Select(s => s.StaffId)
                     .Distinct()
                     .ToListAsync();
 
-                // Get the list of available staff
-                var availableStaff = _context.Staff
+                // Filter available staff
+                var availableStaff = await _context.Staff
                     .Where(s => !unavailableStaffIds.Contains(s.StaffId))
+                    .ToListAsync();
+
+                // Extract available managers
+                var availableManagers = availableStaff
+                    .Where(s => s.Role == "Manager")
                     .ToList();
 
-                if (!availableStaff.Any())
+                if (!availableManagers.Any())
                 {
                     throw new Exception("No available staff for the specified time period.");
                 }
 
                 // Select a random staff member
                 var random = new Random();
-                var selectedStaff = availableStaff[random.Next(availableStaff.Count)];
+                var selectedStaff = availableManagers[random.Next(availableManagers.Count)];
 
                 // Create a staffing record
                 var staffing = new Staffing
