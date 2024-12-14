@@ -128,6 +128,42 @@
     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addGuestModal">
         Add Guest
     </button>
+
+    @if (Model.Event.Staffings.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var staff in Model.Event.Staffings)
+                {
+                    <tr>
+                        <td>@staff.Staff.Name</td>
+                        <td>@staff.Staff.Role</td>
+                        <td>
+                            <form method="post" asp-page-handler="RemoveStaff">
+                                <input type="hidden" name="StaffId" value="@staff.Staff.StaffId" />
+                                <input type="hidden" name="EventId" value="@Model.Event.EventId" />
+                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No staff found for this event</p>
+    }
+    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+        Add Staff
+    </button>
 </div>
 
 <!-- Modal Structure -->
@@ -158,6 +194,9 @@
         </div>
     </div>
 </div>
+
+<!-- Add Staff Modal -->
+
 
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |

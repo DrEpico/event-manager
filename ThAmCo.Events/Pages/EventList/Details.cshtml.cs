@@ -23,6 +23,7 @@ namespace ThAmCo.Events.Pages.EventList
         }
 
         public Event Event { get; set; } = default!;
+
         [BindProperty]
         public GetVenueDto Venue { get; set; } = default!;
 
@@ -33,11 +34,13 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
-            // Fetch the event first
             Event = await _context.Events
                 .Include(e => e.GuestBookings)
-                .ThenInclude(gb => gb.Guest)
+                    .ThenInclude(gb => gb.Guest)
+                .Include(e => e.Staffings)
+                    .ThenInclude(s => s.Staff)
                 .FirstOrDefaultAsync(e => e.EventId == id);
+
 
             if (Event == null)
             {
@@ -118,6 +121,17 @@ namespace ThAmCo.Events.Pages.EventList
             return Page(); // Return to the current page to show updated data
         }
 
+        public async Task<IActionResult> OnPostRemoveStaffAsync(int StaffId, int EventId)
+        {
+            var staffing = await _context.Staffing
+                .FirstOrDefaultAsync(s => s.StaffId == StaffId && s.EventId == EventId);
 
+            if (staffing == null) return NotFound();
+
+            _context.Staffing.Remove(staffing);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Details", new { id = EventId });
+        }
     }
 }
