@@ -196,7 +196,37 @@
 </div>
 
 <!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStaffModalLabel">Add Staff</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addStaffForm" method="post" asp-page-handler="AddStaff">
+                    <input type="hidden" name="EventId" value="@Model.Event.EventId" />
 
+                    <div class="mb-3">
+                        <label for="StaffId" class="form-label">Select Staff</label>
+                        <select class="form-select" id="StaffId" name="StaffId" required>
+                            <option value="">-- Select an Assistant --</option>
+                            @foreach (var staff in Model.Assistants)
+                            {
+                                    <option value="@staff.StaffId">@staff.Name - @staff.Role</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |

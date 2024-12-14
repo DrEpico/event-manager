@@ -27,6 +27,8 @@ namespace ThAmCo.Events.Pages.EventList
         [BindProperty]
         public GetVenueDto Venue { get; set; } = default!;
 
+        public List<Staff> Assistants { get; set; } = new();
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -46,6 +48,10 @@ namespace ThAmCo.Events.Pages.EventList
             {
                 return NotFound();
             }
+
+            Assistants = await _context.Staff
+                .Where(s => s.Role == "Assistant")
+                .ToListAsync();
 
             // Fetch the venue if the reference exists
             if (!string.IsNullOrEmpty(Event.VenueReference))
@@ -129,6 +135,31 @@ namespace ThAmCo.Events.Pages.EventList
             if (staffing == null) return NotFound();
 
             _context.Staffing.Remove(staffing);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Details", new { id = EventId });
+        }
+
+        public async Task<IActionResult> OnPostAddStaffAsync(int EventId, int StaffId)
+        {
+            if (StaffId == 0)
+            {
+                ModelState.AddModelError(string.Empty, "Please select a valid staff member.");
+                return Page();
+            }
+
+            var selectedEvent = await _context.Events.FindAsync(EventId);
+            if (selectedEvent == null)
+            {
+                return NotFound();
+            }
+
+            var staffing = new Staffing
+            {
+                EventId = EventId,
+                StaffId = StaffId
+            };
+            _context.Staffing.Add(staffing);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Details", new { id = EventId });
