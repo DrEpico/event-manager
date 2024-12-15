@@ -1,5 +1,14 @@
 ### Web Apps and Services Project
 
+todo:
+prevent user from booking the venue in the past (booking a venue with the time technically being yesterday)
+translate acronyms to meaningful words (optional)
+
+
+
+
+
+
 ## Scenario
 <p>ThreeAmigos Corp is an event management company that arranges and oversees a range of functions, including conferences, parties and weddings for its clients. 
 <br>As well as logistics, ThreeAmigos Corp organises the catering and staffing for events.</p>
