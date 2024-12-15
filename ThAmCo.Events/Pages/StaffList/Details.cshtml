@@ -37,10 +37,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var staffing in Model.Staff.Staffings) //TODO: exclude the cancelled events
+            @foreach (var staffing in Model.Staff.Staffings) //TODO: exclude the cancelled events once soft deletion is implemented
             {
                 <tr>
-                    <td>@staffing.Event.Title</td>
+                    <td>
+                        <a asp-page="/EventList/Details" asp-route-id="@staffing.Event.EventId">
+                            @staffing.Event.Title
+                        </a>
+                    </td>
                     <td>@staffing.Event.Date.ToString("dd/MM/yyyy")</td>
                 </tr>
             }
