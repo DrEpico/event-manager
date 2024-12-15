@@ -7,6 +7,16 @@
 
 <h1>Details</h1>
 
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-warning">
+        @foreach(var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
 <div>
     <h4>Event</h4>
     <hr />

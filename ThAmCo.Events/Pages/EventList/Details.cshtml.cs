@@ -43,7 +43,6 @@ namespace ThAmCo.Events.Pages.EventList
                     .ThenInclude(s => s.Staff)
                 .FirstOrDefaultAsync(e => e.EventId == id);
 
-
             if (Event == null)
             {
                 return NotFound();
@@ -52,6 +51,9 @@ namespace ThAmCo.Events.Pages.EventList
             Assistants = await _context.Staff
                 .Where(s => s.Role == "Assistant" || s.Role == "First Aider")
                 .ToListAsync();
+
+            //Check if certain types of events have first aider assigned or not
+            CheckFristAiderRequirement();
 
             // Fetch the venue if the reference exists
             if (!string.IsNullOrEmpty(Event.VenueReference))
@@ -65,7 +67,6 @@ namespace ThAmCo.Events.Pages.EventList
 
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostAddGuestAsync(
             int EventId, string GuestName, string Email, string Phone)
@@ -163,6 +164,17 @@ namespace ThAmCo.Events.Pages.EventList
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Details", new { id = EventId });
+        }
+
+        private void CheckFristAiderRequirement()
+        {
+            if(Event.EventType == "EXH" || Event.EventType == "FES" || Event.EventType == "CMP")
+            {
+                if(!Event.Staffings.Any(s => s.Staff.Role == "First Aider"))
+                {
+                    ModelState.AddModelError(string.Empty, "Warning: This event requires at least one first-aider");
+                }
+            }
         }
     }
 }
