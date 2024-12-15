@@ -25,6 +25,34 @@
         </dd>
     </dl>
 </div>
+
+<h4>Upcoming Events</h4>
+@if (Model.Staff.Staffings.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Event ID</th>
+                <th>Event Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var staffing in Model.Staff.Staffings) //TODO: exclude the cancelled events
+            {
+                <tr>
+                    <td>@staffing.Event.Title</td>
+                    <td>@staffing.Event.Date.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No upcoming events found.</p>
+}
+
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Staff.StaffId">Edit</a> |
     <a asp-page="./Index">Back to List</a>

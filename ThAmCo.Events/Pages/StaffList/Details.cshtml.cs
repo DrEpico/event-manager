@@ -27,6 +27,11 @@ namespace ThAmCo.Events.Pages.StaffList
                 return NotFound();
             }
 
+            Staff = await _context.Staff
+                .Include(s => s.Staffings)
+                .ThenInclude(st => st.Event)
+                .FirstOrDefaultAsync(s => s.StaffId == id);
+
             var staff = await _context.Staff.FirstOrDefaultAsync(m => m.StaffId == id);
             if (staff == null)
             {
