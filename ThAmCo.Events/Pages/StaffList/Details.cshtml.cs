@@ -28,7 +28,8 @@ namespace ThAmCo.Events.Pages.StaffList
             }
 
             Staff = await _context.Staff
-                .Include(s => s.Staffings)
+                .Include(s => s.Staffings.
+                    Where(st => st.Event.isCancelled == false))
                 .ThenInclude(st => st.Event)
                 .FirstOrDefaultAsync(s => s.StaffId == id);
 

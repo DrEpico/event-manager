@@ -32,7 +32,13 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                    @if (item.isCancelled)
+                    {
+                        @:Cancelled
+                    } else
+                    {
+                        @Html.DisplayFor(modelItem => item.Date)
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EventType)
