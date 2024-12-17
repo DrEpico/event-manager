@@ -39,7 +39,6 @@
                         <div class="text-danger font-weight-bold">
                             Cancelled
                         </div>
-
                     }
                     else
                     {
@@ -186,6 +185,15 @@
         Add Staff
     </button>
 </div>
+    @* <button type="button" class="btn" asp-page-handler="DeleteVenueReserving">test</button> *@
+    <form method="post" asp-page-handler="DeleteVenueReserving">
+        <input type="hidden" name="EventId" value="@Model.Event.EventId" />
+        <input type="hidden" name="VenueRefernece" value="@Model.Event.VenueReference" />
+        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this event?')">
+            Cancel Event
+        </button>
+    </form>
+
 
 <!-- Modal Structure -->
 <div class="modal fade" id="addGuestModal" tabindex="-1" aria-labelledby="addGuestModalLabel" aria-hidden="true">

@@ -146,5 +146,27 @@ namespace ThAmCo.Events.Services
             }
         }
 
+        public async Task<GetVenueDto?> DeleteVenueReservationAsync(string reference)
+        {
+            var url = $"{ServiceBaseUrl}{VenueReservationEndpoint}/{Uri.EscapeDataString(reference)}";
+            try
+            {
+                var response = await _httpClient.DeleteAsync(url);
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Log the error or handle it appropriately
+                    return null;
+                }
+
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                return JsonSerializer.Deserialize<GetVenueDto>(jsonResponse, jsonOptions);
+            }
+            catch (Exception ex)
+            {
+                // Log exception details
+                Console.WriteLine($"Failed to fetch venue reservation: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

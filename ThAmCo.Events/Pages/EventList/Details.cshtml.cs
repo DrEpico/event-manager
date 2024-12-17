@@ -176,5 +176,30 @@ namespace ThAmCo.Events.Pages.EventList
                 }
             }
         }
+
+        public async Task<IActionResult> OnDeleteVenueReservingAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            if (Event == null)
+            {
+                return NotFound();
+            }
+
+            // Fetch the venue if the reference exists
+            if (!string.IsNullOrEmpty(Event.VenueReference))
+            {
+                Venue = await _venueReservationService.DeleteVenueReservationAsync(Event.VenueReference);
+            }
+            else
+            {
+                Venue = null; // Handle unreserved venue case
+            }
+
+            return Page();
+        }
     }
 }
