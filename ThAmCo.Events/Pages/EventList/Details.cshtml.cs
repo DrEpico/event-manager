@@ -184,22 +184,30 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
+            // Fetch the event from the database
+            Event = await _context.Events.FindAsync(id);
+
             if (Event == null)
             {
                 return NotFound();
             }
 
-            // Fetch the venue if the reference exists
+            // Fetch and delete the venue reservation if a reference exists
             if (!string.IsNullOrEmpty(Event.VenueReference))
             {
                 Venue = await _venueReservationService.DeleteVenueReservationAsync(Event.VenueReference);
+
+                // Optionally clear the venue reference from the Event
+                Event.VenueReference = null;
+                await _context.SaveChangesAsync();
             }
             else
             {
                 Venue = null; // Handle unreserved venue case
             }
 
-            return Page();
+            return RedirectToPage("./Details", new { id });
         }
+
     }
 }
