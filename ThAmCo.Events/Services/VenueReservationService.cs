@@ -148,23 +148,34 @@ namespace ThAmCo.Events.Services
 
         public async Task<GetVenueDto?> DeleteVenueReservationAsync(string reference)
         {
-            var url = $"{ServiceBaseUrl}{VenueReservationEndpoint}/{Uri.EscapeDataString(reference)}";
+            var eventByReference = await _context.Events.FirstOrDefaultAsync(m => m.VenueReference == reference.Trim());
+            if (eventByReference == null)
+            {
+                Console.WriteLine("Event not found with the given reference.");
+                return null;
+            }
+
+            var url = $"{ServiceBaseUrl}{VenueReservationEndpoint}/{Uri.EscapeDataString(reference.Trim())}";
             try
             {
                 var response = await _httpClient.DeleteAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
-                    // Log the error or handle it appropriately
+                    Console.WriteLine("Failed to delete venue reservation.");
                     return null;
                 }
+
+                // Update the event only after successful API call
+                eventByReference.VenueReference = null;
+                eventByReference.isCancelled = true;
+                await _context.SaveChangesAsync();
 
                 var jsonResponse = await response.Content.ReadAsStringAsync();
                 return JsonSerializer.Deserialize<GetVenueDto>(jsonResponse, jsonOptions);
             }
             catch (Exception ex)
             {
-                // Log exception details
-                Console.WriteLine($"Failed to fetch venue reservation: {ex.Message}");
+                Console.WriteLine($"Failed to delete venue reservation: {ex.Message}");
                 return null;
             }
         }

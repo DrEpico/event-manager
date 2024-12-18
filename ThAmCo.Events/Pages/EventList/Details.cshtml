@@ -189,9 +189,16 @@
     <form method="post" asp-page-handler="DeleteVenueReservation">
         <input type="hidden" name="EventId" value="@Model.Event.EventId" />
         <input type="hidden" name="VenueReference" value="@Model.Event.VenueReference" />
-        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this event?')">
-            Cancel Event
-        </button>
+        @if (!Model.Event.isCancelled)
+        {
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this event?')">
+                Cancel Event
+            </button>
+        }
+        else
+        {
+            //TODO: Potential rebook button?
+        }
     </form>
 
 
