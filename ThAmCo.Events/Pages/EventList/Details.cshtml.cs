@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using ThAmCo.Events.Data;
 using ThAmCo.Events.Dtos;
 using ThAmCo.Events.Services;
@@ -177,15 +178,21 @@ namespace ThAmCo.Events.Pages.EventList
             }
         }
 
-        public async Task<IActionResult> OnDeleteVenueReservingAsync(int? id)
+        public async Task<IActionResult> OnPostDeleteVenueReservationAsync(int EventId)
         {
-            if (id == null)
+            if (EventId == null)
             {
                 return NotFound();
             }
 
             // Fetch the event from the database
-            Event = await _context.Events.FindAsync(id);
+            Event = await _context.Events.FindAsync(EventId);
+            //Event = await _context.Events
+            //    .Include(e => e.GuestBookings)
+            //        .ThenInclude(gb => gb.Guest)
+            //    .Include(e => e.Staffings)
+            //        .ThenInclude(s => s.Staff)
+            //    .FirstOrDefaultAsync(e => e.EventId == EventId);
 
             if (Event == null)
             {
@@ -206,7 +213,8 @@ namespace ThAmCo.Events.Pages.EventList
                 Venue = null; // Handle unreserved venue case
             }
 
-            return RedirectToPage("./Details", new { id });
+            return RedirectToPage("./Details", new { id = EventId });
+            //return Page();
         }
 
     }
