@@ -70,7 +70,7 @@
                     <dd class="col-sm-8">
                         @(Model.Event.VenueReference == null
                             ? "Unreserved"
-                            : Html.DisplayFor(model => model.Venue.VenueCode))
+                            : Html.DisplayFor(model => model.Venue.VenueName))
                     </dd>
                     <dt class="col-sm-4">
                         @Html.DisplayNameFor(model => model.Venue.WhenMade)
