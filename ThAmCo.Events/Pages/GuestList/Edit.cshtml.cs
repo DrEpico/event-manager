@@ -72,5 +72,49 @@ namespace ThAmCo.Events.Pages.GuestList
         {
             return _context.Guests.Any(e => e.GuestId == id);
         }
+
+        public async Task<IActionResult> OnPostAnonymiseGuest(int GuestId)
+        {
+            var guest = await _context.Guests.FirstOrDefaultAsync(g => g.GuestId == GuestId);
+            if (guest == null)
+            {
+                Console.WriteLine("Guest not found");
+                return Page();
+            }
+
+            string anon = GenerateAnon();
+
+            if (anon != null)
+            {
+                guest.Name = anon;
+                guest.Email = anon + guest.GuestId.ToString() + "@removed.com";
+                guest.Phone = "0000000000";
+                //TODO?: Could also remove the guest bookings?
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to save anonymised guest information: {ex.Message}");
+            }
+
+            return Page();
+        }
+
+        private string GenerateAnon()
+        {
+            var anon = "anon";
+            Random random = new Random();
+            for (int i = 0; i < 3; i++)
+            {
+                int num = random.Next(0, 9);
+                num.ToString();
+                anon += num.ToString();
+            }
+            return anon;
+        }
     }
 }
