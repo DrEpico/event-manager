@@ -179,5 +179,36 @@ namespace ThAmCo.Events.Services
                 return null;
             }
         }
+
+        public async Task AnonymiseGuest(int guestId)
+        {
+            var guest = await _context.Guests.FirstOrDefaultAsync(g => g.GuestId == guestId);
+            if (guest == null)
+            {
+                Console.WriteLine("Guest not found");
+                return;
+            }
+            string anon = GenerateAnon();
+            if (anon != null)
+            {
+
+            }
+
+
+
+        }
+
+        private string GenerateAnon()
+        {
+            var anon = "anon";
+            Random random = new Random();
+            for(int i = 0; i < 3; i++)
+            {
+                int num = random.Next(0,9);
+                num.ToString();
+                anon += num.ToString();
+            }
+            return anon;
+        }
     }
 }
