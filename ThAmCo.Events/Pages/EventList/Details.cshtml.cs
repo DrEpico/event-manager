@@ -178,6 +178,20 @@ namespace ThAmCo.Events.Pages.EventList
             }
         }
 
+        private int GetRequiredStaffCount()
+        {
+            int guests = Event.GuestBookings.Count();
+            int staff = Event.Staffings.Count();
+
+            // Calculate minimum required staff
+            int requiredStaff = (int)Math.Ceiling(guests / 10.0);
+
+            // Calculate how many more staff are needed
+            int staffNeeded = Math.Max(0, requiredStaff - staff);
+
+            return staffNeeded;
+        }
+
         public async Task<IActionResult> OnPostDeleteVenueReservationAsync(int EventId)
         {
             if (EventId == null)

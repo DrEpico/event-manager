@@ -132,9 +132,9 @@
                         </td>
                     </tr>
                 }
-                    <tr>
-                        <td colspan="3">Total Guest Count: @Model.Event.GuestBookings.Count(gb => !gb.IsCancelled)</td> <!-- Show count of non-cancelled bookings -->
-                    </tr>
+                <tr>
+                    <td colspan="3">Total Guest Count: @Model.Event.GuestBookings.Count(gb => !gb.IsCancelled)</td> <!-- Show count of non-cancelled bookings -->
+                </tr>
             </tbody>
         </table>
         //TODO: Add a new page for booking a guest onto an event for better UX instead of doing it within the same page. 
