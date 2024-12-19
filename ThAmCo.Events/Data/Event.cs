@@ -13,6 +13,17 @@ namespace ThAmCo.Events.Data
         //[DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
         public string EventType { get; set; }
+        public string EventTypeFull => EventType switch
+        {
+            "CMP" => "Competition",
+            "EXH" => "Exhibition",
+            "FES" => "Festival",
+            "FND" => "Fundraiser",
+            "GAL" => "Gala",
+            "NET" => "Networking",
+            "OTR" => "Outreach",
+            "WKS" => "Workshop"
+        };
         public string? VenueReference { get; set; } // Bind the selected venue's code
         public bool isCancelled { get; set; }
 
