@@ -188,14 +188,26 @@ namespace ThAmCo.Events.Services
                 Console.WriteLine("Guest not found");
                 return;
             }
+
             string anon = GenerateAnon();
+
             if (anon != null)
             {
-
+                guest.Name = anon;
+                guest.Email = anon + guest.GuestId.ToString() + "@removed.com";
+                guest.Phone = "0000000000";
+                //TODO?: Could also remove the guest bookings?
             }
 
-
-
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to save anonymised guest information: {ex.Message}");
+                return;
+            }
         }
 
         private string GenerateAnon()
