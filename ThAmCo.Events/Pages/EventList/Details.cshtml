@@ -9,12 +9,12 @@
 
 @if (!ViewData.ModelState.IsValid)
 {
-    <div class="alert alert-warning">
         @foreach(var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
         {
-            <p>@error.ErrorMessage</p>
+            <div class="alert alert-warning pb-0">
+                <p class="pb-0">@error.ErrorMessage</p>
+            </div>
         }
-    </div>
 }
 
 <div>
@@ -49,7 +49,7 @@
                     @Html.DisplayNameFor(model => model.Event.EventType)
                 </dt>
                 <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Event.EventType)
+                    @Html.DisplayFor(model => model.Event.EventTypeFull)
                 </dd>
             </dl>
         </div>
@@ -103,7 +103,7 @@
     @* Backup JUSTIFICATION: EventType and VenueCode shoudn't need to be converted to words from acronyms 
                             because the user is assumed to be an employee and not a customer *@
     <div>
-    <h4>Guests</h4>
+    <h4 class="mt-1">Guests</h4>
     @if (Model.Event.GuestBookings.Any())
     {
         <table class="table">
@@ -148,7 +148,7 @@
         Add Guest
     </button>
     
-    <h4>Staff</h4>
+    <h4 class="mt-3">Staff</h4>
     @if (Model.Event.Staffings.Any())
     {
         <table class="table">
@@ -191,7 +191,7 @@
         <input type="hidden" name="VenueReference" value="@Model.Event.VenueReference" />
         @if (!Model.Event.isCancelled)
         {
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to cancel this event?')">
+            <button type="submit" class="btn btn-danger mt-2 mb-2" onclick="return confirm('Are you sure you want to cancel this event?')">
                 Cancel Event
             </button>
         }
