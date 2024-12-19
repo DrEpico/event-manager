@@ -50,7 +50,7 @@
             </div>
             <div class="modal-body">
                 <form id="removeGuestForm" method="post" asp-page-handler="AnonymiseGuest">
-                    <input type="hidden" name="EventId" value="@Model.Guest.GuestId" />
+                    <input type="hidden" name="GuestId" value="@Model.Guest.GuestId" />
                     <div class="mb-3">
                         <p>In accordance with GDPR regulations, you have the right to request the removal of your personal data from our database. While complete deletion may not be possible due to data retention policies, you can choose to anonymise your personal information. Please review the terms carefully and proceed by clicking the button below if you agree.</p>
                     </div>
