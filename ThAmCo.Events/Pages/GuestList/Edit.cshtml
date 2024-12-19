@@ -36,6 +36,36 @@
     </div>
 </div>
 
+<button type="button" class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#removeGuestModal">
+    Remove Guest
+</button>
+
+<!-- Modal Structure -->
+<div class="modal fade" id="removeGuestModal" tabindex="-1" aria-labelledby="removeGuestModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="removeGuestModalLabel">Remove Guest</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="removeGuestForm" method="post" asp-page-handler="AnonymiseGuest">
+                    <input type="hidden" name="EventId" value="@Model.Guest.GuestId" />
+                    <div class="mb-3">
+                        <p>In accordance with GDPR regulations, you have the right to request the removal of your personal data from our database. While complete deletion may not be possible due to data retention policies, you can choose to anonymise your personal information. Please review the terms carefully and proceed by clicking the button below if you agree.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-danger">
+                            Anonymise Guest
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
