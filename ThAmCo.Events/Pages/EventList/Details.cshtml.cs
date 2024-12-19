@@ -55,6 +55,12 @@ namespace ThAmCo.Events.Pages.EventList
 
             //Check if certain types of events have first aider assigned or not
             CheckFristAiderRequirement();
+            //Check if there is at least one staff per 10 guests
+            int requiredStaffCount = GetRequiredStaffCount();
+            if (requiredStaffCount > 0)
+            {
+                ModelState.AddModelError(string.Empty, $"Warning: Please add {requiredStaffCount - Event.Staffings.Count()} staff (1 staff per 10 guests)");
+            }
 
             // Fetch the venue if the reference exists
             if (!string.IsNullOrEmpty(Event.VenueReference))
