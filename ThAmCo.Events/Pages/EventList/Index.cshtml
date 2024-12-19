@@ -32,16 +32,16 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                    @if (item.isCancelled)
-                    {
-                        @:Cancelled
-                    } else
-                    {
-                        @Html.DisplayFor(modelItem => item.Date)
-                    }
+                @if (item.isCancelled)
+                {
+                    @:Cancelled
+                } else
+                {
+                    @Html.DisplayFor(modelItem => item.Date)
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EventType)
+                @Html.DisplayFor(modelItem => item.EventTypeFull)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.EventId">Edit</a> |

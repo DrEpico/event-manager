@@ -72,5 +72,7 @@ namespace ThAmCo.Events.Pages.EventList
         {
             return _context.Events.Any(e => e.EventId == id);
         }
+
+        //TODO: Add a modal that allows venues to be booked for existing events.
     }
 }
