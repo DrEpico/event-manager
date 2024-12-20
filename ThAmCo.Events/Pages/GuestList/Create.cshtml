@@ -1,44 +1,49 @@
 ﻿@page
 @model ThAmCo.Events.Pages.GuestList.CreateModel
-
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create New Guest";
 }
 
-<h1>Create</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Create New Guest</h2>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-<h4>Guest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Guest.Name" class="control-label"></label>
-                <input asp-for="Guest.Name" class="form-control" />
-                <span asp-validation-for="Guest.Name" class="text-danger"></span>
+                        <div class="mb-3">
+                            <label asp-for="GuestVM.Name" class="form-label"></label>
+                            <input asp-for="GuestVM.Name" class="form-control" placeholder="Enter guest name" />
+                            <span asp-validation-for="GuestVM.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="GuestVM.Email" class="form-label"></label>
+                            <input asp-for="GuestVM.Email" class="form-control" placeholder="Enter email address" type="email" />
+                            <span asp-validation-for="GuestVM.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="GuestVM.Phone" class="form-label"></label>
+                            <input asp-for="GuestVM.Phone" class="form-control" placeholder="Enter phone number" />
+                            <span asp-validation-for="GuestVM.Phone" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a asp-page="Index" class="btn btn-secondary me-md-2">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Create Guest</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Guest.Email" class="control-label"></label>
-                <input asp-for="Guest.Email" class="form-control" />
-                <span asp-validation-for="Guest.Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Guest.Phone" class="control-label"></label>
-                <input asp-for="Guest.Phone" class="form-control" />
-                <span asp-validation-for="Guest.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }

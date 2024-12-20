@@ -1,32 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
     public class CreateModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
 
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context)
+        public CreateModel(EventDbContext context)
         {
             _context = context;
         }
+
+        [BindProperty]
+        public GuestViewModel GuestVM { get; set; } = new GuestViewModel();
 
         public IActionResult OnGet()
         {
             return Page();
         }
 
-        [BindProperty]
-        public Guest Guest { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -34,9 +29,18 @@ namespace ThAmCo.Events.Pages.GuestList
                 return Page();
             }
 
-            _context.Guests.Add(Guest);
+            // Map view model to data model
+            var guest = new Guest
+            {
+                Name = GuestVM.Name,
+                Email = GuestVM.Email,
+                Phone = GuestVM.Phone
+            };
+
+            _context.Guests.Add(guest);
             await _context.SaveChangesAsync();
 
+            TempData["SuccessMessage"] = "Guest created successfully!";
             return RedirectToPage("./Index");
         }
     }
