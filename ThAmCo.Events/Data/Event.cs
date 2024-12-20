@@ -22,7 +22,8 @@ namespace ThAmCo.Events.Data
             "GAL" => "Gala",
             "NET" => "Networking",
             "OTR" => "Outreach",
-            "WKS" => "Workshop"
+            "WKS" => "Workshop",
+            _ => "Unknown Venue"
         };
         public string? VenueReference { get; set; } // Bind the selected venue's code
         public bool isCancelled { get; set; }
