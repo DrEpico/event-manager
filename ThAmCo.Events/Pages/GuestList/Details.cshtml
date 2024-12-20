@@ -1,54 +1,115 @@
 ﻿@page
 @model ThAmCo.Events.Pages.GuestList.DetailsModel
-
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Guest Details";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <h1>Guest Details</h1>
 
-<div>
-    <h4>Guest</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Guest.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Guest.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Guest.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Guest.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Guest.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Guest.Phone)
-        </dd>
-    </dl>
-    <h4>Bookings</h4>
-    @if (Model.Guest.GuestBookings.Any())
+    @if (Model.GuestVM != null)
     {
-        <ul>
-            @foreach (var booking in Model.Guest.GuestBookings)
-            {
-                <li>
-                    Event: @booking.Event?.Title (@booking.Event?.EventType)<br />
-                    Attended: @(booking.HasAttended ? "Yes" : "No")
-                </li> 
-            }
-        </ul>
-    } 
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Personal Information</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(m => m.GuestVM.Name)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(m => m.GuestVM.Name)
+                    </dd>
+
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(m => m.GuestVM.Email)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(m => m.GuestVM.Email)
+                    </dd>
+
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(m => m.GuestVM.Phone)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(m => m.GuestVM.Phone)
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Event Bookings</h4>
+            </div>
+            <div class="card-body">
+                @if (Model.GuestVM.Bookings.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Attendance</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var booking in Model.GuestVM.Bookings)
+                                {
+                                    <tr>
+                                        <td>@booking.EventTitle</td>
+                                        <td>@booking.EventDate.ToShortDateString()</td>
+                                        <td>
+                                            @if (booking.IsCancelled)
+                                            {
+                                                <span class="badge bg-danger">Cancelled</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-success">Confirmed</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (booking.HasAttended)
+                                            {
+                                                <span class="badge bg-success">Attended</span>
+                                            }
+                                            else if (!booking.IsCancelled && booking.EventDate > DateTime.Now)
+                                            {
+                                                <span class="badge bg-warning">Pending</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-danger">Did Not Attend</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        No bookings found for this guest.
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <a asp-page="./Edit" asp-route-id="@Model.GuestVM.GuestId" class="btn btn-primary">Edit</a>
+            <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+        </div>
+    }
     else
     {
-        <p>No bookings found for this guest.</p>
+        <div class="alert alert-danger">
+            Guest information not found.
+        </div>
     }
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Guest.GuestId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
 </div>

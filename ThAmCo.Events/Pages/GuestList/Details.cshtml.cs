@@ -6,46 +6,55 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
     public class DetailsModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
 
-        public DetailsModel(ThAmCo.Events.Data.EventDbContext context)
+        public DetailsModel(EventDbContext context)
         {
             _context = context;
         }
 
-        public Guest Guest { get; set; } = default!;
-        //Event object to navigate to events associated with a guest
-        public Guest? Event { get; set; } = default!;
-        //Guest can have no bookings so it is nullable
+        public GuestViewModel? GuestVM { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            
             if (id == null)
             {
                 return NotFound();
             }
 
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
-            var guestEvent = await _context.Guests
-                .Include(g => g.GuestBookings) // link to bookings
-                .ThenInclude(gb => gb.Event) // link to events accosiated with the bookings
+            var guest = await _context.Guests
+                .Include(g => g.GuestBookings)
+                    .ThenInclude(gb => gb.Event)
                 .FirstOrDefaultAsync(m => m.GuestId == id);
 
             if (guest == null)
             {
                 return NotFound();
             }
-            else
+
+            // Map the data model to view model
+            GuestVM = new GuestViewModel
             {
-                Guest = guest;
-                Event = guestEvent;
-            }
+                GuestId = guest.GuestId,
+                Name = guest.Name,
+                Email = guest.Email,
+                Phone = guest.Phone,
+                Bookings = guest.GuestBookings.Select(gb => new GuestViewModel.GuestBookingSummary
+                {
+                    EventId = gb.EventId,
+                    EventTitle = gb.Event?.Title ?? "Unknown Event",
+                    EventDate = gb.Event?.Date ?? DateTime.MinValue,
+                    HasAttended = gb.HasAttended,
+                    IsCancelled = gb.IsCancelled
+                }).ToList()
+            };
+
             return Page();
         }
     }
