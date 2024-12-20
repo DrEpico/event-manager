@@ -1,26 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
     public class EditModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(ThAmCo.Events.Data.EventDbContext context)
+        public EditModel(EventDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
-        public Guest Guest { get; set; } = default!;
+        public GuestViewModel GuestVM { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -29,17 +27,36 @@ namespace ThAmCo.Events.Pages.GuestList
                 return NotFound();
             }
 
-            var guest =  await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
+            var guest = await _context.Guests
+                .Include(g => g.GuestBookings)
+                    .ThenInclude(gb => gb.Event)
+                .FirstOrDefaultAsync(m => m.GuestId == id);
+
             if (guest == null)
             {
                 return NotFound();
             }
-            Guest = guest;
+
+            // Map data model to view model
+            GuestVM = new GuestViewModel
+            {
+                GuestId = guest.GuestId,
+                Name = guest.Name,
+                Email = guest.Email,
+                Phone = guest.Phone,
+                Bookings = guest.GuestBookings.Select(gb => new GuestViewModel.GuestBookingSummary
+                {
+                    EventId = gb.EventId,
+                    EventTitle = gb.Event?.Title ?? "Unknown Event",
+                    EventDate = gb.Event?.Date ?? DateTime.MinValue,
+                    HasAttended = gb.HasAttended,
+                    IsCancelled = gb.IsCancelled
+                }).ToList()
+            };
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -47,15 +64,26 @@ namespace ThAmCo.Events.Pages.GuestList
                 return Page();
             }
 
-            _context.Attach(Guest).State = EntityState.Modified;
+            var guest = await _context.Guests.FindAsync(GuestVM.GuestId);
+
+            if (guest == null)
+            {
+                return NotFound();
+            }
+
+            // Map view model back to data model
+            guest.Name = GuestVM.Name;
+            guest.Email = GuestVM.Email;
+            guest.Phone = GuestVM.Phone;
 
             try
             {
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Guest updated successfully!";
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GuestExists(Guest.GuestId))
+                if (!GuestExists(GuestVM.GuestId))
                 {
                     return NotFound();
                 }
@@ -68,53 +96,45 @@ namespace ThAmCo.Events.Pages.GuestList
             return RedirectToPage("./Index");
         }
 
+        public async Task<IActionResult> OnPostAnonymiseGuestAsync(int guestId)
+        {
+            var guest = await _context.Guests.FindAsync(guestId);
+
+            if (guest == null)
+            {
+                _logger.LogWarning("Attempt to anonymize non-existent guest with ID: {GuestId}", guestId);
+                return NotFound();
+            }
+
+            string anonymizedIdentifier = GenerateAnonymizedIdentifier();
+            guest.Name = anonymizedIdentifier;
+            guest.Email = $"{anonymizedIdentifier}@anonymized.com";
+            guest.Phone = "XXXX-XXX-XXX";
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Guest data has been successfully anonymized.";
+                _logger.LogInformation("Guest {GuestId} successfully anonymized", guestId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to anonymize guest {GuestId}", guestId);
+                TempData["ErrorMessage"] = "Failed to anonymize guest data. Please try again.";
+                return Page();
+            }
+
+            return RedirectToPage("./Index");
+        }
+
         private bool GuestExists(int id)
         {
             return _context.Guests.Any(e => e.GuestId == id);
         }
 
-        public async Task<IActionResult> OnPostAnonymiseGuest(int GuestId)
+        private string GenerateAnonymizedIdentifier()
         {
-            var guest = await _context.Guests.FirstOrDefaultAsync(g => g.GuestId == GuestId);
-            if (guest == null)
-            {
-                Console.WriteLine("Guest not found");
-                return Page();
-            }
-
-            string anon = GenerateAnon();
-
-            if (anon != null)
-            {
-                guest.Name = anon;
-                guest.Email = anon + guest.GuestId.ToString() + "@removed.com";
-                guest.Phone = "0000000000";
-                //TODO?: Could also remove the guest bookings?
-            }
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to save anonymised guest information: {ex.Message}");
-            }
-
-            return Page();
-        }
-
-        private string GenerateAnon()
-        {
-            var anon = "anon";
-            Random random = new Random();
-            for (int i = 0; i < 3; i++)
-            {
-                int num = random.Next(0, 9);
-                num.ToString();
-                anon += num.ToString();
-            }
-            return anon;
+            return $"ANON-{Guid.NewGuid().ToString().Substring(0, 8)}";
         }
     }
 }

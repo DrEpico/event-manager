@@ -1,64 +1,124 @@
 ﻿@page
 @model ThAmCo.Events.Pages.GuestList.EditModel
-
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Guest";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0">Edit Guest Information</h2>
+                </div>
+                <div class="card-body">
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
 
-<h4>Guest</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Guest.GuestId" />
-            <div class="form-group">
-                <label asp-for="Guest.Name" class="control-label"></label>
-                <input asp-for="Guest.Name" class="form-control" />
-                <span asp-validation-for="Guest.Name" class="text-danger"></span>
+                    <form method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="GuestVM.GuestId" />
+
+                        <div class="mb-3">
+                            <label asp-for="GuestVM.Name" class="form-label"></label>
+                            <input asp-for="GuestVM.Name" class="form-control" />
+                            <span asp-validation-for="GuestVM.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="GuestVM.Email" class="form-label"></label>
+                            <input asp-for="GuestVM.Email" class="form-control" type="email" />
+                            <span asp-validation-for="GuestVM.Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="GuestVM.Phone" class="form-label"></label>
+                            <input asp-for="GuestVM.Phone" class="form-control" />
+                            <span asp-validation-for="GuestVM.Phone" class="text-danger"></span>
+                        </div>
+
+                        @if (Model.GuestVM.Bookings.Any())
+                        {
+                            <div class="mb-3">
+                                <h5>Current Bookings</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Event</th>
+                                                <th>Date</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var booking in Model.GuestVM.Bookings)
+                                            {
+                                                <tr>
+                                                    <td>@booking.EventTitle</td>
+                                                    <td>@booking.EventDate.ToShortDateString()</td>
+                                                    <td>
+                                                        @if (booking.IsCancelled)
+                                                        {
+                                                            <span class="badge bg-danger">Cancelled</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge bg-success">Active</span>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="d-flex justify-content-between">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#removeGuestModal">
+                                Anonymize Guest Data
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Guest.Email" class="control-label"></label>
-                <input asp-for="Guest.Email" class="form-control" />
-                <span asp-validation-for="Guest.Email" class="text-danger"></span>
+
+            <div class="mt-3">
+                <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Guest.Phone" class="control-label"></label>
-                <input asp-for="Guest.Phone" class="form-control" />
-                <span asp-validation-for="Guest.Phone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 
-<button type="button" class="btn btn-danger mt-1" data-bs-toggle="modal" data-bs-target="#removeGuestModal">
-    Remove Guest
-</button>
-
-<!-- Modal Structure -->
+<!-- Anonymization Modal -->
 <div class="modal fade" id="removeGuestModal" tabindex="-1" aria-labelledby="removeGuestModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="removeGuestModalLabel">Remove Guest</h5>
+                <h5 class="modal-title" id="removeGuestModalLabel">Data Anonymization Request</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="removeGuestForm" method="post" asp-page-handler="AnonymiseGuest">
-                    <input type="hidden" name="GuestId" value="@Model.Guest.GuestId" />
+                <form id="anonymizeForm" method="post" asp-page-handler="AnonymiseGuest">
+                    <input type="hidden" name="guestId" value="@Model.GuestVM.GuestId" />
                     <div class="mb-3">
-                        <p>In accordance with GDPR regulations, you have the right to request the removal of your personal data from our database. While complete deletion may not be possible due to data retention policies, you can choose to anonymise your personal information. Please review the terms carefully and proceed by clicking the button below if you agree.</p>
+                        <h6>GDPR Data Protection Notice</h6>
+                        <p>In accordance with GDPR regulations, you are requesting to anonymize this guest's personal data. Please note:</p>
+                        <ul>
+                            <li>Personal information will be replaced with anonymous identifiers</li>
+                            <li>Booking history will be maintained for legal requirements</li>
+                            <li>This action cannot be undone</li>
+                            <li>The guest will need to re-register to use our services again</li>
+                        </ul>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-danger">
-                            Anonymise Guest
-                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Confirm Anonymization</button>
                     </div>
                 </form>
             </div>
@@ -66,10 +126,6 @@
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <partial name="_ValidationScriptsPartial" />
 }
