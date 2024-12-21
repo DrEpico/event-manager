@@ -26,7 +26,7 @@ namespace ThAmCo.Events.Data
             _ => "Unknown Venue"
         };
         public string? VenueReference { get; set; } // Bind the selected venue's code
-        public bool isCancelled { get; set; }
+        public bool IsCancelled { get; set; }
 
         // Navigation Properties
         public List<GuestBooking> GuestBookings { get; set; } = new();
