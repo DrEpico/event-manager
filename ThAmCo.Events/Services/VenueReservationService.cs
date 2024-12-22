@@ -6,22 +6,12 @@ using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace ThAmCo.Events.Services
 {
-    /// <summary>
-    /// Service for managing venue reservations and related operations.
-    /// </summary>
     public class VenueReservationService
     {
         const string ServiceBaseUrl = "https://localhost:7088/api";
         const string VenueReservationEndpoint = "/Reservations";
         private readonly HttpClient _httpClient;
-        // Database context for accessing and updating the local database.
         private readonly EventDbContext _context;
-
-        /// <summary>
-        /// Initializes a new instance of the VenueReservationService with the provided HttpClient and DbContext.
-        /// </summary>
-        /// <param name="httpClient">HTTP client for API calls.</param>
-        /// <param name="context">Database context for local data operations.</param>
         public VenueReservationService(HttpClient httpClient, EventDbContext context)
         {
             _httpClient = httpClient;
@@ -33,28 +23,17 @@ namespace ThAmCo.Events.Services
             PropertyNameCaseInsensitive = true
         };
 
-        /// <summary>
-        /// Makes a venue reservation for the specified event details.
-        /// </summary>
-        /// <param name="date">Event date.</param>
-        /// <param name="venueCode">Code of the venue to be reserved.</param>
-        /// <param name="eventId">ID of the event requiring the reservation.</param>
-        /// <param name="startTime">Start time of the event.</param>
-        /// <param name="endTime">End time of the event.</param>
-        /// <returns>A confirmation DTO containing reservation details.</returns>
         public async Task<ConfirmReservationDto> PostReservationVenueAsync(DateTime date, string venueCode, int eventId, TimeSpan startTime, TimeSpan endTime)
-        {
-            // Assign a staff member to the event.
+        {  
             string staffId = await AssignStaffing(eventId, date, startTime, endTime);
 
-            // Create a DTO for the reservation.
+            // Create the reservation DTO
             var reservation = new VenueReservationDto //TODO: move this to service (pass down data not as object yet)
             {
                 StaffId = staffId,
                 EventDate = date,
                 VenueCode = venueCode
             };
-            // Post the reservation to the API.
             var url = ServiceBaseUrl + VenueReservationEndpoint;
             HttpResponseMessage response;
             try
@@ -73,8 +52,8 @@ namespace ThAmCo.Events.Services
                 throw new InvalidOperationException("The response was not received.");
             }
 
-            // Deserialize the confirmation response.
             var jsonResponse = await response.Content.ReadAsStringAsync();
+
             var confirm = JsonSerializer.Deserialize<ConfirmReservationDto>(jsonResponse, jsonOptions);
 
             if (confirm == null)
@@ -86,19 +65,12 @@ namespace ThAmCo.Events.Services
             return confirm;
         }
 
-        /// <summary>
-        /// Assigns a "Manager" level staff to an event based on availability and role.
-        /// </summary>
-        /// <param name="eventId">ID of the event.</param>
-        /// <param name="eventDate">Date of the event.</param>
-        /// <param name="startTime">Start time of the event.</param>
-        /// <param name="endTime">End time of the event.</param>
-        /// <returns>The ID of the assigned staff member.</returns>
+        /// <returns>Returns string type StaffId because the reservation DTO takes string type</returns>
         private async Task<string> AssignStaffing(int eventId, DateTime eventDate, TimeSpan startTime, TimeSpan endTime)
         {
             try
             {
-                // Find unavailable staff based on overlapping events.
+                // Get the list of unavailable staff IDs
                 var unavailableStaffIds = await _context.Staffing
                     .Where(s => s.Event.Date == eventDate && s.Event.StartTime < endTime && s.Event.EndTime > startTime)
                     .Select(s => s.StaffId)
@@ -120,16 +92,18 @@ namespace ThAmCo.Events.Services
                     throw new Exception("No available staff for the specified time period.");
                 }
 
-                // Select a random manager from the available ones.
+                // Select a random staff member
                 var random = new Random();
                 var selectedStaff = availableManagers[random.Next(availableManagers.Count)];
 
-                // Create a new staffing record and save it to the database.
+                // Create a staffing record
                 var staffing = new Staffing
                 {
                     StaffId = selectedStaff.StaffId,
                     EventId = eventId
                 };
+
+                // Save the staffing record to the database
                 _context.Staffing.Add(staffing);
                 await _context.SaveChangesAsync();
 
@@ -193,7 +167,7 @@ namespace ThAmCo.Events.Services
 
                 // Update the event only after successful API call
                 eventByReference.VenueReference = null;
-                eventByReference.IsCancelled = true;
+                eventByReference.isCancelled = true;
                 await _context.SaveChangesAsync();
 
                 var jsonResponse = await response.Content.ReadAsStringAsync();
@@ -204,6 +178,49 @@ namespace ThAmCo.Events.Services
                 Console.WriteLine($"Failed to delete venue reservation: {ex.Message}");
                 return null;
             }
+        }
+
+        public async Task AnonymiseGuest(int guestId)
+        {
+            var guest = await _context.Guests.FirstOrDefaultAsync(g => g.GuestId == guestId);
+            if (guest == null)
+            {
+                Console.WriteLine("Guest not found");
+                return;
+            }
+
+            string anon = GenerateAnon();
+
+            if (anon != null)
+            {
+                guest.Name = anon;
+                guest.Email = anon + guest.GuestId.ToString() + "@removed.com";
+                guest.Phone = "0000000000";
+                //TODO?: Could also remove the guest bookings?
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to save anonymised guest information: {ex.Message}");
+                return;
+            }
+        }
+
+        private string GenerateAnon()
+        {
+            var anon = "anon";
+            Random random = new Random();
+            for(int i = 0; i < 3; i++)
+            {
+                int num = random.Next(0,9);
+                num.ToString();
+                anon += num.ToString();
+            }
+            return anon;
         }
     }
 }
