@@ -11,9 +11,9 @@ namespace ThAmCo.Events.Pages.EventList
 {
     public class DeleteModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
 
-        public DeleteModel(ThAmCo.Events.Data.EventDbContext context)
+        public DeleteModel(EventDbContext context)
         {
             _context = context;
         }
@@ -21,6 +21,11 @@ namespace ThAmCo.Events.Pages.EventList
         [BindProperty]
         public Event Event { get; set; } = default!;
 
+        /// <summary>
+        /// Takes ID of the event from the form and save the record in memory for future manipulation.
+        /// </summary>
+        /// <param name="id">ID of the event.</param>
+        /// <returns>Reload page</returns>
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -28,6 +33,7 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
+            // Find the event with the given ID.
             var selectedEvent = await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
 
             if (selectedEvent == null)
@@ -41,6 +47,11 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
+        /// <summary>
+        /// Delete the event record from the database.
+        /// </summary>
+        /// <param name="id">The ID of the event.</param>
+        /// <returns>Load event list page</returns>
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)

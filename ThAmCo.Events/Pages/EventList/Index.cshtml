@@ -26,29 +26,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Event) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @if (item.IsCancelled)
-                {
-                    @:Cancelled
-                } else
-                {
-                    @Html.DisplayFor(modelItem => item.Date)
-                }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventTypeFull)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.EventId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.EventId">Details</a> @* | *@
-                @* <a asp-page="./Delete" asp-route-id="@item.EventId">Delete</a> *@
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Event) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @if (item.IsCancelled)
+                    {
+                        @:Cancelled
+                    } else
+                    {
+                        @Html.DisplayFor(modelItem => item.Date)
+                    }
+                </td>
+                <td>
+                    @*Display the full event types instead of the acronyms for an improved UX*@
+                    @Html.DisplayFor(modelItem => item.EventTypeFull)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.EventId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.EventId">Details</a> @* | *@
+                    @* <a asp-page="./Delete" asp-route-id="@item.EventId">Delete</a> *@
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

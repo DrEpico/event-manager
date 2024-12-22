@@ -37,6 +37,8 @@
                     <option>-- Select --</option>
                     @for (int hour = 8; hour <= 23; hour++)
                     {
+                        //Populate the dropdown list with hours from 8 to 23 (8am to 11pm)
+                        //Default time input box is not used to simplify the user experience and avoid complicated business logic
                         <option value="@hour:00">@hour:00</option>
                     }
                 </select>
@@ -63,7 +65,7 @@
             <div class="form-group">
                 <button type="submit" asp-page-handler="SearchVenues" class="btn btn-primary">Search</button>
             </div>
-            @if (Model.Venues != null && Model.Venues.Any())
+            @if (Model.Venues != null && Model.Venues.Any())//Show venue dropdown list if Venue instance is not null
             {
                 <div class="form-group">
                     <label for="AvailableVenues" class="control-label">Available Venues</label>

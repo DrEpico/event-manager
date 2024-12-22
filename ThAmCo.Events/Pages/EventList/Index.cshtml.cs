@@ -20,6 +20,7 @@ namespace ThAmCo.Events.Pages.EventList
 
         public IList<Event> Event { get;set; } = default!;
 
+        // Fetch all the events from the database.
         public async Task OnGetAsync()
         {
             Event = await _context.Events.ToListAsync();

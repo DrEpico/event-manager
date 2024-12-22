@@ -149,15 +149,24 @@ namespace ThAmCo.Events.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves a venue reservation based on the given reference.
+        /// </summary>
+        /// <param name="reference">The reference identifier for the reservation.</param>
+        /// <returns>
+        /// A <see cref="GetVenueDto"/> object representing the reservation details, or null if the reservation is not found or the request fails.
+        /// </returns>
         public async Task<GetVenueDto?> GetVenueReservationAsync(string reference)
         {
+            // Construct the API URL with the escaped reference to prevent URL issues.
             var url = $"{ServiceBaseUrl}{VenueReservationEndpoint}/{Uri.EscapeDataString(reference)}";
             try
             {
+                // Send a GET request to the API.
                 var response = await _httpClient.GetAsync(url);
                 if (!response.IsSuccessStatusCode)
                 {
-                    // Log the error or handle it appropriately
+                    // If the response is not successful, return null (could also log the issue).
                     return null;
                 }
 
@@ -166,21 +175,31 @@ namespace ThAmCo.Events.Services
             }
             catch (Exception ex)
             {
-                // Log exception details
+                // Log the exception message for debugging purposes.
                 Console.WriteLine($"Failed to fetch venue reservation: {ex.Message}");
                 return null;
             }
         }
 
+        /// <summary>
+        /// Deletes a venue reservation based on the given reference and updates the related event's status.
+        /// </summary>
+        /// <param name="reference">The reference identifier for the reservation to delete.</param>
+        /// <returns>
+        /// A <see cref="GetVenueDto"/> object representing the deleted reservation details, or null if the deletion fails.
+        /// </returns>
         public async Task<GetVenueDto?> DeleteVenueReservationAsync(string reference)
         {
+            // Find the event associated with the given reference.
             var eventByReference = await _context.Events.FirstOrDefaultAsync(m => m.VenueReference == reference.Trim());
             if (eventByReference == null)
             {
+                // If no event is found, log the issue and return null.
                 Console.WriteLine("Event not found with the given reference.");
                 return null;
             }
 
+            // Construct the API URL with the escaped reference.
             var url = $"{ServiceBaseUrl}{VenueReservationEndpoint}/{Uri.EscapeDataString(reference.Trim())}";
             try
             {
@@ -201,8 +220,9 @@ namespace ThAmCo.Events.Services
             }
             catch (Exception ex)
             {
+                // Log the exception message for debugging purposes.
                 Console.WriteLine($"Failed to delete venue reservation: {ex.Message}");
-                return null;
+                return null; // Return null if any exception occurs.
             }
         }
     }

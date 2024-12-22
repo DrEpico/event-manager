@@ -14,6 +14,7 @@ namespace ThAmCo.Events.Pages.EventList
 {
     public class DetailsModel : PageModel
     {
+        // Fields to store the database context and venue reservation service.
         private readonly ThAmCo.Events.Data.EventDbContext _context;
         private readonly VenueReservationService _venueReservationService;
 
@@ -23,13 +24,16 @@ namespace ThAmCo.Events.Pages.EventList
             _venueReservationService = venueService;
         }
 
+        // The Event object being viewed.
         public Event Event { get; set; } = default!;
 
+        // Venue details fetched from the reservation service.
         [BindProperty]
         public GetVenueDto Venue { get; set; } = default!;
 
         public List<Staff> Assistants { get; set; } = new();
 
+        // Handles GET requests to fetch event details for viewing.
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -37,6 +41,7 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
+            // Fetch the event with its guest bookings and staff assignments.
             Event = await _context.Events
                 .Include(e => e.GuestBookings)
                     .ThenInclude(gb => gb.Guest)
@@ -49,13 +54,13 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
+            // Fetch assistants and first-aiders for selection.
             Assistants = await _context.Staff
                 .Where(s => s.Role == "Assistant" || s.Role == "First Aider")
                 .ToListAsync();
 
-            //Check if certain types of events have first aider assigned or not
+            // Validate requirements for first aiders and staff count.
             CheckFristAiderRequirement();
-            //Check if there is at least one staff per 10 guests
             int requiredStaffCount = GetRequiredStaffCount();
             if (requiredStaffCount > 0)
             {
@@ -69,12 +74,13 @@ namespace ThAmCo.Events.Pages.EventList
             }
             else
             {
-                Venue = null; // Handle unreserved venue case
+                Venue = null; // No venue reserved.
             }
 
             return Page();
         }
 
+        // Adds a new guest to the event.
         public async Task<IActionResult> OnPostAddGuestAsync(
             int EventId, string GuestName, string Email, string Phone)
         {
@@ -101,6 +107,7 @@ namespace ThAmCo.Events.Pages.EventList
             _context.Guests.Add(guest);
             await _context.SaveChangesAsync();
 
+            // Associate the guest with the event.
             var newGuest = new GuestBooking
             {
                 EventId = EventId,
@@ -112,6 +119,7 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Details", new { id = EventId });
         }
 
+        // Cancels a guest's booking.
         public async Task<IActionResult> OnPostCancelBookingAsync(int GuestBookingId, int EventId)
         {
             // Find the guest booking
@@ -135,6 +143,7 @@ namespace ThAmCo.Events.Pages.EventList
             return Page(); // Return to the current page to show updated data
         }
 
+        // Removes a staff member from the event.
         public async Task<IActionResult> OnPostRemoveStaffAsync(int StaffId, int EventId)
         {
             var staffing = await _context.Staffing
@@ -148,6 +157,7 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Details", new { id = EventId });
         }
 
+        // Adds a staff member to the event.
         public async Task<IActionResult> OnPostAddStaffAsync(int EventId, int StaffId)
         {
             if (StaffId == 0)
@@ -173,6 +183,7 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Details", new { id = EventId });
         }
 
+        // Validates if the event type requires a first-aider.
         private void CheckFristAiderRequirement()
         {
             if(Event.EventType == "EXH" || Event.EventType == "FES" || Event.EventType == "CMP")
@@ -184,6 +195,7 @@ namespace ThAmCo.Events.Pages.EventList
             }
         }
 
+        // Calculates the number of additional staff required.
         private int GetRequiredStaffCount()
         {
             int guests = Event.GuestBookings.Count();
@@ -198,6 +210,7 @@ namespace ThAmCo.Events.Pages.EventList
             return staffNeeded;
         }
 
+        // Deletes the venue reservation for an event.
         public async Task<IActionResult> OnPostDeleteVenueReservationAsync(int EventId)
         {
             if (EventId == null)
@@ -207,12 +220,6 @@ namespace ThAmCo.Events.Pages.EventList
 
             // Fetch the event from the database
             Event = await _context.Events.FindAsync(EventId);
-            //Event = await _context.Events
-            //    .Include(e => e.GuestBookings)
-            //        .ThenInclude(gb => gb.Guest)
-            //    .Include(e => e.Staffings)
-            //        .ThenInclude(s => s.Staff)
-            //    .FirstOrDefaultAsync(e => e.EventId == EventId);
 
             if (Event == null)
             {

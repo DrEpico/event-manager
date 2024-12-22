@@ -19,16 +19,20 @@ namespace ThAmCo.Events.Pages.EventList
             _context = context;
         }
 
+        // The Event object bound to the form data on the page.
         [BindProperty]
         public Event Event { get; set; } = default!;
 
+        // Handles GET requests to fetch an event for editing based on its ID.
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            // If no ID is provided, return a 404 Not Found result.
             if (id == null)
             {
                 return NotFound();
             }
 
+            // Retrieve the event from the database by its ID.
             var selectedEvent =  await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
             if (selectedEvent == null)
             {
@@ -38,36 +42,40 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        // Handles POST requests to update the event details in the database.
         public async Task<IActionResult> OnPostAsync()
         {
+            // If the form data is invalid, reload the page with validation messages.
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
+            // Mark the Event entity as modified to track changes.
             _context.Attach(Event).State = EntityState.Modified;
 
             try
             {
+                // Save the changes to the database.
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
+                // Handle concurrency issues if the event no longer exists.
                 if (!EventExists(Event.EventId))
                 {
                     return NotFound();
                 }
                 else
                 {
-                    throw;
+                    Console.WriteLine("Concurrency exception occurred.");
                 }
             }
 
             return RedirectToPage("./Index");
         }
 
+        // Helper method to check if an event exists in the database by its ID.
         private bool EventExists(int id)
         {
             return _context.Events.Any(e => e.EventId == id);
