@@ -45,7 +45,7 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<string>("VenueReference")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("isCancelled")
+                    b.Property<bool>("IsCancelled")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("EventId");

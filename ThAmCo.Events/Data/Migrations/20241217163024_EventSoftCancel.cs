@@ -11,7 +11,7 @@ namespace ThAmCo.Events.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "isCancelled",
+                name: "IsCancelled",
                 table: "Events",
                 type: "INTEGER",
                 nullable: false,
@@ -21,105 +21,105 @@ namespace ThAmCo.Events.Data.Migrations
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 1,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 2,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 3,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 4,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 5,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 6,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 7,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 8,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 9,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 10,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 11,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 12,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 13,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 14,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
 
             migrationBuilder.UpdateData(
                 table: "Events",
                 keyColumn: "EventId",
                 keyValue: 15,
-                column: "isCancelled",
+                column: "IsCancelled",
                 value: false);
         }
 
@@ -127,7 +127,7 @@ namespace ThAmCo.Events.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "isCancelled",
+                name: "IsCancelled",
                 table: "Events");
         }
     }
