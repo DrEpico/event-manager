@@ -10,6 +10,9 @@ using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
+    /// <summary>
+    /// Controller for managing food bookings in the catering system.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class FoodBookingsController : ControllerBase
@@ -21,12 +24,16 @@ namespace ThAmCo.Catering.Controllers
             _context = context;
         }
 
-        // GET: api/FoodBookings
+        /// <summary>
+        /// Gets a list of all food bookings.
+        /// GET: api/FoodBookings
+        /// </summary>
+        /// <returns>A list of food bookings in the form of output DTOs.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FoodBookingOutputDto>>> GetFoodBookings()
         {
             var FoodBookings = await _context.FoodBookings
-                .Include(fb => fb.Menu)
+                .Include(fb => fb.Menu) // Include related Menu entity
                 .ToListAsync();
 
             var FoodBookingsDto = FoodBookings
@@ -39,9 +46,12 @@ namespace ThAmCo.Catering.Controllers
             return Ok(FoodBookingsDto);
         }
 
-        // GET: api/FoodBookings/5
-        //Skipping this one as I hope no one will randomly start GET'ing food bookings
-        // by ID. That's be kinda weird in my humble opinion.
+        /// <summary>
+        /// Gets a specific food booking by its ID.
+        /// GET: api/FoodBookings/5
+        /// </summary>
+        /// <param name="id">The ID of the food booking to retrieve.</param>
+        /// <returns>The requested food booking.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<FoodBooking>> GetFoodBooking(int id)
         {
@@ -55,15 +65,20 @@ namespace ThAmCo.Catering.Controllers
             return foodBooking;
         }
 
-        // PUT: api/FoodBookings/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updates an existing food booking.
+        /// PUT: api/FoodBookings/5
+        /// </summary>
+        /// <param name="foodBookingDto">The updated food booking data.</param>
+        /// <returns>The updated food booking data or an appropriate status code.</returns>
         [HttpPut]
         public async Task<ActionResult<FoodBookingOutputDto>> PutFoodBooking(FoodBookingEditInputDto foodBookingDto)
         {
             var foodBooking = await _context.FoodBookings
                 .FirstOrDefaultAsync(fb => fb.ClientReferenceId == foodBookingDto.ClientReferenceId);
-            
-            if(!foodBookingDto.NumberOfGuests.HasValue && !foodBookingDto.MenuId.HasValue)
+
+            // Ensure at least one field is being updated
+            if (!foodBookingDto.NumberOfGuests.HasValue && !foodBookingDto.MenuId.HasValue)
             {
                 return BadRequest("At least either of 'NumberOfGuests' or 'MenuId' should have a value to update booking.");
             }
@@ -73,7 +88,7 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound("The Client Reference ID doesn't exist.");
             }
 
-            //Ignore possisble null values as they're handled at line 63
+            // Check if the submitted values are identical to the existing record
             if (foodBooking.NumberOfGuests == foodBookingDto.NumberOfGuests.Value 
                 && foodBooking.MenuId == foodBookingDto.MenuId.Value)
             {
@@ -108,20 +123,26 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingDto);
         }
 
-        // POST: api/FoodBookings
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new food booking.
+        /// POST: api/FoodBookings
+        /// </summary>
+        /// <param name="foodBookingDto">The food booking data.</param>
+        /// <returns>The created food booking data.</returns>
         [HttpPost]
         public async Task<ActionResult<FoodBookingOutputDto>> PostFoodBooking(FoodBookingInputDto foodBookingDto)
         {   
             var foodBooking = new FoodBooking();
             
             try
-            { 
-                //Validation is done at DTO so I don't think I need to check for null in here again?
+            {
+                // Assign DTO values to the entity. 
+                // Validation is done at DTO.
                 foodBooking.NumberOfGuests = foodBookingDto.NumberOfGuests;
                 foodBooking.MenuId = foodBookingDto.MenuId;
-                //TODO:
-                //foodBooking.ClientReferenceId = GenerateClientReferenceId();
+
+                // Placeholder for generating a unique Client Reference ID
+                // foodBooking.ClientReferenceId = GenerateClientReferenceId();
 
                 _context.FoodBookings.Add(foodBooking);
                 await _context.SaveChangesAsync();
@@ -134,8 +155,12 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingDto);
         }
 
-        //TODO: this needs to be a PUT method cuz cancelling isn't deleting it 
-        // DELETE: api/FoodBookings/5
+        /// <summary>
+        /// Deletes a food booking by its client reference ID.
+        /// DELETE: api/FoodBookings/5
+        /// </summary>
+        /// <param name="clientReferenceId">The client reference ID of the food booking to delete.</param>
+        /// <returns>No content if successful, or an error status code.</returns>
         [HttpDelete("{clientReferenceId}")]
         public async Task<IActionResult> DeleteFoodBooking(int clientReferenceId)
         {
@@ -160,6 +185,11 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Checks if a food booking exists by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the food booking.</param>
+        /// <returns>True if the booking exists; otherwise, false.</returns>
         private bool FoodBookingExists(int id)
         {
             return _context.FoodBookings.Any(e => e.FoodBookingId == id);

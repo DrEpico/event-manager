@@ -12,6 +12,9 @@ using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
+    /// <summary>
+    /// Controller for managing the relationships between menus and food items (MenuFoodItems).
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class MenuFoodItemsController : ControllerBase
@@ -30,7 +33,11 @@ namespace ThAmCo.Catering.Controllers
         //    return await _context.MenuFoodItems.ToListAsync();
         //}
 
-        // GET: api/MenuFoodItems
+        /// <summary>
+        /// Retrieves all MenuFoodItem records, including related menu names and food item descriptions.
+        /// GET: api/MenuFoodItems
+        /// </summary>
+        /// <returns>A list of MenuFoodItem DTOs.</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MenuFoodItemDto>>> GetMenuFoodItems()
         {   
@@ -40,19 +47,23 @@ namespace ThAmCo.Catering.Controllers
                 .Include(mfi => mfi.FoodItem)
                 .ToListAsync();
 
-            // Map entities to DTO with null-checks in memory
+            // Map entities to DTOs with null-checks
             var menuFoodItemsDto = menuFoodItems
                 .Select(mfi => new MenuFoodItemDto(
-                    mfi.Menu != null ? mfi.Menu.MenuName : "Unknown menu",
-                    mfi.FoodItem != null ? mfi.FoodItem.Description : "Unknown item"
-                ))// Null checks are done in C# instead of being translated to SQL.
+                    mfi.Menu?.MenuName ?? "Unknown menu",
+                    mfi.FoodItem?.Description ?? "Unknown item"))
                 .ToList();
 
             return Ok(menuFoodItemsDto);
         }
 
-        //I don't even think getting a composite table record by ID is a thing so pass
-        // GET: api/MenuFoodItems/5
+        // Skipping individual composite key lookup as it's not typical for this use case.
+        /// <summary>
+        /// Retrieves a specific MenuFoodItem record by ID.
+        /// GET: api/MenuFoodItems/5
+        /// </summary>
+        /// <param name="id">The ID of the MenuFoodItem record.</param>
+        /// <returns>The MenuFoodItem record.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<MenuFoodItem>> GetMenuFoodItem(int id)
         {
@@ -66,9 +77,10 @@ namespace ThAmCo.Catering.Controllers
             return menuFoodItem;
         }
 
-        //Editing the composite table record is not in the requirements so skipping
-        // PUT: api/MenuFoodItems/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // Editing a composite table record is not required per your note, so this is skipped.
+        /// <summary>
+        /// Updates an existing MenuFoodItem record.
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMenuFoodItem(int id, MenuFoodItem menuFoodItem)
         {
@@ -98,10 +110,9 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
-        // POST: api/MenuFoodItems
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         /// <summary>
-        /// Takes menu ID and food item ID to populate a row in the MenuFoodItem composite table.
+        /// Adds a new MenuFoodItem record linking a menu and a food item.
+        /// POST: api/MenuFoodItems
         /// </summary>
         /// <param name="menuId">The menu to be added with an item</param>
         /// <param name="itemId">The food item to be added to the specificed menu</param>
@@ -109,10 +120,12 @@ namespace ThAmCo.Catering.Controllers
         [HttpPost("CreateMenuFoodItem")]
         public async Task<ActionResult> PostMenuFoodItem(int menuId, int itemId)
         {
+            // Ensure both menu and food item exist
             var menu = await _context.Menus.FindAsync(menuId);
             var item = await _context.FoodItems.FindAsync(itemId);
 
-            MenuFoodItem MenuFoodItem = new MenuFoodItem(menuId, itemId);
+            // Create a new MenuFoodItem
+            var MenuFoodItem = new MenuFoodItem(menuId, itemId);
             _context.MenuFoodItems.Add(MenuFoodItem);
 
             try
@@ -134,10 +147,17 @@ namespace ThAmCo.Catering.Controllers
             return Created(); //Probably return a list of items on the modificated menu.
         }
 
-        // DELETE: api/MenuFoodItems/5
+        /// <summary>
+        /// Deletes a MenuFoodItem record, unlinking a food item from a menu.
+        /// DELETE: api/MenuFoodItems/5
+        /// </summary>
+        /// <param name="menuId">The ID of the menu.</param>
+        /// <param name="itemId">The ID of the food item.</param>
+        /// <returns>No content if successful.</returns>
         [HttpDelete("RemoveMenuFoodItem")]
         public async Task<IActionResult> DeleteMenuFoodItem(int menuId, int itemId)
         {
+            // Ensure both menu and food item exist
             var menu = await _context.Menus.FindAsync(menuId);
             var item = await _context.FoodItems.FindAsync(itemId);
 
@@ -161,11 +181,17 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Checks if a MenuFoodItem exists by its MenuId.
+        /// </summary>
         private bool MenuFoodItemExists(int id)
         {
             return _context.MenuFoodItems.Any(e => e.MenuId == id);
         }
 
+        /// <summary>
+        /// Checks if a menu already has the specified food item.
+        /// </summary>
         private bool MenuHasFoodItem(int menuId, int itemId)
         {
             return _context.MenuFoodItems.Any(e => e.MenuId == menuId && e.FoodItemId == itemId);

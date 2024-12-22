@@ -10,6 +10,9 @@ using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
+    /// <summary>
+    /// Controller for managing food items in the catering system.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class FoodItemsController : ControllerBase
@@ -28,15 +31,21 @@ namespace ThAmCo.Catering.Controllers
         //    return await _context.FoodItems.ToListAsync();
         //}
 
+        /// <summary>
+        /// Retrieves all food items with their descriptions and prices.
+        /// </summary>
+        /// <returns>A list of food items in the form of DTOs.</returns>
         [HttpGet("GetFoodItems")]
         public async Task<ActionResult<IEnumerable<FoodItemDto>>> GetFoodItems()
         {
             try
             {
+                // Fetch and map FoodItems to DTOs
                 var FoodItems = await _context.FoodItems
                     .Select(fi => new FoodItemDto(fi.Description, fi.UnitPrice))
                     .ToListAsync();
 
+                // Return a 404 status if no food items exist
                 if (!FoodItems.Any())
                     return NotFound("No item found");
 
@@ -44,14 +53,21 @@ namespace ThAmCo.Catering.Controllers
             }
             catch (Exception ex)
             {
+                // Handle server errors
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
-        // GET: api/FoodItems/5
+        /// <summary>
+        /// Retrieves a specific food item by its ID.
+        /// GET: api/FoodItems/5
+        /// </summary>
+        /// <param name="id">The ID of the food item to retrieve.</param>
+        /// <returns>The requested food item as a DTO.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<FoodItemDto>> GetFoodItem(int id)
         {
+            // Find the food item by its ID
             var foodItem = await _context.FoodItems.FindAsync(id);
 
             if (foodItem == null)
@@ -59,6 +75,7 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound();
             }
 
+            // Map the entity to a DTO
             var foodItemDto = new FoodItemDto();
             foodItemDto.Description = foodItem.Description;
             foodItemDto.UnitPrice = foodItem.UnitPrice;
@@ -75,9 +92,7 @@ namespace ThAmCo.Catering.Controllers
         //    {
         //        return BadRequest();
         //    }
-
         //    _context.Entry(foodItem).State = EntityState.Modified;
-
         //    try
         //    {
         //        await _context.SaveChangesAsync();
@@ -93,11 +108,16 @@ namespace ThAmCo.Catering.Controllers
         //            throw;
         //        }
         //    }
-
         //    return NoContent();
         //}
 
-        //PUT: api/EditFoodItem/{id}
+        /// <summary>
+        /// Updates an existing food item by its ID.
+        /// PUT: api/EditFoodItem/{id}
+        /// </summary>
+        /// <param name="id">The ID of the food item to update.</param>
+        /// <param name="foodItemDto">The updated food item data.</param>
+        /// <returns>No content if the update is successful.</returns>
         [HttpPut("EditFoodItem/{id}")]
         public async Task<IActionResult> EditFoodItem(int id, FoodItemDto foodItemDto)
         {
@@ -145,7 +165,12 @@ namespace ThAmCo.Catering.Controllers
         //    return CreatedAtAction("GetFoodItem", new { id = foodItem.FoodItemId }, foodItemDto);
         //} //I forgot I had already created a new POST method xd
 
-        //POST: api/AddFoodItems(name, )
+        /// <summary>
+        /// Adds a new food item.
+        /// POST: api/AddFoodItems
+        /// </summary>
+        /// <param name="foodItemDto">The food item data to add.</param>
+        /// <returns>The created food item as a DTO.</returns>
         [HttpPost("AddFoodItem")]
         public async Task<ActionResult<FoodItemDto>> AddFoodItem(FoodItemDto foodItemDto)
         {
@@ -172,10 +197,16 @@ namespace ThAmCo.Catering.Controllers
             return CreatedAtAction(nameof(GetFoodItem), new {id = foodItem.FoodItemId}, foodItemDto);
         }
 
-        // DELETE: api/FoodItems/5
+        /// <summary>
+        /// Deletes a food item by its ID.
+        /// DELETE: api/FoodItems/5
+        /// </summary>
+        /// <param name="id">The ID of the food item to delete.</param>
+        /// <returns>No content if the deletion is successful.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFoodItem(int id)
         {
+            // Find the food item by its ID
             var foodItem = await _context.FoodItems.FindAsync(id);
 
             if (foodItem == null)
@@ -185,17 +216,24 @@ namespace ThAmCo.Catering.Controllers
 
             try
             {
+                // Remove the food item
                 _context.FoodItems.Remove(foodItem);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
+                // Handle server errors
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
 
             return NoContent();
         }
 
+        /// <summary>
+        /// Checks if a food item exists by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the food item.</param>
+        /// <returns>True if the food item exists; otherwise, false.</returns>
         private bool FoodItemExists(int id)
         {
             return _context.FoodItems.Any(e => e.FoodItemId == id);

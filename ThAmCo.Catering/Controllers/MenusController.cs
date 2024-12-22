@@ -10,6 +10,9 @@ using ThAmCo.Catering.Dtos;
 
 namespace ThAmCo.Catering.Controllers
 {
+    /// <summary>
+    /// API Controller for managing Menus.
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class MenusController : ControllerBase
@@ -29,9 +32,12 @@ namespace ThAmCo.Catering.Controllers
         //    return await _context.Menus.ToListAsync();
         //}
 
-        //Consider Pagination for scalability
-        // GET: api/GetMenus
-
+        // Considering to implement pagination for scalability.
+        /// <summary>
+        /// Retrieves all Menus with limited details (ID and Name).
+        /// GET: api/GetMenus
+        /// </summary>
+        /// <returns>A list of MenuOutputDto objects.</returns>
         [HttpGet("GetMenus")]
         public async Task<ActionResult<IEnumerable<MenuOutputDto>>> GetMenus()
         {
@@ -53,7 +59,12 @@ namespace ThAmCo.Catering.Controllers
             }
         }
 
-        // GET: api/Menus/5
+        /// <summary>
+        /// Retrieves a specific Menu by its ID.
+        /// GET: api/Menus/5
+        /// </summary>
+        /// <param name="id">The ID of the Menu.</param>
+        /// <returns>The Menu as a MenuOutputDto object.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<MenuOutputDto>> GetMenu(int id)
         {
@@ -88,9 +99,7 @@ namespace ThAmCo.Catering.Controllers
         //    {
         //        return BadRequest();
         //    }
-
         //    _context.Entry(menu).State = EntityState.Modified;
-
         //    try
         //    {
         //        await _context.SaveChangesAsync();
@@ -106,11 +115,16 @@ namespace ThAmCo.Catering.Controllers
         //            throw;
         //        }
         //    }
-
         //    return NoContent();
         //}
 
-        //PUT: api/Menu/EditName/id
+        /// <summary>
+        /// Updates the name of an existing Menu.
+        /// PUT: api/Menu/EditName/id
+        /// </summary>
+        /// <param name="id">The ID of the Menu to update.</param>
+        /// <param name="menuDto">The DTO containing the new name for the Menu.</param>
+        /// <returns>No content if successful, or an error response.</returns>
         [HttpPut("EditName/{id}")]
         public async Task<IActionResult> EditMenuName(int id, MenuInputDto menuDto)
         {
@@ -134,24 +148,46 @@ namespace ThAmCo.Catering.Controllers
             }
         }
 
-        // POST: api/Menus
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creates a new Menu.
+        /// POST: api/Menus
+        /// </summary>
+        /// <param name="menuDto">The DTO containing the details for the new Menu.</param>
+        /// <returns>A 201 Created response with the created Menu details.</returns>
         [HttpPost]//TODO: Route to the created object
         public async Task<ActionResult> PostMenu(MenuInputDto menuDto)
-        {
-            // Map the input DTO to the Menu entity
-            Menu menu = new Menu
-            {
-                MenuName = menuDto.MenuName
-            };
+        {   
+            //Delete this if the code below works
+            //Menu menu = new Menu
+            //{
+            //    MenuName = menuDto.MenuName
+            //};
 
+            //try
+            //{
+            //    // Add the new Menu to the database context
+            //    _context.Menus.Add(menu);
+            //    await _context.SaveChangesAsync();
+
+            //    return CreatedAtAction(nameof(GetMenu), new { id = menu.MenuId }, menuDto);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, $"Internal server error: {ex.Message}");
+            //}
             try
             {
+                // Map the input DTO to the Menu entity
+                var menu = new Menu
+                {
+                    MenuName = menuDto.MenuName
+                };
+
                 // Add the new Menu to the database context
                 _context.Menus.Add(menu);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetMenu), new { id = menu.MenuId }, menuDto);
+                return CreatedAtAction(nameof(GetMenu), new { id = menu.MenuId }, new MenuOutputDto(menu.MenuId, menu.MenuName));
             }
             catch (Exception ex)
             {
@@ -159,22 +195,35 @@ namespace ThAmCo.Catering.Controllers
             }
         }
 
-        // DELETE: api/Menus/5
+        /// <summary>
+        /// Deletes an existing Menu by its ID.
+        /// DELETE: api/Menus/5
+        /// </summary>
+        /// <param name="id">The ID of the Menu to delete.</param>
+        /// <returns>No content if successful, or an error response.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMenu(int id)
         {
-            var menu = await _context.Menus.FindAsync(id);
-            if (menu == null)
+            try
             {
-                return NotFound();
+                var menu = await _context.Menus.FindAsync(id);
+                if (menu == null)
+                    return NotFound("Menu not found.");
+
+                _context.Menus.Remove(menu);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-
-            _context.Menus.Remove(menu);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
+        /// <summary>
+        /// Checks if a Menu exists in the database by its ID.
+        /// </summary>
         private bool MenuExists(int id)
         {
             return _context.Menus.Any(e => e.MenuId == id);
