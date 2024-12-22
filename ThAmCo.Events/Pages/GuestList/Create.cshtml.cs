@@ -11,9 +11,9 @@ namespace ThAmCo.Events.Pages.GuestList
 {
     public class CreateModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
 
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context)
+        public CreateModel(EventDbContext context)
         {
             _context = context;
         }
@@ -26,7 +26,10 @@ namespace ThAmCo.Events.Pages.GuestList
         [BindProperty]
         public Guest Guest { get; set; } = default!;
 
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Save the guest record to the database.
+        /// </summary>
+        /// <returns>Redirect to the guest list page.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

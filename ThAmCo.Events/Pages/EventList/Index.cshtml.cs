@@ -11,9 +11,9 @@ namespace ThAmCo.Events.Pages.EventList
 {
     public class IndexModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
 
-        public IndexModel(ThAmCo.Events.Data.EventDbContext context)
+        public IndexModel(EventDbContext context)
         {
             _context = context;
         }

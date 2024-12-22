@@ -28,6 +28,7 @@ namespace ThAmCo.Events.Pages.GuestList
                 return NotFound();
             }
 
+            // Find the guest with the given ID.
             var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
 
             if (guest == null)
@@ -41,6 +42,11 @@ namespace ThAmCo.Events.Pages.GuestList
             return Page();
         }
 
+        /// <summary>
+        /// Removes the guest record from the database.
+        /// </summary>
+        /// <param name="id">ID of the guest.</param>
+        /// <returns>Redirect to the guest list page</returns>
         public async Task<IActionResult> OnPostAsync(int? id)
         {
             if (id == null)

@@ -34,6 +34,7 @@
     @if (Model.Guest.GuestBookings.Any())
     {
         <ul>
+            <!--Display all the guest bookings accosiated with a guest-->
             @foreach (var booking in Model.Guest.GuestBookings)
             {
                 <li>
