@@ -12,11 +12,13 @@ namespace ThAmCo.Events.Pages.GuestList
 {
     public class EditModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
+        private readonly ILogger<EditModel> _logger;
 
-        public EditModel(ThAmCo.Events.Data.EventDbContext context)
+        public EditModel(EventDbContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -68,53 +70,50 @@ namespace ThAmCo.Events.Pages.GuestList
             return RedirectToPage("./Index");
         }
 
+        //private bool GuestExists(int id)
+        //{
+        //    return _context.Guests.Any(e => e.GuestId == id);
+        //}
+
+        public async Task<IActionResult> OnPostAnonymiseGuestAsync(int guestId)
+        {
+            var guest = await _context.Guests.FindAsync(guestId);
+
+            if (guest == null)
+            {
+                _logger.LogWarning("Attempt to anonymize non-existent guest with ID: {GuestId}", guestId);
+                return NotFound();
+            }
+
+            string anonymizedIdentifier = GenerateAnonymizedIdentifier();
+            guest.Name = anonymizedIdentifier;
+            guest.Email = $"{anonymizedIdentifier}@anonymized.com";
+            guest.Phone = "XXXXXXXXXX";
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Guest data has been successfully anonymized.";
+                _logger.LogInformation("Guest {GuestId} successfully anonymized", guestId);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to anonymize guest {GuestId}", guestId);
+                TempData["ErrorMessage"] = "Failed to anonymize guest data. Please try again.";
+                return Page();
+            }
+
+            return RedirectToPage("./Index");
+        }
+
         private bool GuestExists(int id)
         {
             return _context.Guests.Any(e => e.GuestId == id);
         }
 
-        public async Task<IActionResult> OnPostAnonymiseGuest(int GuestId)
+        private string GenerateAnonymizedIdentifier()
         {
-            var guest = await _context.Guests.FirstOrDefaultAsync(g => g.GuestId == GuestId);
-            if (guest == null)
-            {
-                Console.WriteLine("Guest not found");
-                return Page();
-            }
-
-            string anon = GenerateAnon();
-
-            if (anon != null)
-            {
-                guest.Name = anon;
-                guest.Email = anon + guest.GuestId.ToString() + "@removed.com";
-                guest.Phone = "0000000000";
-                //TODO?: Could also remove the guest bookings?
-            }
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Failed to save anonymised guest information: {ex.Message}");
-            }
-
-            return Page();
-        }
-
-        private string GenerateAnon()
-        {
-            var anon = "anon";
-            Random random = new Random();
-            for (int i = 0; i < 3; i++)
-            {
-                int num = random.Next(0, 9);
-                num.ToString();
-                anon += num.ToString();
-            }
-            return anon;
+            return $"ANON-{Guid.NewGuid().ToString().Substring(0, 8)}";
         }
     }
 }
