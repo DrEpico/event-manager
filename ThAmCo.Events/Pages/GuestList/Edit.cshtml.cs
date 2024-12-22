@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
@@ -28,7 +24,7 @@ namespace ThAmCo.Events.Pages.GuestList
 
         // The Guest object bound to the form data for editing.
         [BindProperty]
-        public Guest Guest { get; set; } = default!;
+        public GuestViewModel GuestVM { get; set; } = default!;
 
         /// <summary>
         /// Handles the GET request to retrieve and display a guest for editing.
@@ -42,12 +38,33 @@ namespace ThAmCo.Events.Pages.GuestList
                 return NotFound();
             }
 
-            var guest =  await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
+            var guest = await _context.Guests
+                .Include(g => g.GuestBookings)
+                    .ThenInclude(gb => gb.Event)
+                .FirstOrDefaultAsync(m => m.GuestId == id);
+
             if (guest == null)
             {
                 return NotFound();
             }
-            Guest = guest;
+
+            // Map data model to view model
+            GuestVM = new GuestViewModel
+            {
+                GuestId = guest.GuestId,
+                Name = guest.Name,
+                Email = guest.Email,
+                Phone = guest.Phone,
+                Bookings = guest.GuestBookings.Select(gb => new GuestViewModel.GuestBookingSummary
+                {
+                    EventId = gb.EventId,
+                    EventTitle = gb.Event?.Title ?? "Unknown Event",
+                    EventDate = gb.Event?.Date ?? DateTime.MinValue,
+                    HasAttended = gb.HasAttended,
+                    IsCancelled = gb.IsCancelled
+                }).ToList()
+            };
+
             return Page();
         }
 
@@ -71,10 +88,11 @@ namespace ThAmCo.Events.Pages.GuestList
             try
             {
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Guest updated successfully!";
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GuestExists(Guest.GuestId))
+                if (!GuestExists(GuestVM.GuestId))
                 {
                     return NotFound();
                 }
@@ -105,7 +123,7 @@ namespace ThAmCo.Events.Pages.GuestList
             string anonymizedIdentifier = GenerateAnonymizedIdentifier();
             guest.Name = anonymizedIdentifier;
             guest.Email = $"{anonymizedIdentifier}@anonymized.com";
-            guest.Phone = "XXXXXXXXXX";
+            guest.Phone = "xxxxxxxxxx";
 
             try
             {
@@ -132,7 +150,7 @@ namespace ThAmCo.Events.Pages.GuestList
         {
             return _context.Guests.Any(e => e.GuestId == id);
         }
-
+        
         /// <summary>
         /// Helper method to generate a unique anonymized identifier for a guest.
         /// </summary>

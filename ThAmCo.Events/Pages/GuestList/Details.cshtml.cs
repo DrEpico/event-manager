@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
@@ -26,7 +27,6 @@ namespace ThAmCo.Events.Pages.GuestList
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            
             if (id == null)
             {
                 return NotFound();
@@ -44,11 +44,24 @@ namespace ThAmCo.Events.Pages.GuestList
             {
                 return NotFound();
             }
-            else
+
+            // Map the data model to view model
+            GuestVM = new GuestViewModel
             {
-                Guest = guest;
-                Event = guestEvent;
-            }
+                GuestId = guest.GuestId,
+                Name = guest.Name,
+                Email = guest.Email,
+                Phone = guest.Phone,
+                Bookings = guest.GuestBookings.Select(gb => new GuestViewModel.GuestBookingSummary
+                {
+                    EventId = gb.EventId,
+                    EventTitle = gb.Event?.Title ?? "Unknown Event",
+                    EventDate = gb.Event?.Date ?? DateTime.MinValue,
+                    HasAttended = gb.HasAttended,
+                    IsCancelled = gb.IsCancelled
+                }).ToList()
+            };
+
             return Page();
         }
     }
