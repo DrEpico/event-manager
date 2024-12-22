@@ -20,6 +20,11 @@ namespace ThAmCo.Events.Pages.StaffList
 
         public Staff Staff { get; set; } = default!;
 
+        /// <summary>
+        /// Pull joined staff record and events record associated with the staff on load.
+        /// </summary>
+        /// <param name="id">ID of the staff.</param>
+        /// <returns>Reload page</returns>
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)

@@ -16,7 +16,7 @@ namespace ThAmCo.Events.Data
             var folder = Environment.SpecialFolder.MyDocuments;
             var path = Environment.GetFolderPath(folder);
             DbPath = Path.Join(path, "ThAmCo.Event.db");
-            //Console.WriteLine($"Database Path: {DbPath}");
+            //Console.WriteLine($"Database Path: {DbPath}"); //Debugging
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -11,6 +11,7 @@ namespace ThAmCo.Events.Dtos
 
         public string VenueCode { get; set; }
 
+        // This is a computed property that returns the venue name based on the venue code.
         public string VenueName => VenueCode switch
         {
             "BLKTW" => "Blackthorn Workshop",

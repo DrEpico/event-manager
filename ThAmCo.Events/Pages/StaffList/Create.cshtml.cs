@@ -11,9 +11,9 @@ namespace ThAmCo.Events.Pages.StaffList
 {
     public class CreateModel : PageModel
     {
-        private readonly ThAmCo.Events.Data.EventDbContext _context;
+        private readonly EventDbContext _context;
 
-        public CreateModel(ThAmCo.Events.Data.EventDbContext context)
+        public CreateModel(EventDbContext context)
         {
             _context = context;
         }
@@ -25,8 +25,10 @@ namespace ThAmCo.Events.Pages.StaffList
 
         [BindProperty]
         public Staff Staff { get; set; } = default!;
-
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Populate the staff table with a new record.
+        /// </summary>
+        /// <returns>Redirect to staff list page.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)

@@ -13,6 +13,8 @@ namespace ThAmCo.Events.Data
         //[DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
         public string EventType { get; set; }
+
+        // This is a computed property that will return the full event type name
         public string EventTypeFull => EventType switch
         {
             "CMP" => "Competition",
@@ -25,6 +27,7 @@ namespace ThAmCo.Events.Data
             "WKS" => "Workshop",
             _ => "Unknown Venue"
         };
+
         public string? VenueReference { get; set; } // Bind the selected venue's code
         public bool IsCancelled { get; set; }
 

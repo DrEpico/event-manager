@@ -22,6 +22,11 @@ namespace ThAmCo.Events.Pages.StaffList
         [BindProperty]
         public Staff Staff { get; set; } = default!;
 
+        /// <summary>
+        /// Pull staff instance by ID from the database.
+        /// </summary>
+        /// <param name="id">ID of the staff.</param>
+        /// <returns>Reload page</returns>
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -38,8 +43,10 @@ namespace ThAmCo.Events.Pages.StaffList
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
+        /// <summary>
+        /// Save changes to staff record to database.
+        /// </summary>
+        /// <returns>Direct to the staff details page.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -65,9 +72,14 @@ namespace ThAmCo.Events.Pages.StaffList
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = Staff.StaffId });
         }
 
+        /// <summary>
+        /// Helper method to check for a staff instance by ID.
+        /// </summary>
+        /// <param name="id">ID of the staff.</param>
+        /// <returns>True if staff exsits, otherwise False.</returns>
         private bool StaffExists(int id)
         {
             return _context.Staff.Any(e => e.StaffId == id);
