@@ -16,6 +16,8 @@ This project involves managing food items and menus for the Catering system, adh
 ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/△-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E)
+
+### Web Api Services (ThAmCo.Catering) to:
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 1. Create, edit, delete, and list food items.
 These functionalities are implemented in **`MenuItemsController.cs`**.
 
@@ -104,6 +106,54 @@ These functionalities are implemented in **`FoodBookingsController.cs`**.
 - For further details on specific methods or functionality, refer to the code in the respective controllers (`MenuItemsController.cs` and `MenuFoodItemsController.cs`).
 
 ---
+
+#### Via the RAZOR PAGES web app, the user should be able to:
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 5. Create, list and edit guests
+These functionalities are implemented in **`Events/GuestList/`**.
+- Create Guest:
+<br>Clicking the "New Guest" on the guest list page redirects the user to **`GuestList/Create`**. The user then may enter the guest's `name`, `email` and `phone number`.
+
+- List Guests:
+<br>**`GuestList/Index`** lists all the guests.
+
+- Edit Guests:
+<br>Clicking on the "Edit" link on each guest on the guest list redirects the user to **`GuestList/Edit`**. The user then may edit the guest details.
+
+> - Delete Guests:
+> I have kept the Delete page as the need to delete a user may eventually arise.
+> <br>Clicking on the "Delete" link on each guest on the guest list redirects the user to **`GuestList/Delete`**. The user then may delete the guest record.
+> <br>ALTERNATIVE: Keeping the page but removing the link may be beneficial for it not to be confused with the soft-delete button.
+
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 6. Create a new Event, specifying as a minimum its title, date and EventType
+This functionality is implemented in **`Events/EventList/`**.
+- Create Event:
+<br>Clicking the "Create New" link above the list of events redirects the user to **`EventList/Create`**. The user then may enter the `Event Name`, `Date`, `Start Time`, `End Time` and `Event Type`. Once the user clicks the "Search" button it displays a dropdown list of available venues, suitable to the specified event type with details such as price and etc. Then the user may choose a venue from the dropdown list and click "Reserve Venue" to confirm the reservation. The user will be redirected to the venue reservation confirmation page if successful.
+
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 7. Edit an Event (except its date and type)
+This functionality is implemented in **`Events/EventList/`**.
+- Edit Event:
+<br>Clicking the "Edit" link on an event record which will redirect the user to **`EventList/Edit`** page. The user may then edit the event name. ALTERNATIVE: Show date and event type fields but have them disabled instead of completely removing them.
+
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 8. Book a Guest onto an Event
+This functionality is implemented in **`Events/EventList/Details`**.
+<br>User may click the "Add Guest" button and proceed to enter the guest details in the modal input fields. On clicking the "Add" button the page will refresh and show the newly added guest record.
+ALTERNATIVE/TODO: It would be beneficial to implement an option for users to book new guests onto events OR select from an existing list of guests. However, currently only the first option has been implemented.
+
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 9. List Guests (including a total count) for an Event and register their attendance
+This functionality is implemented in **`Events/EventList/Details`**.
+<br>The list includes all the guests associated with an event and their attendance. ALTERNATIVE/TODO: The attendance checkbox may better be interactable and changes saved in the database.
+
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 10. Display the details of an individual Guest, including information about the Events with which they are associated and their attendance
+This functionality is implemented in **`Events/GuestList/Details`**.
+<br>This functionality shows the guest details and below that, the list of events with which they are associated and their attendance.
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 11. Cancel the booking of a guest from an upcoming Event.
+This functionality is implemented in **`Events/EventList/Details`**.
+<br>Clicking the "Cancel" button on each guest record row allows the user to cancel (soft-delete) the GuestBooking record by setting `IsCancelled` to `True`. Such records will be filtered and not be shown on the event details page on page reload.
+
+
+
+
 
 ### Web Apps and Services Project
 
