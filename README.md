@@ -1,11 +1,11 @@
 # ThAmCo Project Requirements
 This project involves managing food items and menus for the Catering system, adhering to the functional requirements outlined below. API methods utilise DTOs to simplify input and output handling, unless deemed unnecessary.
 
-## Functional Requirements
+<!--## Functional Requirements
 # Must (Critical requirements)
-![MUST](https://img.shields.io/badge/✓-MUST-F43F5E)    <!-- Complete -->
-![MUST](https://img.shields.io/badge/△-MUST-F43F5E)     <!-- In Progress -->
-![MUST](https://img.shields.io/badge/✗-MUST-F43F5E)    <!-- Not Done -->
+![MUST](https://img.shields.io/badge/✓-MUST-F43F5E)    
+![MUST](https://img.shields.io/badge/△-MUST-F43F5E)     
+![MUST](https://img.shields.io/badge/✗-MUST-F43F5E)   
 
 # Should (Recommended features)
 ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308)
@@ -16,7 +16,7 @@ This project involves managing food items and menus for the Catering system, adh
 ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/△-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E)
-
+-->
 ### Web Api Services (ThAmCo.Catering) to:
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 1. Create, edit, delete, and list food items.
 These functionalities are implemented in **`MenuItemsController.cs`**.
@@ -154,7 +154,7 @@ This functionality is implemented in **`Events/EventList/Details`**.
 
 
 
-
+<!--
 ### Web Apps and Services Project
 
 todo:
@@ -206,3 +206,4 @@ the ASP.NET Core runtime in any project (version 6.0)</p>
 module.
 - You should document alternative solutions to the key problems and challenges of the assignment within the source code or a readme file with any references utilised (e.g. stackoverflow.com). 
   - An example would be the choice between overloading an existing method or creating a new named method within a class.
+-->
