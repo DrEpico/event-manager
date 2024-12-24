@@ -17,6 +17,13 @@ This project involves managing food items and menus for the Catering system and 
 ![WOULD](https://img.shields.io/badge/△-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E)
 -->
+<!--<details>
+<summary>
+
+  ### MUST
+
+</summary>-->
+  
 ### Web Api Services (ThAmCo.Catering) to:
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 1. Create, edit, delete, and list food items.
 These functionalities are implemented in **`MenuItemsController.cs`**.
@@ -146,6 +153,8 @@ This functionality is implemented in **`Events/EventList/Details`**.
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 10. Display the details of an individual Guest, including information about the Events with which they are associated and their attendance
 This functionality is implemented in **`Events/GuestList/Details`**.
 <br>This functionality shows the guest details and below that, the list of events with which they are associated and their attendance.
+</details>
+---
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 11. Cancel the booking of a guest from an upcoming Event.
 This functionality is implemented in **`Events/EventList/Details`**.
@@ -194,13 +203,64 @@ This functionality is implemented in **`Events/StaffList/Details`**.
 This functionality is implemented in **`Events/EventList/Details`**.
 <br>By clicking the "Cancel" button at the bottom of the page user may cancel (soft-delete) an event, calling the relevant API and freeing up the venue as well as removing the staffing records. 
 
+![image](https://github.com/user-attachments/assets/2a1bc539-ec37-48b4-8529-4a25d6cbcc94)
+
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 19. Display the details for an Event, which must include details of the Venue, Staff and Guests – this should be more detailed that the summary information found in the Event list.
+This functionality is implemented in **`Events/EventList/Details`**.
+- The page displays pure event information such as event name, type and date on the right side while showing venue-related details on the right side. 
+  ![image](https://github.com/user-attachments/assets/44bd1675-966c-407e-9021-2ca26fb54886)
+- This may also be shown as follows when the venue reference column is not null but the venue API fails to return data successfully:
+  ![image](https://github.com/user-attachments/assets/33e843df-1aaa-4f07-9055-d739d4bc95ef)
+- And when the venue reference is null it shows the following:
+   <br>TODO/ALTERNATIVE: It is not required for the scope of this assignment but it would be nice to have a button that allows the user to book/rebook a venue here.
+  ![image](https://github.com/user-attachments/assets/63009cc3-15eb-4992-809c-1d34c6a88182)
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 20. Permanently remove personal data by anonymising their Guest entity.
+This functionality is implemented in **`Events/GuestList/Edit`**.
+The button responsible for this functionality is located on the edit guest page (the delete guest page may be a better place) and anonymises user data by randomly generating strings and overwriting the personal data: 
+![image](https://github.com/user-attachments/assets/f00d3117-81a6-47f8-876e-ef03b97e1be9)
+<br>JUSTIFICATION: Guest bookings associated with the guest ID are not deleted to maintain the integrity of historical event data, such as attendance records, financial reports, and event analytics, as would be essential in a real business context.
+Helper method to generate randomised strings.
+```cs 
+private string GenerateAnonymizedIdentifier()
+    return $"ANON-{Guid.NewGuid().ToString().Substring(0, 8)}";
+```
+Overwriting of the personal data.
+```cs
+string anonymizedIdentifier = GenerateAnonymizedIdentifier();
+guest.Name = anonymizedIdentifier;
+guest.Email = $"{anonymizedIdentifier}@anonymized.com";
+guest.Phone = "XXXXXXXXXX";
+```
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 21. Display a detailed list of available Venues, filtered by EventType and date range, and then create a new Event by picking a result.
+This functionality is implemented in **`Events/VenueList/Create`**.
+User may enter the event name, select the date, starting & ending times as well as the event type and the dropdown list of **available suitable venues** would appear. 
+
+![IMAGE](https://github.com/user-attachments/assets/2f1082da-8230-40a4-b706-f73dd7c9ed27)
+<br>JUSTIFICATION: I believe what I overengineered for a "Should" criteria should suffice for this criteria. 
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 22. See appropriate warnings within the event list and staffing views when there is fewer than one member of staff per 10 guests assigned to an Event.
+This functionality is implemented in **`Events/EventList/Details`**.
+Appropriate warning will be displayed when staff to guest ratio is less than 1:10 as shown below:
+![brave_Go2tlfVeVG](https://github.com/user-attachments/assets/9b0f7a61-9bb9-4de8-98d2-d50aa62a9193)
+This warning specifically shows the number of staff members required for the number of guests.
+The helper method used to calculate:
+```cs
+private int GetRequiredStaffCount()
+{
+    int guests = Event.GuestBookings.Count();
+    int staff = Event.Staffings.Count();
+
+    // Calculate minimum required staff
+    int requiredStaff = (int)Math.Ceiling(guests / 10.0);
+
+    // Calculate how many more staff are needed
+    int staffNeeded = Math.Max(0, requiredStaff - staff);
+
+    return staffNeeded;
+}
+```
 
 ### ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E) 23. User access control.
 - Can create and edit staff details (Permitted Users: Managers)
