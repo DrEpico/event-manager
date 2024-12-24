@@ -1,5 +1,5 @@
 # ThAmCo Project Requirements
-This project involves managing food items and menus for the Catering system, adhering to the functional requirements outlined below. API methods utilise DTOs to simplify input and output handling, unless deemed unnecessary.
+This project involves managing food items and menus for the Catering system and Event management system, adhering to the functional requirements outlined below. API methods utilise DTOs to simplify input and output handling, unless deemed unnecessary.
 
 <!--## Functional Requirements
 # Must (Critical requirements)
@@ -103,7 +103,7 @@ These functionalities are implemented in **`FoodBookingsController.cs`**.
 
 ## Notes
 - DTOs are implemented for all API methods unless deemed unnecessary to simplify input/output handling and improve readability. 
-- For further details on specific methods or functionality, refer to the code in the respective controllers (`MenuItemsController.cs` and `MenuFoodItemsController.cs`).
+- For further details on specific methods or functionality, refer to the code in the respective API controllers.
 
 ---
 
@@ -152,8 +152,41 @@ This functionality is implemented in **`Events/EventList/Details`**.
 <br>Clicking the "Cancel" button on each guest record row allows the user to cancel (soft-delete) the GuestBooking record by setting `IsCancelled` to `True`. Such records will be filtered and not be shown on the event details page on page reload.
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 12. Reserve an appropriate, available Venue for an Event via the ThAmCo.Venues web service, freeing any previously associated Venue.
-This functionality is implemented in **`Events/EventList/Create`** and overlabs with [test](#should-11-cancel-the-booking-of-a-guest-from-an-upcoming-event
-)
+This functionality is implemented in **`Events/EventList/Create`** and overlabs with [criteria 6 documentation](#must-6-create-a-new-event-specifying-as-a-minimum-its-title-date-and-eventtype).
+- To reserve an **appropriate** venue considering the suitabilities, user must first enter all the event details and click the "Search Venue" button calling `OnPostSearchVenueAsync()` method, which calls two methods in different service classes to call appropriate API's and return data. A dropdown list of available venues will then appear ready for selection. The reserved venue would not be available for the other events on the same date and will be back to the dropdown list once the event is cancelled.
+  - **Note**: The events are automatically assigned with a random "manage" role staff on creation.
+- Clicking the "Reserve Venue" button after selecting a venue from the dropdown list calls `OnPostReserveVenueAsync()` also calls a method in the service class to communicate to the API to reserve a venue, providing the information required for the API parameters. The venue reference from the reservation confirmation will then be stored in the database so the website can refer back to it more efficiently for displaying purposes and etc.
+- Freeing a venue takes a similar route. However the button is located on the **`Events/EventList/Details`** page for enhanced user experience/navigation flow.
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 13. Display a list of Events that includes summary information about the Guests and Venue within it.
+This functionality is implemented in **`Events/EventList/Index`**.
+The page displays the list of events with event names, dates and event type. 
+<br>JUSTIFICATION: The page doesn't display summary information about the guests and venue within it as that would make the page cluttered with information while the exact information is just one click away on the **`Events/EventList/Details`** page via the "Details" link button. <br>ALTERNATIVE: However it may be a good middleground to show the guest count for each event on the list page.
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 14. Create, list and edit Staff.
+These functionalities are implemented in **`Events/StaffList/`**.
+- List Staff: The **`Events/StaffList/Index`** page is dedicated to listing the staff members, displaying the names and roles.
+  - User may click the available link buttons to create, edit or delete staff members.
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 15. Adjust the staffing of an Event, adding available staff or removing currently assigned staff.
+This functionality is implemented in **`Events/EventList/Details`**.
+- User may click on the "Add Staff" button under the Staff table element and select an "Assistant role" or a "First Aider" role staff.
+- User may click on the "Remove" link button on the individual staff records to remove (hard-delete) the staffing record.
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 16. See appropriate warnings within the event list and staffing views when there is not a first aider assigned to an Event.
+This functionality is implemented in **`Events/EventList/Details`**.
+- The event details page will show a warning if events with Exhibition, Festival or Competition event types have no First Aider assigned.
+  ```cs
+  private void CheckFristAiderRequirement()
+  {
+      if(Event.EventType == "EXH" || Event.EventType == "FES" || Event.EventType == "CMP")
+      {
+          if(!Event.Staffings.Any(s => s.Staff.Role == "First Aider"))
+          {
+              ModelState.AddModelError(string.Empty, "Warning: This event requires at least one first-aider");
+  ```
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 17. Display the details of a Staff member, including information about upcoming Events at which they are assigned to work.
 
 
 <!--
