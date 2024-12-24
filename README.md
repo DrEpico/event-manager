@@ -151,7 +151,9 @@ This functionality is implemented in **`Events/GuestList/Details`**.
 This functionality is implemented in **`Events/EventList/Details`**.
 <br>Clicking the "Cancel" button on each guest record row allows the user to cancel (soft-delete) the GuestBooking record by setting `IsCancelled` to `True`. Such records will be filtered and not be shown on the event details page on page reload.
 
-
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 12. Reserve an appropriate, available Venue for an Event via the ThAmCo.Venues web service, freeing any previously associated Venue.
+This functionality is implemented in **`Events/EventList/Create`** and overlabs with [test](#should-11-cancel-the-booking-of-a-guest-from-an-upcoming-event
+)
 
 
 <!--
