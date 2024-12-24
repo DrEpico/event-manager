@@ -187,6 +187,26 @@ This functionality is implemented in **`Events/EventList/Details`**.
   ```
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 17. Display the details of a Staff member, including information about upcoming Events at which they are assigned to work.
+This functionality is implemented in **`Events/StaffList/Details`**.
+<br>The list of upcoming events with their venue codes for each staff member is shown below the basic staff details.
+
+### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 18. Cancel (soft delete) an Event, freeing any associated Venue and Staff.
+This functionality is implemented in **`Events/EventList/Details`**.
+<br>By clicking the "Cancel" button at the bottom of the page user may cancel (soft-delete) an event, calling the relevant API and freeing up the venue as well as removing the staffing records. 
+
+### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 19. Display the details for an Event, which must include details of the Venue, Staff and Guests – this should be more detailed that the summary information found in the Event list.
+
+### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 20. Permanently remove personal data by anonymising their Guest entity.
+
+### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 21. Display a detailed list of available Venues, filtered by EventType and date range, and then create a new Event by picking a result.
+
+### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 22. See appropriate warnings within the event list and staffing views when there is fewer than one member of staff per 10 guests assigned to an Event.
+
+### ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E) 23. User access control.
+- Can create and edit staff details (Permitted Users: Managers)
+- Adjust the staffing of an event (Permitted Users: Team Leaders or Managers)
+- Permanently delete (Permitted Users: Team Leaders or Managers)
+
 
 
 <!--
