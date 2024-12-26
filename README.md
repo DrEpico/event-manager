@@ -51,6 +51,35 @@ The system architecture and data model are documented below.
 
 ---
 
+### Tag System
+
+>#### Requirements Status
+>
+>We use a color-coded system to track requirement implementation:
+>
+>![MUST](https://img.shields.io/badge/✓-MUST-F43F5E): Must Requirements
+><br>![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308): Should Requirements
+><br>![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E): Would Requirements
+>
+>Status indicators used with requirements:
+>- ✓ : Fully implemented
+>- △ : Partially implemented
+>- ✗ : Not started
+> **Note**: In this project, all requirements are marked with ✓ (fully implemented) except for the final requirement.
+>
+> #### Development Insight Badges
+> To provide clarity on development decisions and future plans, we use:
+>
+>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): Justifications for the choices I have made.
+> 
+>![ALTERNATIVE](https://img.shields.io/badge/ALTERNATIVE-8B5CF6): The alternative solutions I would like to/could implement that require considerable refactoring.
+>
+>![TODO](https://img.shields.io/badge/TODO-3B82F6): The improvements I would like to implement on top of the existing code.
+>
+>![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): The improvements I would like to implement that require considerable refactoring. 
+
+---
+
 ### Web Api Services (ThAmCo.Catering) to:
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 1. Create, edit, delete, and list food items.
 These functionalities are implemented in **`MenuItemsController.cs`**.
