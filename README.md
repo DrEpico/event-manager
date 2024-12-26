@@ -16,7 +16,11 @@ This project involves managing food items and menus for the Catering system and 
 ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/△-WOULD-22C55E)
 ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E)
--->
+
+![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1)    
+![ALTERNATIVE](https://img.shields.io/badge/ALTERNATIVE-8B5CF6)
+![TODO](https://img.shields.io/badge/TODO-3B82F6)
+![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB)
 <!--<details>
 <summary>
 
@@ -170,7 +174,7 @@ This functionality is implemented in **`Events/EventList/Create`** and overlabs 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 13. Display a list of Events that includes summary information about the Guests and Venue within it.
 This functionality is implemented in **`Events/EventList/Index`**.
 The page displays the list of events with event names, dates and event type. 
-<br>JUSTIFICATION: The page doesn't display summary information about the guests and venue within it as that would make the page cluttered with information while the exact information is just one click away on the **`Events/EventList/Details`** page via the "Details" link button. <br>ALTERNATIVE: However it may be a good middleground to show the guest count for each event on the list page.
+<br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): The page doesn't display summary information about the guests and venue within it as that would make the page cluttered with information while the exact information is just one click away on the **`Events/EventList/Details`** page via the "Details" link button. <br>![ALTERNATIVE](https://img.shields.io/badge/ALTERNATIVE-8B5CF6): However it may be a good middleground to show the guest count for each event on the list page.
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 14. Create, list and edit Staff.
 These functionalities are implemented in **`Events/StaffList/`**.
@@ -219,7 +223,7 @@ This functionality is implemented in **`Events/EventList/Details`**.
 This functionality is implemented in **`Events/GuestList/Edit`**.
 The button responsible for this functionality is located on the edit guest page (the delete guest page may be a better place) and anonymises user data by randomly generating strings and overwriting the personal data: 
 ![image](https://github.com/user-attachments/assets/f00d3117-81a6-47f8-876e-ef03b97e1be9)
-<br>JUSTIFICATION: Guest bookings associated with the guest ID are not deleted to maintain the integrity of historical event data, such as attendance records, financial reports, and event analytics, as would be essential in a real business context.
+<br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): Guest bookings associated with the guest ID are not deleted to maintain the integrity of historical event data, such as attendance records, financial reports, and event analytics, as would be essential in a real business context.
 Helper method to generate randomised strings.
 ```cs 
 private string GenerateAnonymizedIdentifier()
