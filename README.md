@@ -1,5 +1,5 @@
 # ThAmCo Project Requirements
-This project involves managing food items and menus for the Catering system and Event management system, adhering to the functional requirements outlined below. API methods utilise DTOs to simplify input and output handling, unless deemed unnecessary.
+This project involves managing food items and menus for the Catering system and Event management system, adhering to the functional requirements outlined below. All API methods in Catering utilise DTOs to simplify input and output handling (unless deemed unnecessary).
 
 <!--## Functional Requirements
 # Must (Critical requirements)
@@ -21,12 +21,17 @@ This project involves managing food items and menus for the Catering system and 
 ![ALTERNATIVE](https://img.shields.io/badge/ALTERNATIVE-8B5CF6)
 ![TODO](https://img.shields.io/badge/TODO-3B82F6)
 ![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB)
-<!--<details>
-<summary>
+-->
 
-  ### MUST
+<details>
+<summary> Scenario</summary>
 
-</summary>-->
+### Your content goes here
+This can include any markdown content
+- Like lists
+- And other elements
+
+</details>
   
 ### Web Api Services (ThAmCo.Catering) to:
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 1. Create, edit, delete, and list food items.
@@ -148,11 +153,11 @@ This functionality is implemented in **`Events/EventList/`**.
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 8. Book a Guest onto an Event
 This functionality is implemented in **`Events/EventList/Details`**.
 <br>User may click the "Add Guest" button and proceed to enter the guest details in the modal input fields. On clicking the "Add" button the page will refresh and show the newly added guest record.
-ALTERNATIVE/TODO: It would be beneficial to implement an option for users to book new guests onto events OR select from an existing list of guests. However, currently only the first option has been implemented.
+![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): It would be beneficial to implement an option for users to book new guests onto events OR select from an existing list of guests. However, currently only the first option has been implemented.
 
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 9. List Guests (including a total count) for an Event and register their attendance
 This functionality is implemented in **`Events/EventList/Details`**.
-<br>The list includes all the guests associated with an event and their attendance. ALTERNATIVE/TODO: The attendance checkbox may better be interactable and changes saved in the database.
+<br>The list includes all the guests associated with an event and their attendance. ![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): The attendance checkbox may better be interactable and changes saved in the database.
 
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 10. Display the details of an individual Guest, including information about the Events with which they are associated and their attendance
 This functionality is implemented in **`Events/GuestList/Details`**.
@@ -216,14 +221,14 @@ This functionality is implemented in **`Events/EventList/Details`**.
 - This may also be shown as follows when the venue reference column is not null but the venue API fails to return data successfully:
   ![image](https://github.com/user-attachments/assets/33e843df-1aaa-4f07-9055-d739d4bc95ef)
 - And when the venue reference is null it shows the following:
-   <br>TODO/ALTERNATIVE: It is not required for the scope of this assignment but it would be nice to have a button that allows the user to book/rebook a venue here.
+   <br>![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): It is not required for the scope of this assignment but it would be nice to have a button that allows the user to book/rebook a venue here.
   ![image](https://github.com/user-attachments/assets/63009cc3-15eb-4992-809c-1d34c6a88182)
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 20. Permanently remove personal data by anonymising their Guest entity.
 This functionality is implemented in **`Events/GuestList/Edit`**.
 The button responsible for this functionality is located on the edit guest page (the delete guest page may be a better place) and anonymises user data by randomly generating strings and overwriting the personal data: 
 ![image](https://github.com/user-attachments/assets/f00d3117-81a6-47f8-876e-ef03b97e1be9)
-<br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): Guest bookings associated with the guest ID are not deleted to maintain the integrity of historical event data, such as attendance records, financial reports, and event analytics, as would be essential in a real business context.
+<br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1):  Guest bookings associated with the guest ID are not deleted to maintain the integrity of historical event data, such as attendance records, financial reports, and event analytics, as would be essential in a real business context.
 Helper method to generate randomised strings.
 ```cs 
 private string GenerateAnonymizedIdentifier()
@@ -242,7 +247,7 @@ This functionality is implemented in **`Events/VenueList/Create`**.
 User may enter the event name, select the date, starting & ending times as well as the event type and the dropdown list of **available suitable venues** would appear. 
 
 ![IMAGE](https://github.com/user-attachments/assets/2f1082da-8230-40a4-b706-f73dd7c9ed27)
-<br>JUSTIFICATION: I believe what I overengineered for a "Should" criteria should suffice for this criteria. 
+<br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): I believe what I overengineered for a "Should" criteria should suffice for this criteria. 
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 22. See appropriate warnings within the event list and staffing views when there is fewer than one member of staff per 10 guests assigned to an Event.
 This functionality is implemented in **`Events/EventList/Details`**.
