@@ -23,16 +23,34 @@ This project involves managing food items and menus for the Catering system and 
 ![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB)
 -->
 
+---
 <details>
-<summary> Scenario</summary>
+<summary> 
 
-### Your content goes here
-This can include any markdown content
-- Like lists
-- And other elements
+  ### Scenario
+  Expand to see the project scenario.
+
+</summary>
+
+### ThAmCo Project
+ThreeAmigos Corp is an event management company that arranges and oversees a range of functions, including conferences, parties and weddings for its clients. As well as logistics,
+ThreeAmigos Corp organises the catering and staffing for events. I have been given the responsibility of constructing a new intranet-based prototype system for
+the events management team. The internal system will be used by ThreeAmigos Corp staff to perform the key operations:
+- Manage event details;
+- Assign staff to events;
+- Attach guests to events;
+- Assign food orders to events.
+A system architecture and data model have been agreed upon by all stakeholders. It has been decided that an existing web service will be used for reserving event venues.
+It has also been decided that catering will be created as an independent web service because of the potential for selling on as a third-party service to other companies.
+The system architecture and data model are documented below.
+
+![image](https://github.com/user-attachments/assets/e009edb0-f471-4250-97fc-b07ce4370743)
+![image](https://github.com/user-attachments/assets/94ea6be4-c43d-4d5d-b756-d98374ce5fe2)
 
 </details>
-  
+
+---
+
 ### Web Api Services (ThAmCo.Catering) to:
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 1. Create, edit, delete, and list food items.
 These functionalities are implemented in **`MenuItemsController.cs`**.
