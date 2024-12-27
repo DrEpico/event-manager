@@ -288,6 +288,9 @@ guest.Name = anonymizedIdentifier;
 guest.Email = $"{anonymizedIdentifier}@anonymized.com";
 guest.Phone = "XXXXXXXXXX";
 ```
+![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): Initially a simple algorithm was used to generate 4 random numbers but later Globally Unique Identifier (Guid) was implemented to generate the random numbers in `GenerateAnonymizedIdentifier();` to reduce the risk of collision. However, this still does not completely mitigate the risk of collision. ![ALTERNATIVE](https://img.shields.io/badge/ALTERNATIVE-8B5CF6): As an alternative solution to further minimise the risk of collision, Hashing could be utilised, which would not suit the scope of this specific project.
+
+Source: https://learn.microsoft.com/en-us/dotnet/api/system.guid.newguid?view=net-9.0   
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 21. Display a detailed list of available Venues, filtered by EventType and date range, and then create a new Event by picking a result.
 This functionality is implemented in **`Events/VenueList/Create`**.
