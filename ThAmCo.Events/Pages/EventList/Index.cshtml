@@ -29,6 +29,9 @@
         @foreach (var item in Model.Event) {
             <tr>
                 <td>
+                    @* <a asp-page="/EventList/Details" asp-route-id="@item.EventId">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </a> *@
                     @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
