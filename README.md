@@ -129,7 +129,9 @@ These functionalities are implemented in **`MenusController.cs`**.
 - **`DeleteMenu(id)`**  
   Deletes a Menu record by ID.
 
-> Although not required, I also kept the scaffolded GET and PUT methods and implemented DTO
+> Although not required, I also kept the scaffolded GET and PUT methods and implemented DTO.
+>
+> This method joins tables and shows a meaningful list of DTOs rather than the bare objects.
 > - **`GetMenus()`**:
 > Retrieves a list of menus.
 > 
@@ -142,14 +144,19 @@ These functionalities are implemented in **`MenusController.cs`**.
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 4. Book, edit and cancel Food for an Event - see the ERD above for details. The service should return the FoodBookingId as confirmation of the booking.
 These functionalities are implemented in **`FoodBookingsController.cs`**.
 
+![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): These methods return `ClientReferenceId` instead of FoodBookingId which reduces the risk of directly exposing database ID's. This improved abstraction aligns well with API design best practices, where external consumers should interact with business-relevant data rather than internal system details.
+![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): Ideally this ID should not be incremented by 1 for every new food booking record to avoid predictable behaviour which could be a exploited.
+
 #### API Endpoints:
 - **`PostFoodBooking(foodBookingInputDto)`**
   <br>Takes food booking requests.
-  <br>Food booking input DTO is made of `NumberOfGuests`(1-100) and `MenuId` fields. 
+  <br>Food booking input DTO is made of `NumberOfGuests`(1-100) and `MenuId` fields.
+  <br>Returns Client Reference ID if successful.
 
 - **`PutFoodBooking(foodBookingEditInputDto)`**
   <br>Edits food bookings.
-  <br>Food booking *edit* input DTO takes 3 fields of `ClientReferenceId`(Required), `NumberOfGuests` OR `MenuId` OR both 
+  <br>Food booking *edit* input DTO takes 3 fields of `ClientReferenceId`(Required), `NumberOfGuests` OR `MenuId` OR both.
+  <br>Returns Client Reference ID if successful.
 
 - **`DeleteFoodBooking(clientReferenceId)`**
   <br>Removes FoodBooking (hard delete).
