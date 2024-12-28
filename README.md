@@ -129,7 +129,9 @@ These functionalities are implemented in **`MenusController.cs`**.
 - **`DeleteMenu(id)`**  
   Deletes a Menu record by ID.
 
-> Although not required, I also kept the scaffolded GET and PUT methods and implemented DTO
+> Although not required, I also kept the scaffolded GET and PUT methods and implemented DTO.
+>
+> This method joins tables and shows a meaningful list of DTOs rather than the bare objects.
 > - **`GetMenus()`**:
 > Retrieves a list of menus.
 > 
