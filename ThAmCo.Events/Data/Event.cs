@@ -12,7 +12,7 @@ namespace ThAmCo.Events.Data
         public TimeSpan StartTime { get; set; }
         //[DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
-        public string EventType { get; set; }
+        public string EventType { get; set; } = string.Empty;
 
         // This is a computed property that will return the full event type name
         public string EventTypeFull => EventType switch

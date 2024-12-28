@@ -51,15 +51,21 @@ namespace ThAmCo.Events.Pages.EventList
                 return Page();
             }
 
-            // Mark the Event entity as modified to track changes.
-            _context.Attach(Event).State = EntityState.Modified;
+            var selectedEvent = await _context.Events.FirstOrDefaultAsync(m => m.EventId == Event.EventId);
+
+            if (selectedEvent == null)
+            {
+                return NotFound();
+            }
+
+            // Update the properties of the tracked entity
+            selectedEvent.Title = Event.Title;
 
             try
-            {
                 // Save the changes to the database.
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
                 // Handle concurrency issues if the event no longer exists.
                 if (!EventExists(Event.EventId))
@@ -68,7 +74,7 @@ namespace ThAmCo.Events.Pages.EventList
                 }
                 else
                 {
-                    Console.WriteLine("Concurrency exception occurred.");
+                    Console.WriteLine($"Concurrency exception occurred. {ex}");
                 }
             }
 
