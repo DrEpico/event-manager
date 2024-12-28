@@ -34,6 +34,10 @@ namespace ThAmCo.Catering.Dtos
         public int NumberOfGuests { get; set; }
         public string? MenuName { get; set; }
 
+        public FoodBookingOutputDto()
+        {
+        }
+
         public FoodBookingOutputDto(int clientReferenceId, int numberOfGuests, string? menuName)
         {
             ClientReferenceId = clientReferenceId;
