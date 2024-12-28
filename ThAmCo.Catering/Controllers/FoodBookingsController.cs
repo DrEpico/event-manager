@@ -152,7 +152,28 @@ namespace ThAmCo.Catering.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
 
-            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingDto);
+            // Retrieve the newly created FoodBooking with the related Menu entity
+            var createdFoodBooking = await _context.FoodBookings
+                .Include(fb => fb.Menu)
+                .FirstOrDefaultAsync(fb => fb.FoodBookingId == foodBooking.FoodBookingId);
+
+            // If no matching booking is found, return a 404 (shouldn't occur in normal scenarios)
+            if (createdFoodBooking == null)
+            {
+                return NotFound();
+            }
+
+            var clientRef = GenerateClientReferenceId();
+
+            // Map the entity to the output DTO
+            var foodBookingOutputDto = new FoodBookingOutputDto(
+                clientRef,
+                createdFoodBooking.NumberOfGuests,
+                createdFoodBooking.Menu?.MenuName // Handle potential null reference
+            );
+
+            // Return the single object
+            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBookingOutputDto);
         }
 
         /// <summary>
@@ -193,6 +214,17 @@ namespace ThAmCo.Catering.Controllers
         private bool FoodBookingExists(int id)
         {
             return _context.FoodBookings.Any(e => e.FoodBookingId == id);
+        }
+
+        private int GenerateClientReferenceId()
+        {
+            // Fetch the last ClientReferenceId from the database
+            var lastClientReferenceId = _context.FoodBookings
+                .OrderByDescending(fb => fb.ClientReferenceId)
+                .Select(fb => fb.ClientReferenceId)
+                .FirstOrDefault();
+
+            return lastClientReferenceId + 1;
         }
     }
 }
