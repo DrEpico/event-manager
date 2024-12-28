@@ -61,7 +61,7 @@ namespace ThAmCo.Events.Pages.EventList
             // Update the properties of the tracked entity
             selectedEvent.Title = Event.Title;
 
-            try
+            try { 
                 // Save the changes to the database.
                 await _context.SaveChangesAsync();
             }

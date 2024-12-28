@@ -140,7 +140,13 @@ namespace ThAmCo.Events.Pages.EventList
                 .ThenInclude(gb => gb.Guest)
                 .FirstOrDefaultAsync(e => e.EventId == EventId);
 
-            return Page(); // Return to the current page to show updated data
+            if (Event == null)
+            {
+                return NotFound();
+            }
+
+            // Redirect to reload the page
+            return RedirectToPage(new { id = EventId });
         }
 
         // Removes a staff member from the event.
