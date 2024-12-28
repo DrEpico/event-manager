@@ -138,6 +138,7 @@ namespace ThAmCo.Catering.Controllers
             {
                 // Assign DTO values to the entity. 
                 // Validation is done at DTO.
+                foodBooking.ClientReferenceId = GenerateClientReferenceId();
                 foodBooking.NumberOfGuests = foodBookingDto.NumberOfGuests;
                 foodBooking.MenuId = foodBookingDto.MenuId;
 
@@ -163,11 +164,9 @@ namespace ThAmCo.Catering.Controllers
                 return NotFound();
             }
 
-            var clientRef = GenerateClientReferenceId();
-
             // Map the entity to the output DTO
             var foodBookingOutputDto = new FoodBookingOutputDto(
-                clientRef,
+                foodBooking.ClientReferenceId,
                 createdFoodBooking.NumberOfGuests,
                 createdFoodBooking.Menu?.MenuName // Handle potential null reference
             );
@@ -203,7 +202,7 @@ namespace ThAmCo.Catering.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
 
-            return NoContent();
+            return Ok($"Booking with Client Reference ID {clientReferenceId} has been deleted");
         }
 
         /// <summary>
