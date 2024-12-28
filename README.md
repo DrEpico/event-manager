@@ -155,7 +155,7 @@ These functionalities are implemented in **`FoodBookingsController.cs`**.
 
 - **`PutFoodBooking(foodBookingEditInputDto)`**
   <br>Edits food bookings.
-  <br>Food booking *edit* input DTO takes 3 fields of `ClientReferenceId`(Required), `NumberOfGuests` OR `MenuId` OR both.
+  <br>Food booking *edit* input DTO takes 3 fields of `ClientReferenceId`(Required), ~~`NumberOfGuests` OR `MenuId` OR both~~.
   <br>Returns Client Reference ID if successful.
 
 - **`DeleteFoodBooking(clientReferenceId)`**
