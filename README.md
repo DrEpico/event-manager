@@ -159,8 +159,8 @@ These functionalities are implemented in **`FoodBookingsController.cs`**.
   <br>Returns Client Reference ID if successful.
 
 - **`DeleteFoodBooking(clientReferenceId)`**
-  <br>Removes FoodBooking (hard delete).
-  <br>The service returns the booking detail by FoodBookingId as confirmation of the booking.
+  <br>Removes FoodBooking (hard-delete).
+  <br>The method returns a confirmation message referencing the Client Reference ID of the record that is deleted.
 
 > Again, I also kept the scaffolded GET methods and implemented DTO
 > - **`GetFoodBookings()`**:
@@ -168,6 +168,7 @@ These functionalities are implemented in **`FoodBookingsController.cs`**.
 > 
 > - **`GetFoodBooking(id)`**:
 > Retrieves a food booking record by ID.
+> Used by the `CreatedAtAction()` method.
 
 ---
 
