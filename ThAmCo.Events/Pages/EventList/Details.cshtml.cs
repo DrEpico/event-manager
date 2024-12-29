@@ -227,10 +227,13 @@ namespace ThAmCo.Events.Pages.EventList
             // Fetch the event from the database
             Event = await _context.Events.FindAsync(EventId);
 
+            CancelEvent();
+
             if (Event == null)
             {
                 return NotFound();
             }
+
 
             // Fetch and delete the venue reservation if a reference exists
             if (!string.IsNullOrEmpty(Event.VenueReference))
@@ -250,5 +253,11 @@ namespace ThAmCo.Events.Pages.EventList
             //return Page();
         }
 
+
+        private async void CancelEvent()
+        {
+            Event.IsCancelled = true;
+            await _context.SaveChangesAsync();
+        }
     }
 }
