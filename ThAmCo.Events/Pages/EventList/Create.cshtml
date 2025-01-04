@@ -28,7 +28,10 @@
             </div>
             <div class="form-group">
                 <label asp-for="Event.Date" class="control-label">Date</label>
-                <input asp-for="Event.Date" class="form-control" type="date" />
+                <input asp-for="Event.Date" class="form-control" type="date" 
+                min="@(DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"))"
+                max="@(DateTime.Now.AddDays(7).ToString("yyyy-MM-dd"))" />
+                <!-- ^Restrict date selection^: Enable only dates between tomorrow and 7 days from now (inclusive) -->
                 <span asp-validation-for="Event.Date" class="text-danger"></span>
             </div>
             <div class="form-group">
