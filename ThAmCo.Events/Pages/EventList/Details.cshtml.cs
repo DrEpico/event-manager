@@ -217,6 +217,7 @@ namespace ThAmCo.Events.Pages.EventList
         }
 
         // Deletes the venue reservation for an event.
+        //Horrible naming for a method that's responsible for cancelling an event.
         public async Task<IActionResult> OnPostDeleteVenueReservationAsync(int EventId)
         {
             if (EventId == null)
@@ -224,10 +225,15 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
-            // Fetch the event from the database
-            Event = await _context.Events.FindAsync(EventId);
+            // Fetch the event from the database including the staffing
+            Event = await _context.Events
+                .Include(e => e.Staffings)
+                    .ThenInclude(s => s.Staff)
+                .FirstOrDefaultAsync(e => e.EventId == EventId);
+            // Not including the guests as the page will be refreshed after this and OnGet() will get that again.
 
             CancelEvent();
+            CancelStaffing();
 
             if (Event == null)
             {
@@ -250,13 +256,18 @@ namespace ThAmCo.Events.Pages.EventList
             }
 
             return RedirectToPage("./Details", new { id = EventId });
-            //return Page();
         }
 
 
         private async void CancelEvent()
         {
             Event.IsCancelled = true;
+            await _context.SaveChangesAsync();
+        }
+
+        private async void CancelStaffing()
+        {
+            Event.Staffings.Clear();
             await _context.SaveChangesAsync();
         }
     }
