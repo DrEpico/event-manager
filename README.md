@@ -145,7 +145,7 @@ These functionalities are implemented in **`MenusController.cs`**.
 These functionalities are implemented in **`FoodBookingsController.cs`**.
 
 ![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): These methods return `ClientReferenceId` instead of FoodBookingId which reduces the risk of directly exposing database ID's. This improved abstraction aligns well with API design best practices, where external consumers should interact with business-relevant data rather than internal system details.
-![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): Ideally this ID should not be incremented by 1 for every new food booking record to avoid predictable behaviour which could be a exploited.
+![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): Ideally this ID should not be incremented by 1 for every new food booking record to avoid predictable behaviour which could be exploited.
 
 #### API Endpoints:
 - **`PostFoodBooking(foodBookingInputDto)`**
@@ -199,6 +199,8 @@ These functionalities are implemented in **`Events/GuestList/`**.
 This functionality is implemented in **`Events/EventList/`**.
 - Create Event:
 <br>Clicking the "Create New" link above the list of events redirects the user to **`EventList/Create`**. The user then may enter the `Event Name`, `Date`, `Start Time`, `End Time` and `Event Type`. Once the user clicks the "Search" button it displays a dropdown list of available venues, suitable to the specified event type with details such as price and etc. Then the user may choose a venue from the dropdown list and click "Reserve Venue" to confirm the reservation. The user will be redirected to the venue reservation confirmation page if successful.
+> When choosing a date, the user would be able to select the dates between the next day and 7 days from the current date.
+> ![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): This design choice is due to the fact the database context generates venue reservation slots for the next 7 days for the purpose of this demo application. 
 
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 7. Edit an Event (except its date and type)
 This functionality is implemented in **`Events/EventList/`**.
@@ -212,12 +214,13 @@ This functionality is implemented in **`Events/EventList/Details`**.
 
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 9. List Guests (including a total count) for an Event and register their attendance
 This functionality is implemented in **`Events/EventList/Details`**.
-<br>The list includes all the guests associated with an event and their attendance. ![TODO/ALTERNATIVE](https://img.shields.io/badge/TODO%2FALTERNATIVE-2563EB): The attendance checkbox may better be interactable and changes saved in the database.
+<br>The list includes all the guests associated with an event and their attendance. The attendance buttons are togglable by clicking.
 
 ### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 10. Display the details of an individual Guest, including information about the Events with which they are associated and their attendance
 This functionality is implemented in **`Events/GuestList/Details`**.
 <br>This functionality shows the guest details and below that, the list of events with which they are associated and their attendance.
 </details>
+
 ---
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 11. Cancel the booking of a guest from an upcoming Event.
@@ -226,14 +229,14 @@ This functionality is implemented in **`Events/EventList/Details`**.
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 12. Reserve an appropriate, available Venue for an Event via the ThAmCo.Venues web service, freeing any previously associated Venue.
 This functionality is implemented in **`Events/EventList/Create`** and overlaps with [criteria 6 documentation](#-6-create-a-new-event-specifying-as-a-minimum-its-title-date-and-eventtype).
-- To reserve an **appropriate** venue considering the suitabilities, user must first enter all the event details and click the "Search Venue" button calling `OnPostSearchVenueAsync()` method, which calls two methods in different service classes to call appropriate API's and return data. A dropdown list of available venues will then appear ready for selection. The reserved venue would not be available for the other events on the same date and will be back to the dropdown list once the event is cancelled.
+- To reserve an **appropriate** venue considering the suitabilities, the user must first enter all the event details and click the "Search Venue" button calling `OnPostSearchVenueAsync()` method, which calls two methods in different service classes to call appropriate API's and return data. A dropdown list of available venues will then appear ready for selection. The reserved venue will not be available for the other events on the same date and will be back on the dropdown list once the event is cancelled.
   - **Note**: The events are automatically assigned with a random "manage" role staff on creation.
 - Clicking the "Reserve Venue" button after selecting a venue from the dropdown list calls `OnPostReserveVenueAsync()` also calls a method in the service class to communicate to the API to reserve a venue, providing the information required for the API parameters. The venue reference from the reservation confirmation will then be stored in the database so the website can refer back to it more efficiently for displaying purposes and etc.
-- Freeing a venue takes a similar route. However the button is located on the **`Events/EventList/Details`** page for enhanced user experience/navigation flow.
+- Freeing a venue takes a similar route. However, the button is located on the **`Events/EventList/Details`** page for enhanced user experience/navigation flow.
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 13. Display a list of Events that includes summary information about the Guests and Venue within it.
 This functionality is implemented in **`Events/EventList/Index`**.
-The page displays the list of events with event names, dates and event type. 
+The page displays the list of events with event names, dates and event types. 
 <br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): The page doesn't display summary information about the guests and venue within it as that would make the page cluttered with information while the exact information is just one click away on the **`Events/EventList/Details`** page via the "Details" link button. <br>![ALTERNATIVE](https://img.shields.io/badge/ALTERNATIVE-8B5CF6): However it may be a good middleground to show the guest count for each event on the list page.
 
 ### ![SHOULD](https://img.shields.io/badge/✓-SHOULD-EAB308) 14. Create, list and edit Staff.
@@ -269,6 +272,8 @@ This functionality is implemented in **`Events/EventList/Details`**.
 
 ![image](https://github.com/user-attachments/assets/2a1bc539-ec37-48b4-8529-4a25d6cbcc94)
 
+---
+
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 19. Display the details for an Event, which must include details of the Venue, Staff and Guests – this should be more detailed that the summary information found in the Event list.
 This functionality is implemented in **`Events/EventList/Details`**.
 - The page displays pure event information such as event name, type and date on the right side while showing venue-related details on the right side. 
@@ -302,14 +307,14 @@ Source: https://learn.microsoft.com/en-us/dotnet/api/system.guid.newguid?view=ne
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 21. Display a detailed list of available Venues, filtered by EventType and date range, and then create a new Event by picking a result.
 This functionality is implemented in **`Events/VenueList/Create`**.
-User may enter the event name, select the date, starting & ending times as well as the event type and the dropdown list of **available suitable venues** would appear. 
+Users may enter the event name, select the date, starting & ending times as well as the event type and the dropdown list of **available suitable venues** will appear. 
 
 ![IMAGE](https://github.com/user-attachments/assets/2f1082da-8230-40a4-b706-f73dd7c9ed27)
 <br>![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): I believe what I overengineered for a "Should" criteria should suffice for this criteria. 
 
 ### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 22. See appropriate warnings within the event list and staffing views when there is fewer than one member of staff per 10 guests assigned to an Event.
 This functionality is implemented in **`Events/EventList/Details`**.
-Appropriate warning will be displayed when staff to guest ratio is less than 1:10 as shown below:
+An appropriate warning will be displayed when staff to guest ratio is less than 1:10 as shown below:
 ![brave_Go2tlfVeVG](https://github.com/user-attachments/assets/9b0f7a61-9bb9-4de8-98d2-d50aa62a9193)
 This warning specifically shows the number of staff members required for the number of guests.
 The helper method used to calculate:
