@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThAmCo.Events", "ThAmCo.Eve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRMApp", "CRMApp\CRMApp.csproj", "{1A8C5C88-D37C-41ED-9D12-BB2BBB41288D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C51EBED6-5E65-43DB-A14D-588C6DAF28B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A8C5C88-D37C-41ED-9D12-BB2BBB41288D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A8C5C88-D37C-41ED-9D12-BB2BBB41288D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A8C5C88-D37C-41ED-9D12-BB2BBB41288D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A8C5C88-D37C-41ED-9D12-BB2BBB41288D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
