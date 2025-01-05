@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRMApp.Data;
 using CRMApp.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRMApp.Controllers
 {
@@ -44,6 +45,7 @@ namespace CRMApp.Controllers
         }
 
         // GET: Managers/Create
+
         public IActionResult Create()
         {
             return View();
@@ -54,6 +56,7 @@ namespace CRMApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Name,Mobile,Email")] ManagerEntity managerEntity)
         {
             if (ModelState.IsValid)
@@ -117,6 +120,7 @@ namespace CRMApp.Controllers
         }
 
         // GET: Managers/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
