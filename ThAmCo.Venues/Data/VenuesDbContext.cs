@@ -165,7 +165,8 @@ namespace ThAmCo.Venues.Data
 
 
                 var rand = new Random(0);
-                var startDate = new DateTime(2024, 12, 01);
+                //NOTE: Correct way of using DateTime is without the new keyword as it is a static property and not a constructor.
+                var startDate = DateTime.Now.AddDays(1);
                 var endDate = startDate.AddDays(14); // 2 weeks of availability
                 var dates = new List<Availability>();
                 var venues = new[]
@@ -193,7 +194,7 @@ namespace ThAmCo.Venues.Data
                 }.ToList();
                 //JUSTIFICATION: I would've had it generate availability for the next 3 months from 1st Dec for 20 venues but that would take
                 //  20 minutes so since this is for demonstration purposes anyway ill keep it down to 2 weeks worth of availability.
-                //  After the changes it now takes 2,3 minutes to generate the availabilities so go grab water and hydrate while you wait lol
+                //  After the changes it now takes 2,3 minutes to generate the availabilities so go grab water and hydrate while you wait 
                 venues.ForEach(v =>
                 {
                     // Generate dates for the 2-week period
@@ -225,7 +226,5 @@ namespace ThAmCo.Venues.Data
                        .HasData(availabilities);
             }
         }
-
-
     }
 }
