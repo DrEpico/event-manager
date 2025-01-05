@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ThAmCo.Events.Data
 {
-    public class EventDbContext : DbContext
+    public class EventDbContext : IdentityDbContext
     {
         public DbSet<Event> Events { get; set; }
         public DbSet<Guest> Guests { get; set; }
