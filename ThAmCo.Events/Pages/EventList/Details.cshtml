@@ -119,7 +119,16 @@
                 {
                     <tr>
                         <td>@Html.DisplayFor(modelItem => guest.Guest.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => guest.HasAttended)</td>
+                        <td>
+                            <form method="post" asp-page-handler="ToggleAttendance">
+                                <input type="hidden" name="GuestBookingId" value="@guest.GuestBookingId" />
+                                <input type="hidden" name="EventId" value="@Model.Event.EventId" />
+                                <button type="submit"
+                                        class="btn btn-sm @(guest.HasAttended ? "btn-success" : "btn-secondary")">
+                                    @(guest.HasAttended ? "Yes" : "No")
+                                </button>
+                            </form>
+                        </td>
                         <td>
                             <form method="post" asp-page-handler="CancelBooking">
                                 <input type="hidden" name="GuestBookingId" value="@guest.GuestBookingId" />

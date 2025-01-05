@@ -270,5 +270,26 @@ namespace ThAmCo.Events.Pages.EventList
             Event.Staffings.Clear();
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IActionResult> OnPostToggleAttendance(int guestBookingId, int EventId)
+        {
+            if (guestBookingId == 0 || EventId == 0)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid guest or event ID.");
+                return Page();
+            }
+
+            var guestBooking = await _context.GuestBookings.FirstOrDefaultAsync(gb => gb.GuestBookingId == guestBookingId);
+            if (guestBooking == null)
+            {
+                return NotFound();
+            }
+
+            // Toggle the attendance status
+            guestBooking.HasAttended = !guestBooking.HasAttended;
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage(new { id = EventId });
+        }
     }
 }
