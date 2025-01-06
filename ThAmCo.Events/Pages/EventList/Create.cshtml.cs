@@ -9,12 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
 using ThAmCo.Events.Dtos;
 using ThAmCo.Events.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThAmCo.Events.Pages.EventList
 {
     /// <summary>
     /// PageModel for creating a new event using the venue service classes.
     /// </summary>
+    [Authorize(Policy = "ElevatedAccess")]
     public class CreateModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;
