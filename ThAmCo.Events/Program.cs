@@ -24,6 +24,30 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
     .AddRoles<IdentityRole>() // Add role support
     .AddEntityFrameworkStores<EventDbContext>();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminAccess", policy =>
+          policy.RequireRole("Admin"));
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ElevatedAccess", policy =>
+          policy.RequireRole("Admin", "Manager"));
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("EmployeeAccess", policy =>
+          policy.RequireRole("Admin", "Manager", "Assistant"));
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("FreeAccess", policy =>
+          policy.RequireRole("Admin", "Manager", "Assistant", "User"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
