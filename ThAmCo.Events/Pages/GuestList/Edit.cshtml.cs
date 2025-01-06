@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
+    [Authorize(Policy = "EmployeeAccess")]
     public class EditModel : PageModel
     {
         private readonly EventDbContext _context;
