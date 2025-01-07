@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ThAmCo.Events.Data;
 
@@ -10,9 +11,11 @@ using ThAmCo.Events.Data;
 namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventDbContext))]
-    partial class EventDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250107233819_AddMoreGuests")]
+    partial class AddMoreGuests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -776,22 +779,6 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             GuestBookingId = 2,
-                            EventId = 1,
-                            GuestId = 15,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 3,
-                            EventId = 1,
-                            GuestId = 7,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 4,
                             EventId = 2,
                             GuestId = 2,
                             HasAttended = true,
@@ -799,23 +786,7 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
-                            GuestBookingId = 5,
-                            EventId = 2,
-                            GuestId = 12,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 6,
-                            EventId = 2,
-                            GuestId = 15,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 7,
+                            GuestBookingId = 3,
                             EventId = 3,
                             GuestId = 3,
                             HasAttended = false,
@@ -823,8 +794,40 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
+                            GuestBookingId = 4,
+                            EventId = 4,
+                            GuestId = 4,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 5,
+                            EventId = 5,
+                            GuestId = 5,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 6,
+                            EventId = 6,
+                            GuestId = 6,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 7,
+                            EventId = 7,
+                            GuestId = 7,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
                             GuestBookingId = 8,
-                            EventId = 3,
+                            EventId = 8,
                             GuestId = 8,
                             HasAttended = true,
                             IsCancelled = false
@@ -832,142 +835,30 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             GuestBookingId = 9,
-                            EventId = 4,
-                            GuestId = 4,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 10,
-                            EventId = 4,
+                            EventId = 9,
                             GuestId = 9,
                             HasAttended = false,
                             IsCancelled = false
                         },
                         new
                         {
+                            GuestBookingId = 10,
+                            EventId = 10,
+                            GuestId = 10,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
                             GuestBookingId = 11,
-                            EventId = 5,
-                            GuestId = 5,
+                            EventId = 11,
+                            GuestId = 11,
                             HasAttended = false,
                             IsCancelled = false
                         },
                         new
                         {
                             GuestBookingId = 12,
-                            EventId = 5,
-                            GuestId = 10,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 13,
-                            EventId = 5,
-                            GuestId = 6,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 14,
-                            EventId = 6,
-                            GuestId = 6,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 15,
-                            EventId = 6,
-                            GuestId = 13,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 16,
-                            EventId = 7,
-                            GuestId = 7,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 17,
-                            EventId = 7,
-                            GuestId = 14,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 18,
-                            EventId = 8,
-                            GuestId = 8,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 19,
-                            EventId = 8,
-                            GuestId = 11,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 20,
-                            EventId = 9,
-                            GuestId = 9,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 21,
-                            EventId = 9,
-                            GuestId = 15,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 22,
-                            EventId = 10,
-                            GuestId = 10,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 23,
-                            EventId = 10,
-                            GuestId = 5,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 24,
-                            EventId = 11,
-                            GuestId = 11,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 25,
-                            EventId = 11,
-                            GuestId = 1,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 26,
                             EventId = 12,
                             GuestId = 12,
                             HasAttended = true,
@@ -975,15 +866,7 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
-                            GuestBookingId = 27,
-                            EventId = 12,
-                            GuestId = 4,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 28,
+                            GuestBookingId = 13,
                             EventId = 13,
                             GuestId = 13,
                             HasAttended = false,
@@ -991,15 +874,7 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
-                            GuestBookingId = 29,
-                            EventId = 13,
-                            GuestId = 2,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 30,
+                            GuestBookingId = 14,
                             EventId = 14,
                             GuestId = 14,
                             HasAttended = true,
@@ -1007,145 +882,33 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
-                            GuestBookingId = 31,
-                            EventId = 14,
-                            GuestId = 3,
+                            GuestBookingId = 15,
+                            EventId = 15,
+                            GuestId = 15,
                             HasAttended = false,
                             IsCancelled = false
                         },
                         new
                         {
-                            GuestBookingId = 32,
-                            EventId = 15,
+                            GuestBookingId = 16,
+                            EventId = 1,
                             GuestId = 15,
                             HasAttended = true,
                             IsCancelled = false
                         },
                         new
                         {
-                            GuestBookingId = 33,
+                            GuestBookingId = 17,
+                            EventId = 2,
+                            GuestId = 15,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 18,
                             EventId = 15,
                             GuestId = 1,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 34,
-                            EventId = 1,
-                            GuestId = 16,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 35,
-                            EventId = 2,
-                            GuestId = 18,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 36,
-                            EventId = 3,
-                            GuestId = 17,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 37,
-                            EventId = 4,
-                            GuestId = 19,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 38,
-                            EventId = 5,
-                            GuestId = 20,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 39,
-                            EventId = 6,
-                            GuestId = 21,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 40,
-                            EventId = 7,
-                            GuestId = 22,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 41,
-                            EventId = 8,
-                            GuestId = 23,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 42,
-                            EventId = 9,
-                            GuestId = 24,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 43,
-                            EventId = 10,
-                            GuestId = 25,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 44,
-                            EventId = 11,
-                            GuestId = 26,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 45,
-                            EventId = 12,
-                            GuestId = 27,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 46,
-                            EventId = 13,
-                            GuestId = 28,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 47,
-                            EventId = 14,
-                            GuestId = 29,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 48,
-                            EventId = 15,
-                            GuestId = 30,
                             HasAttended = true,
                             IsCancelled = false
                         });
