@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ThAmCo.Events.Pages.StaffList
 {
-    [Authorize(Policy = "EmployeeAccess")]
+    [Authorize(Policy = "ElevatedAccess")]
     public class EditModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;

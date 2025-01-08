@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ThAmCo.Events.Pages.StaffList
 {
-    [Authorize(Policy = "FreeAccess")]
+    [Authorize(Policy = "EmployeeAccess")]
     public class DetailsModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventDbContext _context;

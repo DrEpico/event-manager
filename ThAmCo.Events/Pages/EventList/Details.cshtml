@@ -1,5 +1,7 @@
 ﻿@page
 @model ThAmCo.Events.Pages.EventList.DetailsModel
+@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService
 
 @{
     ViewData["Title"] = "Details";
@@ -190,23 +192,27 @@
     {
         <p>No staff found for this event</p>
     }
-    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addStaffModal">
-        Add Staff
-    </button>
+    @if ((await AuthorizationService.AuthorizeAsync(User, "ElevatedAccess")).Succeeded){
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addStaffModal">
+            Add Staff
+        </button>
+    }
 </div>
     @* <button type="button" class="btn" asp-page-handler="DeleteVenueReserving">test</button> *@
     <form method="post" asp-page-handler="DeleteVenueReservation">
         <input type="hidden" name="EventId" value="@Model.Event.EventId" />
         <input type="hidden" name="VenueReference" value="@Model.Event.VenueReference" />
-        @if (!Model.Event.IsCancelled)
-        {
-            <button type="submit" class="btn btn-danger mt-2 mb-2" onclick="return confirm('Are you sure you want to cancel this event?')">
-                Cancel Event
-            </button>
-        }
-        else
-        {
-            //TODO: Potential rebook button?
+        @if ((await AuthorizationService.AuthorizeAsync(User, "ElevatedAccess")).Succeeded){
+            @if (!Model.Event.IsCancelled)
+            {
+                <button type="submit" class="btn btn-danger mt-2 mb-2" onclick="return confirm('Are you sure you want to cancel this event?')">
+                    Cancel Event
+                </button>
+            }
+            else
+            {
+                //TODO: Potential rebook button?
+            }
         }
     </form>
 
