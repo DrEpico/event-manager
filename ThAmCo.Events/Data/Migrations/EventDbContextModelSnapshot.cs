@@ -17,6 +17,198 @@ namespace ThAmCo.Events.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("ThAmCo.Events.Data.Event", b =>
                 {
                     b.Property<int>("EventId")
@@ -34,6 +226,9 @@ namespace ThAmCo.Events.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("StartTime")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -45,9 +240,6 @@ namespace ThAmCo.Events.Data.Migrations
                     b.Property<string>("VenueReference")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsCancelled")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("EventId");
 
                     b.ToTable("Events");
@@ -56,42 +248,43 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             EventId = 1,
-                            Date = new DateTime(2024, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "17:00:00",
                             EventType = "EXH",
+                            IsCancelled = false,
                             StartTime = "09:00:00",
                             Title = "Tech Expo",
-                            isCancelled = false
+                            VenueReference = "Test"
                         },
                         new
                         {
                             EventId = 2,
-                            Date = new DateTime(2024, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "15:00:00",
                             EventType = "WKS",
+                            IsCancelled = false,
                             StartTime = "10:00:00",
-                            Title = "AI Workshop",
-                            isCancelled = false
+                            Title = "AI Workshop"
                         },
                         new
                         {
                             EventId = 3,
-                            Date = new DateTime(2024, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "23:00:00",
                             EventType = "GAL",
+                            IsCancelled = false,
                             StartTime = "19:00:00",
-                            Title = "Annual Gala Dinner",
-                            isCancelled = false
+                            Title = "Annual Gala Dinner"
                         },
                         new
                         {
                             EventId = 4,
-                            Date = new DateTime(2024, 12, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "18:00:00",
                             EventType = "CMP",
+                            IsCancelled = false,
                             StartTime = "09:00:00",
-                            Title = "Coding Hackathon",
-                            isCancelled = false
+                            Title = "Coding Hackathon"
                         },
                         new
                         {
@@ -99,99 +292,99 @@ namespace ThAmCo.Events.Data.Migrations
                             Date = new DateTime(2024, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:30:00",
                             EventType = "OTR",
+                            IsCancelled = false,
                             StartTime = "08:30:00",
-                            Title = "Marketing Summit",
-                            isCancelled = false
+                            Title = "Marketing Summit"
                         },
                         new
                         {
                             EventId = 6,
-                            Date = new DateTime(2024, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "20:00:00",
                             EventType = "CMP",
+                            IsCancelled = false,
                             StartTime = "14:00:00",
-                            Title = "Startup Pitch Fest",
-                            isCancelled = false
+                            Title = "Startup Pitch Fest"
                         },
                         new
                         {
                             EventId = 7,
-                            Date = new DateTime(2024, 12, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:00:00",
                             EventType = "EXH",
+                            IsCancelled = false,
                             StartTime = "10:00:00",
-                            Title = "Science Fair",
-                            isCancelled = false
+                            Title = "Science Fair"
                         },
                         new
                         {
                             EventId = 8,
-                            Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 2, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "22:00:00",
                             EventType = "FND",
+                            IsCancelled = false,
                             StartTime = "18:00:00",
-                            Title = "Charity Auction",
-                            isCancelled = false
+                            Title = "Charity Auction"
                         },
                         new
                         {
                             EventId = 9,
-                            Date = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "17:00:00",
                             EventType = "WKS",
+                            IsCancelled = false,
                             StartTime = "13:00:00",
-                            Title = "Photography Workshop",
-                            isCancelled = false
+                            Title = "Photography Workshop"
                         },
                         new
                         {
                             EventId = 10,
-                            Date = new DateTime(2024, 12, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "18:00:00",
                             EventType = "EXH",
+                            IsCancelled = false,
                             StartTime = "10:00:00",
-                            Title = "Art & Design Expo",
-                            isCancelled = false
+                            Title = "Art & Design Expo"
                         },
                         new
                         {
                             EventId = 11,
-                            Date = new DateTime(2024, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "21:30:00",
                             EventType = "NET",
+                            IsCancelled = false,
                             StartTime = "19:00:00",
-                            Title = "Developer Meetup",
-                            isCancelled = false
+                            Title = "Developer Meetup"
                         },
                         new
                         {
                             EventId = 12,
-                            Date = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 2, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "15:00:00",
                             EventType = "OTR",
+                            IsCancelled = false,
                             StartTime = "09:00:00",
-                            Title = "Community Volunteering",
-                            isCancelled = false
+                            Title = "Community Volunteering"
                         },
                         new
                         {
                             EventId = 13,
-                            Date = new DateTime(2024, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "22:00:00",
                             EventType = "FES",
+                            IsCancelled = false,
                             StartTime = "14:00:00",
-                            Title = "Holiday Festival",
-                            isCancelled = false
+                            Title = "Holiday Festival"
                         },
                         new
                         {
                             EventId = 14,
-                            Date = new DateTime(2024, 12, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 2, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "16:30:00",
                             EventType = "WKS",
+                            IsCancelled = false,
                             StartTime = "09:30:00",
-                            Title = "Leadership Seminar",
-                            isCancelled = false
+                            Title = "Leadership Seminar"
                         },
                         new
                         {
@@ -199,9 +392,9 @@ namespace ThAmCo.Events.Data.Migrations
                             Date = new DateTime(2024, 12, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EndTime = "23:59:00",
                             EventType = "FES",
+                            IsCancelled = false,
                             StartTime = "20:00:00",
-                            Title = "End-of-Year Party",
-                            isCancelled = false
+                            Title = "End-of-Year Party"
                         });
                 });
 
@@ -233,105 +426,315 @@ namespace ThAmCo.Events.Data.Migrations
                             GuestId = 1,
                             Email = "alice.johnson@example.com",
                             Name = "Alice Johnson",
-                            Phone = "1234567890"
+                            Phone = "07412345678"
                         },
                         new
                         {
                             GuestId = 2,
                             Email = "bob.smith@example.com",
                             Name = "Bob Smith",
-                            Phone = "2345678901"
+                            Phone = "07323456789"
                         },
                         new
                         {
                             GuestId = 3,
                             Email = "charlie.brown@example.com",
                             Name = "Charlie Brown",
-                            Phone = "3456789012"
+                            Phone = "07734567890"
                         },
                         new
                         {
                             GuestId = 4,
                             Email = "diana.prince@example.com",
                             Name = "Diana Prince",
-                            Phone = "4567890123"
+                            Phone = "07845678901"
                         },
                         new
                         {
                             GuestId = 5,
                             Email = "eve.adams@example.com",
                             Name = "Eve Adams",
-                            Phone = "5678901234"
+                            Phone = "07956789012"
                         },
                         new
                         {
                             GuestId = 6,
                             Email = "frank.harris@example.com",
                             Name = "Frank Harris",
-                            Phone = "6789012345"
+                            Phone = "07467890123"
                         },
                         new
                         {
                             GuestId = 7,
                             Email = "grace.lee@example.com",
                             Name = "Grace Lee",
-                            Phone = "7890123456"
+                            Phone = "07378901234"
                         },
                         new
                         {
                             GuestId = 8,
                             Email = "hank.hill@example.com",
                             Name = "Hank Hill",
-                            Phone = "8901234567"
+                            Phone = "07789012345"
                         },
                         new
                         {
                             GuestId = 9,
                             Email = "ivy.nguyen@example.com",
                             Name = "Ivy Nguyen",
-                            Phone = "9012345678"
+                            Phone = "07890123456"
                         },
                         new
                         {
                             GuestId = 10,
                             Email = "jack.miller@example.com",
                             Name = "Jack Miller",
-                            Phone = "0123456789"
+                            Phone = "07901234567"
                         },
                         new
                         {
                             GuestId = 11,
                             Email = "kelly.green@example.com",
                             Name = "Kelly Green",
-                            Phone = "1122334455"
+                            Phone = "07411223344"
                         },
                         new
                         {
                             GuestId = 12,
                             Email = "luke.skywalker@example.com",
                             Name = "Luke Skywalker",
-                            Phone = "2233445566"
+                            Phone = "07322334455"
                         },
                         new
                         {
                             GuestId = 13,
                             Email = "maria.garcia@example.com",
                             Name = "Maria Garcia",
-                            Phone = "3344556677"
+                            Phone = "07733445566"
                         },
                         new
                         {
                             GuestId = 14,
                             Email = "nathan.drake@example.com",
                             Name = "Nathan Drake",
-                            Phone = "4455667788"
+                            Phone = "07844556677"
                         },
                         new
                         {
                             GuestId = 15,
                             Email = "olivia.king@example.com",
                             Name = "Olivia King",
-                            Phone = "5566778899"
+                            Phone = "07955667788"
+                        },
+                        new
+                        {
+                            GuestId = 16,
+                            Email = "paul.walker@example.com",
+                            Name = "Paul Walker",
+                            Phone = "07466778899"
+                        },
+                        new
+                        {
+                            GuestId = 17,
+                            Email = "quincy.adams@example.com",
+                            Name = "Quincy Adams",
+                            Phone = "07377889900"
+                        },
+                        new
+                        {
+                            GuestId = 18,
+                            Email = "rachel.scott@example.com",
+                            Name = "Rachel Scott",
+                            Phone = "07788990011"
+                        },
+                        new
+                        {
+                            GuestId = 19,
+                            Email = "samuel.jackson@example.com",
+                            Name = "Samuel Jackson",
+                            Phone = "07899001122"
+                        },
+                        new
+                        {
+                            GuestId = 20,
+                            Email = "tina.turner@example.com",
+                            Name = "Tina Turner",
+                            Phone = "07900112233"
+                        },
+                        new
+                        {
+                            GuestId = 21,
+                            Email = "ulysses.grant@example.com",
+                            Name = "Ulysses Grant",
+                            Phone = "07411223344"
+                        },
+                        new
+                        {
+                            GuestId = 22,
+                            Email = "victor.hugo@example.com",
+                            Name = "Victor Hugo",
+                            Phone = "07322334455"
+                        },
+                        new
+                        {
+                            GuestId = 23,
+                            Email = "wendy.darling@example.com",
+                            Name = "Wendy Darling",
+                            Phone = "07733445566"
+                        },
+                        new
+                        {
+                            GuestId = 24,
+                            Email = "xander.cage@example.com",
+                            Name = "Xander Cage",
+                            Phone = "07844556677"
+                        },
+                        new
+                        {
+                            GuestId = 25,
+                            Email = "yasmine.lopez@example.com",
+                            Name = "Yasmine Lopez",
+                            Phone = "07955667788"
+                        },
+                        new
+                        {
+                            GuestId = 26,
+                            Email = "zack.morris@example.com",
+                            Name = "Zack Morris",
+                            Phone = "07466778899"
+                        },
+                        new
+                        {
+                            GuestId = 27,
+                            Email = "aaron.paul@example.com",
+                            Name = "Aaron Paul",
+                            Phone = "07377889900"
+                        },
+                        new
+                        {
+                            GuestId = 28,
+                            Email = "beatrice.potter@example.com",
+                            Name = "Beatrice Potter",
+                            Phone = "07788990011"
+                        },
+                        new
+                        {
+                            GuestId = 29,
+                            Email = "catherine.zeta@example.com",
+                            Name = "Catherine Zeta",
+                            Phone = "07899001122"
+                        },
+                        new
+                        {
+                            GuestId = 30,
+                            Email = "david.beckham@example.com",
+                            Name = "David Beckham",
+                            Phone = "07900112233"
+                        },
+                        new
+                        {
+                            GuestId = 31,
+                            Email = "elaine.benes@example.com",
+                            Name = "Elaine Benes",
+                            Phone = "07411223344"
+                        },
+                        new
+                        {
+                            GuestId = 32,
+                            Email = "freddie.mercury@example.com",
+                            Name = "Freddie Mercury",
+                            Phone = "07322334455"
+                        },
+                        new
+                        {
+                            GuestId = 33,
+                            Email = "george.clooney@example.com",
+                            Name = "George Clooney",
+                            Phone = "07733445566"
+                        },
+                        new
+                        {
+                            GuestId = 34,
+                            Email = "helen.mirren@example.com",
+                            Name = "Helen Mirren",
+                            Phone = "07844556677"
+                        },
+                        new
+                        {
+                            GuestId = 35,
+                            Email = "ian.mckellen@example.com",
+                            Name = "Ian McKellen",
+                            Phone = "07955667788"
+                        },
+                        new
+                        {
+                            GuestId = 36,
+                            Email = "jessica.alba@example.com",
+                            Name = "Jessica Alba",
+                            Phone = "07466778899"
+                        },
+                        new
+                        {
+                            GuestId = 37,
+                            Email = "kevin.hart@example.com",
+                            Name = "Kevin Hart",
+                            Phone = "07377889900"
+                        },
+                        new
+                        {
+                            GuestId = 38,
+                            Email = "lana.del.rey@example.com",
+                            Name = "Lana Del Rey",
+                            Phone = "07788990011"
+                        },
+                        new
+                        {
+                            GuestId = 39,
+                            Email = "michael.jordan@example.com",
+                            Name = "Michael Jordan",
+                            Phone = "07899001122"
+                        },
+                        new
+                        {
+                            GuestId = 40,
+                            Email = "nancy.drew@example.com",
+                            Name = "Nancy Drew",
+                            Phone = "07900112233"
+                        },
+                        new
+                        {
+                            GuestId = 41,
+                            Email = "oscar.wilde@example.com",
+                            Name = "Oscar Wilde",
+                            Phone = "07411223344"
+                        },
+                        new
+                        {
+                            GuestId = 42,
+                            Email = "penelope.cruz@example.com",
+                            Name = "Penelope Cruz",
+                            Phone = "07322334455"
+                        },
+                        new
+                        {
+                            GuestId = 43,
+                            Email = "quentin.tarantino@example.com",
+                            Name = "Quentin Tarantino",
+                            Phone = "07733445566"
+                        },
+                        new
+                        {
+                            GuestId = 44,
+                            Email = "ryan.gosling@example.com",
+                            Name = "Ryan Gosling",
+                            Phone = "07844556677"
+                        },
+                        new
+                        {
+                            GuestId = 45,
+                            Email = "scarlett.johansson@example.com",
+                            Name = "Scarlett Johansson",
+                            Phone = "07955667788"
                         });
                 });
 
@@ -373,118 +776,6 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             GuestBookingId = 2,
-                            EventId = 2,
-                            GuestId = 2,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 3,
-                            EventId = 3,
-                            GuestId = 3,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 4,
-                            EventId = 4,
-                            GuestId = 4,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 5,
-                            EventId = 5,
-                            GuestId = 5,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 6,
-                            EventId = 6,
-                            GuestId = 6,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 7,
-                            EventId = 7,
-                            GuestId = 7,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 8,
-                            EventId = 8,
-                            GuestId = 8,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 9,
-                            EventId = 9,
-                            GuestId = 9,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 10,
-                            EventId = 10,
-                            GuestId = 10,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 11,
-                            EventId = 11,
-                            GuestId = 11,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 12,
-                            EventId = 12,
-                            GuestId = 12,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 13,
-                            EventId = 13,
-                            GuestId = 13,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 14,
-                            EventId = 14,
-                            GuestId = 14,
-                            HasAttended = true,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 15,
-                            EventId = 15,
-                            GuestId = 15,
-                            HasAttended = false,
-                            IsCancelled = false
-                        },
-                        new
-                        {
-                            GuestBookingId = 16,
                             EventId = 1,
                             GuestId = 15,
                             HasAttended = true,
@@ -492,7 +783,31 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
-                            GuestBookingId = 17,
+                            GuestBookingId = 3,
+                            EventId = 1,
+                            GuestId = 7,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 4,
+                            EventId = 2,
+                            GuestId = 2,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 5,
+                            EventId = 2,
+                            GuestId = 12,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 6,
                             EventId = 2,
                             GuestId = 15,
                             HasAttended = true,
@@ -500,9 +815,337 @@ namespace ThAmCo.Events.Data.Migrations
                         },
                         new
                         {
+                            GuestBookingId = 7,
+                            EventId = 3,
+                            GuestId = 3,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 8,
+                            EventId = 3,
+                            GuestId = 8,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 9,
+                            EventId = 4,
+                            GuestId = 4,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 10,
+                            EventId = 4,
+                            GuestId = 9,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 11,
+                            EventId = 5,
+                            GuestId = 5,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 12,
+                            EventId = 5,
+                            GuestId = 10,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 13,
+                            EventId = 5,
+                            GuestId = 6,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 14,
+                            EventId = 6,
+                            GuestId = 6,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 15,
+                            EventId = 6,
+                            GuestId = 13,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 16,
+                            EventId = 7,
+                            GuestId = 7,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 17,
+                            EventId = 7,
+                            GuestId = 14,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
                             GuestBookingId = 18,
+                            EventId = 8,
+                            GuestId = 8,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 19,
+                            EventId = 8,
+                            GuestId = 11,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 20,
+                            EventId = 9,
+                            GuestId = 9,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 21,
+                            EventId = 9,
+                            GuestId = 15,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 22,
+                            EventId = 10,
+                            GuestId = 10,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 23,
+                            EventId = 10,
+                            GuestId = 5,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 24,
+                            EventId = 11,
+                            GuestId = 11,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 25,
+                            EventId = 11,
+                            GuestId = 1,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 26,
+                            EventId = 12,
+                            GuestId = 12,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 27,
+                            EventId = 12,
+                            GuestId = 4,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 28,
+                            EventId = 13,
+                            GuestId = 13,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 29,
+                            EventId = 13,
+                            GuestId = 2,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 30,
+                            EventId = 14,
+                            GuestId = 14,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 31,
+                            EventId = 14,
+                            GuestId = 3,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 32,
+                            EventId = 15,
+                            GuestId = 15,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 33,
                             EventId = 15,
                             GuestId = 1,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 34,
+                            EventId = 1,
+                            GuestId = 16,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 35,
+                            EventId = 2,
+                            GuestId = 18,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 36,
+                            EventId = 3,
+                            GuestId = 17,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 37,
+                            EventId = 4,
+                            GuestId = 19,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 38,
+                            EventId = 5,
+                            GuestId = 20,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 39,
+                            EventId = 6,
+                            GuestId = 21,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 40,
+                            EventId = 7,
+                            GuestId = 22,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 41,
+                            EventId = 8,
+                            GuestId = 23,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 42,
+                            EventId = 9,
+                            GuestId = 24,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 43,
+                            EventId = 10,
+                            GuestId = 25,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 44,
+                            EventId = 11,
+                            GuestId = 26,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 45,
+                            EventId = 12,
+                            GuestId = 27,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 46,
+                            EventId = 13,
+                            GuestId = 28,
+                            HasAttended = false,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 47,
+                            EventId = 14,
+                            GuestId = 29,
+                            HasAttended = true,
+                            IsCancelled = false
+                        },
+                        new
+                        {
+                            GuestBookingId = 48,
+                            EventId = 15,
+                            GuestId = 30,
                             HasAttended = true,
                             IsCancelled = false
                         });
@@ -891,7 +1534,7 @@ namespace ThAmCo.Events.Data.Migrations
 
             modelBuilder.Entity("ThAmCo.Events.Data.Staffing", b =>
                 {
-                    b.Property<int>("StaffingId")
+                    b.Property<int?>("StaffingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -908,6 +1551,233 @@ namespace ThAmCo.Events.Data.Migrations
                     b.HasIndex("StaffId");
 
                     b.ToTable("Staffing");
+
+                    b.HasData(
+                        new
+                        {
+                            StaffingId = 1,
+                            EventId = 1,
+                            StaffId = 1
+                        },
+                        new
+                        {
+                            StaffingId = 2,
+                            EventId = 1,
+                            StaffId = 21
+                        },
+                        new
+                        {
+                            StaffingId = 3,
+                            EventId = 1,
+                            StaffId = 22
+                        },
+                        new
+                        {
+                            StaffingId = 4,
+                            EventId = 2,
+                            StaffId = 2
+                        },
+                        new
+                        {
+                            StaffingId = 5,
+                            EventId = 2,
+                            StaffId = 23
+                        },
+                        new
+                        {
+                            StaffingId = 6,
+                            EventId = 3,
+                            StaffId = 3
+                        },
+                        new
+                        {
+                            StaffingId = 7,
+                            EventId = 3,
+                            StaffId = 24
+                        },
+                        new
+                        {
+                            StaffingId = 8,
+                            EventId = 3,
+                            StaffId = 25
+                        },
+                        new
+                        {
+                            StaffingId = 9,
+                            EventId = 4,
+                            StaffId = 4
+                        },
+                        new
+                        {
+                            StaffingId = 10,
+                            EventId = 4,
+                            StaffId = 26
+                        },
+                        new
+                        {
+                            StaffingId = 11,
+                            EventId = 5,
+                            StaffId = 5
+                        },
+                        new
+                        {
+                            StaffingId = 12,
+                            EventId = 6,
+                            StaffId = 6
+                        },
+                        new
+                        {
+                            StaffingId = 13,
+                            EventId = 6,
+                            StaffId = 27
+                        },
+                        new
+                        {
+                            StaffingId = 14,
+                            EventId = 7,
+                            StaffId = 7
+                        },
+                        new
+                        {
+                            StaffingId = 15,
+                            EventId = 7,
+                            StaffId = 28
+                        },
+                        new
+                        {
+                            StaffingId = 16,
+                            EventId = 7,
+                            StaffId = 29
+                        },
+                        new
+                        {
+                            StaffingId = 17,
+                            EventId = 8,
+                            StaffId = 8
+                        },
+                        new
+                        {
+                            StaffingId = 18,
+                            EventId = 9,
+                            StaffId = 9
+                        },
+                        new
+                        {
+                            StaffingId = 19,
+                            EventId = 9,
+                            StaffId = 30
+                        },
+                        new
+                        {
+                            StaffingId = 20,
+                            EventId = 10,
+                            StaffId = 10
+                        },
+                        new
+                        {
+                            StaffingId = 21,
+                            EventId = 11,
+                            StaffId = 11
+                        },
+                        new
+                        {
+                            StaffingId = 22,
+                            EventId = 11,
+                            StaffId = 31
+                        },
+                        new
+                        {
+                            StaffingId = 23,
+                            EventId = 12,
+                            StaffId = 12
+                        },
+                        new
+                        {
+                            StaffingId = 24,
+                            EventId = 13,
+                            StaffId = 13
+                        },
+                        new
+                        {
+                            StaffingId = 25,
+                            EventId = 13,
+                            StaffId = 32
+                        },
+                        new
+                        {
+                            StaffingId = 26,
+                            EventId = 14,
+                            StaffId = 14
+                        },
+                        new
+                        {
+                            StaffingId = 27,
+                            EventId = 14,
+                            StaffId = 33
+                        },
+                        new
+                        {
+                            StaffingId = 28,
+                            EventId = 15,
+                            StaffId = 15
+                        },
+                        new
+                        {
+                            StaffingId = 29,
+                            EventId = 15,
+                            StaffId = 34
+                        });
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ThAmCo.Events.Data.GuestBooking", b =>

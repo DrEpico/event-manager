@@ -2,7 +2,9 @@
 {
     public class Staffing
     {
-        public int StaffingId { get; set; }
+        //I dont know if taking the ? out would break update-database
+        //-again so I will leave it just in case...
+        public int? StaffingId { get; set; }
         public int StaffId {  get; set; }
         public int EventId { get; set; }
 

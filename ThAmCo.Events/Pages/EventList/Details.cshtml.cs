@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using ThAmCo.Events.Services;
 
 namespace ThAmCo.Events.Pages.EventList
 {
+    [Authorize(Policy = "FreeAccess")]
     public class DetailsModel : PageModel
     {
         // Fields to store the database context and venue reservation service.

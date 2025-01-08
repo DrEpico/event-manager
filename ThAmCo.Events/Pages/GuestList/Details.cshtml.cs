@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
+    [Authorize(Policy = "FreeAccess")]
     public class DetailsModel : PageModel
     {
         private readonly EventDbContext _context;

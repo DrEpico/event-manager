@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ThAmCo.Events.Pages.EventList
 {
+    [Authorize(Policy = "ElevatedAccess")]
     public class DeleteModel : PageModel
     {
         private readonly EventDbContext _context;
