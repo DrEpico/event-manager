@@ -1534,7 +1534,7 @@ namespace ThAmCo.Events.Data.Migrations
 
             modelBuilder.Entity("ThAmCo.Events.Data.Staffing", b =>
                 {
-                    b.Property<int>("StaffingId")
+                    b.Property<int?>("StaffingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -1551,6 +1551,182 @@ namespace ThAmCo.Events.Data.Migrations
                     b.HasIndex("StaffId");
 
                     b.ToTable("Staffing");
+
+                    b.HasData(
+                        new
+                        {
+                            StaffingId = 1,
+                            EventId = 1,
+                            StaffId = 1
+                        },
+                        new
+                        {
+                            StaffingId = 2,
+                            EventId = 1,
+                            StaffId = 21
+                        },
+                        new
+                        {
+                            StaffingId = 3,
+                            EventId = 1,
+                            StaffId = 22
+                        },
+                        new
+                        {
+                            StaffingId = 4,
+                            EventId = 2,
+                            StaffId = 2
+                        },
+                        new
+                        {
+                            StaffingId = 5,
+                            EventId = 2,
+                            StaffId = 23
+                        },
+                        new
+                        {
+                            StaffingId = 6,
+                            EventId = 3,
+                            StaffId = 3
+                        },
+                        new
+                        {
+                            StaffingId = 7,
+                            EventId = 3,
+                            StaffId = 24
+                        },
+                        new
+                        {
+                            StaffingId = 8,
+                            EventId = 3,
+                            StaffId = 25
+                        },
+                        new
+                        {
+                            StaffingId = 9,
+                            EventId = 4,
+                            StaffId = 4
+                        },
+                        new
+                        {
+                            StaffingId = 10,
+                            EventId = 4,
+                            StaffId = 26
+                        },
+                        new
+                        {
+                            StaffingId = 11,
+                            EventId = 5,
+                            StaffId = 5
+                        },
+                        new
+                        {
+                            StaffingId = 12,
+                            EventId = 6,
+                            StaffId = 6
+                        },
+                        new
+                        {
+                            StaffingId = 13,
+                            EventId = 6,
+                            StaffId = 27
+                        },
+                        new
+                        {
+                            StaffingId = 14,
+                            EventId = 7,
+                            StaffId = 7
+                        },
+                        new
+                        {
+                            StaffingId = 15,
+                            EventId = 7,
+                            StaffId = 28
+                        },
+                        new
+                        {
+                            StaffingId = 16,
+                            EventId = 7,
+                            StaffId = 29
+                        },
+                        new
+                        {
+                            StaffingId = 17,
+                            EventId = 8,
+                            StaffId = 8
+                        },
+                        new
+                        {
+                            StaffingId = 18,
+                            EventId = 9,
+                            StaffId = 9
+                        },
+                        new
+                        {
+                            StaffingId = 19,
+                            EventId = 9,
+                            StaffId = 30
+                        },
+                        new
+                        {
+                            StaffingId = 20,
+                            EventId = 10,
+                            StaffId = 10
+                        },
+                        new
+                        {
+                            StaffingId = 21,
+                            EventId = 11,
+                            StaffId = 11
+                        },
+                        new
+                        {
+                            StaffingId = 22,
+                            EventId = 11,
+                            StaffId = 31
+                        },
+                        new
+                        {
+                            StaffingId = 23,
+                            EventId = 12,
+                            StaffId = 12
+                        },
+                        new
+                        {
+                            StaffingId = 24,
+                            EventId = 13,
+                            StaffId = 13
+                        },
+                        new
+                        {
+                            StaffingId = 25,
+                            EventId = 13,
+                            StaffId = 32
+                        },
+                        new
+                        {
+                            StaffingId = 26,
+                            EventId = 14,
+                            StaffId = 14
+                        },
+                        new
+                        {
+                            StaffingId = 27,
+                            EventId = 14,
+                            StaffId = 33
+                        },
+                        new
+                        {
+                            StaffingId = 28,
+                            EventId = 15,
+                            StaffId = 15
+                        },
+                        new
+                        {
+                            StaffingId = 29,
+                            EventId = 15,
+                            StaffId = 34
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

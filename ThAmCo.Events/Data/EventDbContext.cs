@@ -10,6 +10,7 @@ namespace ThAmCo.Events.Data
         public DbSet<Guest> Guests { get; set; }
         public DbSet<GuestBooking> GuestBookings { get; set; }
         public DbSet<Staff> Staff { get; set; }
+        public DbSet<Staffing> Staffing { get; set; }
         public string DbPath { get; set; } = string.Empty;
 
         public EventDbContext()
@@ -111,9 +112,6 @@ namespace ThAmCo.Events.Data
                 new Guest { GuestId = 45, Name = "Scarlett Johansson", Email = "scarlett.johansson@example.com", Phone = "07955667788" }
             );
 
-
-
-            // Seed data for GuestBookings
             // Seed data for GuestBookings
             modelBuilder.Entity<GuestBooking>().HasData(
                 new GuestBooking { GuestBookingId = 1, GuestId = 1, EventId = 1, HasAttended = false },
@@ -229,8 +227,39 @@ namespace ThAmCo.Events.Data
                 new Staff { StaffId = 59, Name = "George Carter", Role = "First Aider" },
                 new Staff { StaffId = 60, Name = "Heather Turner", Role = "First Aider" }
             );
-        }
 
-        public DbSet<ThAmCo.Events.Data.Staffing> Staffing { get; set; } = default!;
+            // Seed data for Staffing
+            modelBuilder.Entity<Staffing>().HasData(
+                new Staffing { StaffingId = 1, EventId = 1, StaffId = 1 },
+                new Staffing { StaffingId = 2, EventId = 1, StaffId = 21 },
+                new Staffing { StaffingId = 3, EventId = 1, StaffId = 22 },
+                new Staffing { StaffingId = 4, EventId = 2, StaffId = 2 },
+                new Staffing { StaffingId = 5, EventId = 2, StaffId = 23 },
+                new Staffing { StaffingId = 6, EventId = 3, StaffId = 3 },
+                new Staffing { StaffingId = 7, EventId = 3, StaffId = 24 },
+                new Staffing { StaffingId = 8, EventId = 3, StaffId = 25 },
+                new Staffing { StaffingId = 9, EventId = 4, StaffId = 4 },
+                new Staffing { StaffingId = 10, EventId = 4, StaffId = 26 },
+                new Staffing { StaffingId = 11, EventId = 5, StaffId = 5 },
+                new Staffing { StaffingId = 12, EventId = 6, StaffId = 6 },
+                new Staffing { StaffingId = 13, EventId = 6, StaffId = 27 },
+                new Staffing { StaffingId = 14, EventId = 7, StaffId = 7 },
+                new Staffing { StaffingId = 15, EventId = 7, StaffId = 28 },
+                new Staffing { StaffingId = 16, EventId = 7, StaffId = 29 },
+                new Staffing { StaffingId = 17, EventId = 8, StaffId = 8 },
+                new Staffing { StaffingId = 18, EventId = 9, StaffId = 9 },
+                new Staffing { StaffingId = 19, EventId = 9, StaffId = 30 },
+                new Staffing { StaffingId = 20, EventId = 10, StaffId = 10 },
+                new Staffing { StaffingId = 21, EventId = 11, StaffId = 11 },
+                new Staffing { StaffingId = 22, EventId = 11, StaffId = 31 },
+                new Staffing { StaffingId = 23, EventId = 12, StaffId = 12 },
+                new Staffing { StaffingId = 24, EventId = 13, StaffId = 13 },
+                new Staffing { StaffingId = 25, EventId = 13, StaffId = 32 },
+                new Staffing { StaffingId = 26, EventId = 14, StaffId = 14 },
+                new Staffing { StaffingId = 27, EventId = 14, StaffId = 33 },
+                new Staffing { StaffingId = 28, EventId = 15, StaffId = 15 },
+                new Staffing { StaffingId = 29, EventId = 15, StaffId = 34 }
+            );
+        }
     }
 }
