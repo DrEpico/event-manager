@@ -141,7 +141,7 @@ These functionalities are implemented in **`MenusController.cs`**.
 > - **`EditMenuName(id, menuDto)`**:
 > Edits a menu record, selected by ID.
 
-### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 4. Book, edit and cancel Food for an Event - see the ERD above for details. The service should return the FoodBookingId as confirmation of the booking.
+### ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E) 4. Book, edit and cancel Food for an Event. The service should return the FoodBookingId as confirmation of the booking.
 These functionalities are implemented in **`FoodBookingsController.cs`**.
 
 ![JUSTIFICATION](https://img.shields.io/badge/JUSTIFICATION-6366F1): These methods return `ClientReferenceId` instead of FoodBookingId which reduces the risk of directly exposing database ID's. This improved abstraction aligns well with API design best practices, where external consumers should interact with business-relevant data rather than internal system details.
@@ -334,10 +334,50 @@ private int GetRequiredStaffCount()
 }
 ```
 
-### ![WOULD](https://img.shields.io/badge/✗-WOULD-22C55E) 23. User access control.
-- Can create and edit staff details (Permitted Users: Managers)
-- Adjust the staffing of an event (Permitted Users: Team Leaders or Managers)
-- Permanently delete (Permitted Users: Team Leaders or Managers)
+### ![WOULD](https://img.shields.io/badge/✓-WOULD-22C55E) 23. User access control.
+Implemented within the Event project using `Microsoft.AspNetCore.Identity.EntityFrameworkCore`.
+<br>Available roles are: `Admin`, `Manager`, `Assistant`, and `User`.
+<br>
+<br>Authorization is enforced via Policy Based Role Check.
+<br>Policy/role checks are added above each page model and it determines who can access the page.
+<br>Example:
+```cs
+[Authorize(Policy = "ElevatedAccess")]
+public class CreateModel : PageModel {
+``` 
+The policy-based authorization controls 4 access levels.
+- **`Admin Access`**: Admin only.
+- **`Elevated Access`**: Admin and Manager.
+- **`Employee Access`**: Admin, Manager and Assistant.
+- **`Free Access`**: Admin, Manager, Assistant and Users.
+<br>![TODO](https://img.shields.io/badge/TODO-3B82F6): Assign the `User` role to all newly registered accounts by default, and include an interface for promoting user permissions.
+
+As required by the specs, 
+- (Admins and) Managers can create and edit staff details (Elevated Access).
+- (Admins and) Managers ~~and Team Leaders~~ can adjust the staffing of an event (Elevated Access).
+- (Admins and) Managers ~~or Team Leaders~~ can permanently delete (Elevated Access). 
+<br>Other pages have also been given suitable and sensible access levels depending on the context.
+
+>You can log in using the credentials provided below:
+> - Admin:
+><br>admin@example.com
+><br>AdminPassword123!
+>
+> - Manager:
+><br>manager@example.com
+><br>ManagerPassword123!
+>
+> - Assistant:
+><br>assistant@example.com
+><br>AssistantPassword123!
+>
+> - User:
+><br>user@example.com
+><br>UserPassword123!
+
+>Resources used: 
+><br>https://www.c-sharpcorner.com/article/how-to-add-authentication-in-asp-net-core-6-mvc-project-using-identity/
+><br>https://learn.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-6.0
 
 
 
