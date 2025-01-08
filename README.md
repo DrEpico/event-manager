@@ -355,6 +355,7 @@ The policy-based authorization controls 4 access levels.
 As required by the specs, 
 - (Admins and) Managers can create and edit staff details (Elevated Access).
 - (Admins and) Managers ~~and Team Leaders~~ can adjust the staffing of an event (Elevated Access).
+> This incorporates conditional rendering on the razor page as employees would need to see the details of an event while `[Authorize]` cannot be applied to a specific method. Via conditional rendering, only the managers and admins would be able to access the `Add Staff` and `Cancel Event` buttons.
 - (Admins and) Managers ~~or Team Leaders~~ can permanently delete (Elevated Access). 
 <br>Other pages have also been given suitable and sensible access levels depending on the context.
 
