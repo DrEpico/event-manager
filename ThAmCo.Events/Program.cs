@@ -77,17 +77,114 @@ using (var scope = app.Services.CreateScope())
 
     // Optionally seed a default admin user
     var adminEmail = "admin@example.com";
+    var adminUsername = "admin@example.com";
     var adminPassword = "AdminPassword123!";
+
+    var managerEmail = "manager@example.com";
+    var managerUsername = "manager@example.com";
+    var managerPassword = "ManagerPassword123!";
+
+    var assistantEmail = "assistant@example.com";
+    var assistantUsername = "assistant@example.com";
+    var assistantPassword = "AssistantPassword123!";
+
+    var userEmail = "user@example.com";
+    var userUsername = "user@example.com";
+    var userPassword = "UserPassword123!";
+
+    var myEmail = "adadashipour@gmail.com";
+    var myUsername = "adadashipour@gmail.com";
+    var myPassword = "Password123!";
 
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
     if (adminUser == null)
     {
-        adminUser = new IdentityUser { UserName = adminEmail, Email = adminEmail, EmailConfirmed = true };
+        adminUser = new IdentityUser { UserName = adminUsername, Email = adminEmail, EmailConfirmed = true };
         var result = await userManager.CreateAsync(adminUser, adminPassword);
 
         if (result.Succeeded)
         {
-            await userManager.AddToRoleAsync(adminUser, "Manager");
+            await userManager.AddToRoleAsync(adminUser, "Admin");
+        }
+        else
+        {
+            Console.WriteLine("Error creating admin user:");
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine(error.Description);
+            }
+        }
+    }
+
+    var managerUser = await userManager.FindByEmailAsync(managerEmail);
+    if (managerUser == null)
+    {
+        managerUser = new IdentityUser { UserName = managerUsername, Email = managerEmail, EmailConfirmed = true };
+        var result = await userManager.CreateAsync(managerUser, managerPassword);
+
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(managerUser, "Manager");
+        }
+        else
+        {
+            Console.WriteLine("Error creating admin user:");
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine(error.Description);
+            }
+        }
+    }
+
+    var assistantUser = await userManager.FindByEmailAsync(assistantEmail);
+    if (assistantUser == null)
+    {
+        assistantUser = new IdentityUser { UserName = assistantUsername, Email = assistantEmail, EmailConfirmed = true };
+        var result = await userManager.CreateAsync(assistantUser, assistantPassword);
+
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(assistantUser, "Assistant");
+        }
+        else
+        {
+            Console.WriteLine("Error creating admin user:");
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine(error.Description);
+            }
+        }
+    }
+
+    var userUser = await userManager.FindByEmailAsync(userEmail);
+    if (userUser == null)
+    {
+        userUser = new IdentityUser { UserName = userUsername, Email = userEmail, EmailConfirmed = true };
+        var result = await userManager.CreateAsync(userUser, userPassword);
+
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(userUser, "User");
+        }
+        else
+        {
+            Console.WriteLine("Error creating admin user:");
+            foreach (var error in result.Errors)
+            {
+                Console.WriteLine(error.Description);
+            }
+        }
+    }
+
+    var me = await userManager.FindByEmailAsync(myEmail);
+    if (me == null)
+    {
+        me = new IdentityUser { UserName = myUsername, Email = myEmail, EmailConfirmed = true };
+        var result = await userManager.CreateAsync(me, myPassword);
+
+        if (result.Succeeded)
+        {
+            await userManager.AddToRoleAsync(me, "User");
         }
         else
         {
@@ -105,7 +202,7 @@ using (var scope = app.Services.CreateScope())
 //    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
 //    // Find the user by email
-//    var user = await userManager.FindByEmailAsync("assistant@example.com");
+//    var user = await userManager.FindByEmailAsync("adadashipour@gmail.com");
 
 //    if (user != null)
 //    {
