@@ -4,7 +4,53 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container d-flex flex-column align-items-center justify-content-center" style="min-height: 90vh;">
+    <!-- Welcome Message -->
+    <div class="text-center mb-5">
+        <h1 class="display-5 fw-bold">Welcome to ThAmCo</h1>
+        <p class="text-muted">Your one-stop solution for managing events, staff, and guests efficiently.</p>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="row g-4">
+        <!-- Event Section -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-center shadow-sm border-0" style="background-color: #e3f2fd; color: #0d47a1; height: 250px;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title fw-bold mb-3">Event</h5>
+                    <p class="card-text mb-4">Manage and view events in the system.</p>
+                    <div>
+                        <a href="/EventList" class="btn btn-primary btn-sm me-2">View Events</a>
+                        <a href="/EventList/Create" class="btn btn-outline-primary btn-sm">Create Event</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Staff Section -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-center shadow-sm border-0" style="background-color: #e8f5e9; color: #1b5e20; height: 250px;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title fw-bold mb-3">Staff</h5>
+                    <p class="card-text mb-4">Manage and view staff information.</p>
+                    <div>
+                        <a href="/StaffList" class="btn btn-success btn-sm me-2">View Staff</a>
+                        <a href="/StaffList/Create" class="btn btn-outline-success btn-sm">Add Staff</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Guest Section -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-center shadow-sm border-0" style="background-color: #fff8e1; color: #ff6f00; height: 250px;">
+                <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                    <h5 class="card-title fw-bold mb-3">Guest</h5>
+                    <p class="card-text mb-4">Manage and view guest information.</p>
+                    <div>
+                        <a href="/GuestList" class="btn btn-warning btn-sm me-2">View Guests</a>
+                        <a href="/GuestList/Create" class="btn btn-outline-warning btn-sm">Add Guest</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
