@@ -65,7 +65,7 @@ The system architecture and data model are documented below.
 >- ✓ : Fully implemented
 >- △ : Partially implemented
 >- ✗ : Not started
-> **Note**: In this project, all requirements are marked with ✓ (fully implemented) except for the final requirement.
+> <br>**Note**: In this project, all requirements are marked with ✓ (fully implemented).
 >
 > #### Development Insight Badges
 > To provide clarity on development decisions and future plans, we use:
