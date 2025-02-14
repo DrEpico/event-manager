@@ -1,6 +1,7 @@
 # ThAmCo Project Requirements
 This project involves managing food items and menus for the Catering system and Event management system, adhering to the functional requirements outlined below. All API methods in Catering utilise DTOs to simplify input and output handling (unless deemed unnecessary).
 
+[![ThAmCo Demo Video](https://img.youtube.com/vi/ZbY0l1mcqRc/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
 <!--## Functional Requirements
 # Must (Critical requirements)
 ![MUST](https://img.shields.io/badge/✓-MUST-F43F5E)    
